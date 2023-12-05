@@ -1,29 +1,42 @@
-import React from 'react';
-import { View } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { StyleSheet, Button, View } from "react-native";
 
 const Status = () => {
+    const navigation = useNavigation();
+    const [status, setStatus] = useState();
+    const onPress = () => {
+        navigation.navigate('ProblemType',{});
+    }
     return (
-        <View>
+        <View style={styles.container}>
             <Button
                 onPress={onPress}
                 title="Safe"
-                color="#ffffff"
-                accessibilityLabel="Learn more about this purple button"
+                color="#00ff00"
             />
             <Button
                 onPress={onPress}
                 title="In Danger"
                 color="#ffff00"
-                accessibilityLabel="Learn more about this purple button"
             />
             <Button
                 onPress={onPress}
                 title="Emergency"
                 color="#ff0000"
-                accessibilityLabel="Learn more about this purple button"
             />
         </View>
     )
 };
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+});
+
 
 export default Status;
