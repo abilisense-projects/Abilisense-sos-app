@@ -26,6 +26,29 @@ const SendAlert = ({ route }) => {
         );
     };
 
+    const sendAlert = () => {
+        fetch('URL_של_השרת_המקבל_את_הנתונים', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // כאן יש לציין טיפוס הנתונים שאתה שולח, לדוגמה JSON
+            },
+            body: JSON.stringify({ // כאן יש להמיר את הנתונים לפורמט הנדרש
+                key1: 'value1',
+                key2: 'value2'
+                // ניתן להוסיף כמה שדות שתרצה
+            })
+        })
+            .then(response => {
+                // טיפול בתשובה מהשרת
+                console.log(response);
+            })
+            .catch(error => {
+                // טיפול בשגיאות
+                console.error('Error:', error);
+            });
+
+    }
+
     return (
         <View style={styles.container}>
             <Text>

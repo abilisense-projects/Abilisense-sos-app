@@ -8,28 +8,16 @@ const Status = () => {
     const handlePress = (level) => {
         navigation.navigate('ProblemType', { level: level });
     };
-
+    const levels = ["Easy", "Medium", "Hard"];
+    const levelsColors = ["yellow", "orange", "red"]
     return (
         <View style={styles.container}>
-            <Text>Choose your status:</Text>
-            <TouchableOpacity
-                style={[styles.button, { backgroundColor: 'yellow' }]}
-                onPress={() => handlePress('easy')}
-            >
-                <Text style={styles.buttonText}>Easy</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.button, { backgroundColor: 'orange' }]}
-                onPress={() => handlePress('medium')}
-            >
-                <Text style={styles.buttonText}>Medium</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.button, { backgroundColor: '#ff0000' }]}
-                onPress={() => handlePress('hard')}
-            >
-                <Text style={styles.buttonText}>Hard</Text>
-            </TouchableOpacity>
+            <Text>Choose your level:</Text>
+            {levels.map((item, index) => (
+                <TouchableOpacity style={[styles.button, { backgroundColor: levelsColors[index] }]} key={index} onPress={() => handlePress(item)}>
+                    <Text>{item}</Text>
+                </TouchableOpacity>
+            ))}
         </View>
     );
 };

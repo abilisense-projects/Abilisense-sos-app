@@ -6,37 +6,37 @@ import { useNavigation } from '@react-navigation/native';
 const ProblemType = ({ route }) => {
     const navigation = useNavigation();
     const level = route.params;
-    const [text, setText] = useState('');
-    
+    const [anotherProblem, setAnotherProblem] = useState('');
 
-    const send = (problem) => {
-        const prob = {problem: problem}
+    const changeText = (text) => {
+        setAnotherProblem(text);
+        
+    }
+    const handlePress = (problem) => {
+        const prob = { problem: problem }
         const paramsToSend = JSON.stringify({ ...level, ...prob })
         console.log(paramsToSend);
         navigation.navigate('SendAlert', paramsToSend)
     };
-    
+    const problems = ["Event", "Medical condition"];
+
 
     return (
         <View style={styles.container}>
             <Text>Choose your problem: </Text>
-            <TouchableOpacity style={styles.button} onPress={()=>{send("problem 1")}}>
-                <Text style={styles.buttonText}>Problem 1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={()=>{send("problem 2")}}>
-                <Text style={styles.buttonText}>Problem 2</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={()=>{send("problem 3")}}>
-                <Text style={styles.buttonText}>Problem 3</Text>
-            </TouchableOpacity>
+            {problems.map((item, index) => (
+                <TouchableOpacity style={styles.button} key={index} onPress={() => handlePress(item)}>
+                    <Text style={styles.buttonText}>{item}</Text>
+                </TouchableOpacity>
+            ))}
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
                     placeholder="Another problem"
-                    onChangeText={newText => setText(newText)}
-                    value={text}
+                    onChangeText={newText => changeText(newText)}
+                    value={anotherProblem}
                 />
-                <TouchableOpacity style={styles.submitButton} onPress={()=>{send(text)}}>
+                <TouchableOpacity style={styles.submitButton} onPress={() => { handlePress(anotherProblem) }}>
                     <Text style={styles.submitButtonText}>OK</Text>
                 </TouchableOpacity>
             </View>
