@@ -1,0 +1,21 @@
+# קבצי זמניים
+*.DS_Store
+.git
+.gitignore
+*.swp
+*.tmp
+
+# קבצי בנייה
+**/build
+**/ios/Pods
+**/android/app/build
+
+# קבצי תצורה
+**/Podfile
+**/Podfile.lock
+**/App.plist
+
+# קבצים אחרים
+**/node_modules
+**/.vscode
+**/.idea
