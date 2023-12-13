@@ -63,16 +63,13 @@ const FindLocation = ({ route }) => {
     };
     return (
         <View style={styles.container}>
-            {location && (
-                <React.Fragment>
-                    <Text>
-                        Another address was found. Choose your address:
-                    </Text>
-                    <TouchableOpacity style={styles.button} onPress={() => handlePress(location)}>
-                        <Text style={styles.buttonText}>{address}</Text>
-                    </TouchableOpacity>
-                </React.Fragment>
-            )}
+            <Text>
+                {location? 'Another address was found. Choose your address: ': 'Your address: '}
+            </Text>
+            {location &&
+                <TouchableOpacity style={styles.button} onPress={() => handlePress(location)}>
+                    <Text style={styles.buttonText}>{address}</Text>
+                </TouchableOpacity>}
             <TouchableOpacity style={styles.button} onPress={() => handlePress(dbLocation)}>
                 <Text style={styles.buttonText}>{dbLocation}</Text>
             </TouchableOpacity>
