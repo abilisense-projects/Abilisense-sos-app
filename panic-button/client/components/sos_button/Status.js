@@ -2,11 +2,12 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 
-const Status = () => {
-    const navigation = useNavigation();
+const Status = ({ onStepChange, addParamsToAlert }) => {
 
     const handlePress = (level) => {
-        navigation.navigate('ProblemType', { level: level });
+        const lev = {level: level}
+        addParamsToAlert(lev);
+        onStepChange(3);
     };
     const levels = ["Easy", "Medium", "Hard"];
     const levelsColors = ["yellow", "orange", "red"]

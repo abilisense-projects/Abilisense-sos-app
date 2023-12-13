@@ -3,19 +3,17 @@ import { StyleSheet, View, TouchableOpacity, TextInput, Text } from 'react-nativ
 
 import { useNavigation } from '@react-navigation/native';
 
-const ProblemType = ({ route }) => {
-    const navigation = useNavigation();
-    const level = route.params;
+const ProblemType = ({ onStepChange, addParamsToAlert }) => {
     const [anotherProblem, setAnotherProblem] = useState('');
 
     const changeText = (text) => {
         setAnotherProblem(text);
-        
+
     }
     const handlePress = (problem) => {
         const prob = { problem: problem }
-        const mergedJSON = { ...level, ...prob }
-        navigation.navigate('FindLocation', mergedJSON)
+        addParamsToAlert(prob)
+        onStepChange(4);
     };
     const problems = ["Injury", "health event"];
 

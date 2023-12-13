@@ -1,5 +1,3 @@
-import { StyleSheet } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native";
 
 import SignUpPage from './pages/SignUpPage';
 import React from 'react';
@@ -11,6 +9,7 @@ import PasswordValidation from "./components/password_validation";
 import EmailVerification from './components/forget_password/email_verification';
 import ResetPassword from './components/forget_password/reset_password';
 import ForgetPassword from './components/forget_password/forget_password'
+import HomeScreem from './pages/HomeScreen';
 
 
 const Stack = createStackNavigator();
@@ -18,9 +17,10 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-     <Stack.Navigator>
-      <Stack.Screen name="SignUpPage" component={SignUpPage} />
-     </Stack.Navigator>
+      <Stack.Navigator>
+        {/* <Stack.Screen name="SignUpPage" component={SignUpPage} /> */}
+        <Stack.Screen name="SignUpPage" component={HomeScreem} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

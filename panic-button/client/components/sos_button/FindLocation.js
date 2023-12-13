@@ -8,13 +8,10 @@ import { ACCESS_TOKEN } from '@env';
 
 const mapboxClient = MapboxGeocoding({ accessToken: ACCESS_TOKEN });
 
-const FindLocation = ({ route }) => {
-    const params = route.params;
+const FindLocation = ({ onStepChange, addParamsToAlert }) => {
     const [location, setLocation] = useState(null);
     const [address, setAddress] = useState(null);
     const dbLocation = "dbLocation";
-    const navigation = useNavigation();
-    console.log('FindLocation params  ', params);
     useEffect(() => {
         findUserLocation();
 
@@ -58,8 +55,8 @@ const FindLocation = ({ route }) => {
 
     const handlePress = (location) => {
         const loc = { location: location }
-        const mergedJSON = { ...params, ...loc };
-        navigation.navigate('SendAlert', mergedJSON)
+        addParamsToAlert(loc);
+        onStepChange(5);
     };
     return (
         <View style={styles.container}>
@@ -67,7 +64,7 @@ const FindLocation = ({ route }) => {
                 {location? 'Another address was found. Choose your address: ': 'Your address: '}
             </Text>
             {location &&
-                <TouchableOpacity style={styles.button} onPress={() => handlePress(location)}>
+                <TouchableOpacity style={styles.button} onPress={() => handlePress(address)}>
                     <Text style={styles.buttonText}>{address}</Text>
                 </TouchableOpacity>}
             <TouchableOpacity style={styles.button} onPress={() => handlePress(dbLocation)}>

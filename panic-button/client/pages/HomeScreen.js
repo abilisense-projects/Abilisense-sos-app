@@ -1,5 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import React, { useState } from 'react';
 import SosButton from '../components/sos_button/SosButton';
 import Status from '../components/sos_button/Status';
 import ProblemType from '../components/sos_button/ProblemType';
@@ -11,19 +10,22 @@ import FindLocation from '../components/sos_button/FindLocation';
 const Stack = createStackNavigator();
 
 const HomeScreem = () => {
-    console.log("home")
+    const [step, setStep] = useState(1);
+    const [alert, setAlert] = useState();
+    const handleStepChange = (newStep) => {
+        setStep(newStep);
+    };
+    const addParamsToAlert = (jsonParams) => {
+        setAlert({ ...alert, ...jsonParams })
+    }
     return (
-        // <View>
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='SosButton'>
-                <Stack.Screen name="SosButton" component={SosButton} />
-                <Stack.Screen name="Status" component={Status} />
-                <Stack.Screen name="ProblemType" component={ProblemType} />
-                <Stack.Screen name="FindLocation" component={FindLocation} />
-                <Stack.Screen name="SendAlert" component={SendAlert} />
-            </Stack.Navigator>
-        </NavigationContainer>
-        // </View>
+        <>
+            {step === 1 && <SosButton onStepChange={handleStepChange} />}
+            {step === 2 && <Status onStepChange={handleStepChange} addParamsToAlert = {addParamsToAlert}/>}
+            {step === 3 && <ProblemType onStepChange={handleStepChange} addParamsToAlert = {addParamsToAlert}/>}
+            {step === 4 && <FindLocation onStepChange={handleStepChange} addParamsToAlert = {addParamsToAlert}/>}
+            {step === 5 && <SendAlert alert = {alert}/>}
+        </>
     );
 };
 export default HomeScreem;
