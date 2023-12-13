@@ -1,3 +1,7 @@
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+
+import SignUpPage from './pages/SignUpPage';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
@@ -12,9 +16,12 @@ import ForgetPassword from './components/forget_password/forget_password'
 const Stack = createStackNavigator();
 
 export default function App() {
-
   return (
-    <View style={styles.container}></View>
+    <NavigationContainer>
+     <Stack.Navigator>
+      <Stack.Screen name="SignUpPage" component={SignUpPage} />
+     </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
