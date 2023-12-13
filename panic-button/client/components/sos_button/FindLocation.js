@@ -25,7 +25,7 @@ const FindLocation = ({ route }) => {
             position => {
                 const { latitude, longitude } = position.coords;
                 setLocation({ latitude: latitude, longitude: longitude });
-                // getAddressFromCoordinates(latitude, longitude);
+                getAddressFromCoordinates(latitude, longitude);
 
             },
             error => {
