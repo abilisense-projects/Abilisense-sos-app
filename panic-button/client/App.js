@@ -19,7 +19,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         {/* <Stack.Screen name="SignUpPage" component={SignUpPage} /> */}
-        <Stack.Screen name="SignUpPage" component={HomeScreem} />
+        <Stack.Screen name="HomePage" component={HomeScreem} />
       </Stack.Navigator>
     </NavigationContainer>
   );
