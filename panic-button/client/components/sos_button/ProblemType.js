@@ -14,12 +14,10 @@ const ProblemType = ({ route }) => {
     }
     const handlePress = (problem) => {
         const prob = { problem: problem }
-        const paramsToSend = JSON.stringify({ ...level, ...prob })
-        console.log(paramsToSend);
-        navigation.navigate('SendAlert', paramsToSend)
+        const mergedJSON = { ...level, ...prob }
+        navigation.navigate('FindLocation', mergedJSON)
     };
-    const problems = ["Event", "Medical condition"];
-
+    const problems = ["Injury", "health event"];
 
     return (
         <View style={styles.container}>
@@ -29,7 +27,7 @@ const ProblemType = ({ route }) => {
                     <Text style={styles.buttonText}>{item}</Text>
                 </TouchableOpacity>
             ))}
-            <View style={styles.inputContainer}>
+            {/* <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
                     placeholder="Another problem"
@@ -39,7 +37,7 @@ const ProblemType = ({ route }) => {
                 <TouchableOpacity style={styles.submitButton} onPress={() => { handlePress(anotherProblem) }}>
                     <Text style={styles.submitButtonText}>OK</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
         </View>
     );
 };
@@ -52,9 +50,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     button: {
-        width: 200,
-        height: 50,
-        backgroundColor: 'blue',
+        width: 150,
+        height: 150,
+        backgroundColor: 'orange',
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 10,
@@ -62,7 +60,8 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        fontSize: 18,
+        fontSize: 20,
+        fontWeight: 'bold'
     },
     inputContainer: {
         flexDirection: 'row',

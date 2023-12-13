@@ -6,6 +6,7 @@ import ProblemType from '../components/sos_button/ProblemType';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View } from 'react-native';
 import SendAlert from '../components/sos_button/SendAlert';
+import FindLocation from '../components/sos_button/FindLocation';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ const HomeScreem = () => {
                 <Stack.Screen name="SosButton" component={SosButton} />
                 <Stack.Screen name="Status" component={Status} />
                 <Stack.Screen name="ProblemType" component={ProblemType} />
+                <Stack.Screen name="FindLocation" component={FindLocation} />
                 <Stack.Screen name="SendAlert" component={SendAlert} />
             </Stack.Navigator>
         </NavigationContainer>

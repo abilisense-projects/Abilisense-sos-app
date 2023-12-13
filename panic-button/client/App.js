@@ -5,7 +5,6 @@ import HomeScreen from './pages/HomeScreen';
 
 //import Home from './pages/Home';
 
-
 export default function App() {
   return (
     // <View style={styles.container}>
