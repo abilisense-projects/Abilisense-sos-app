@@ -19,6 +19,21 @@ async function getPatientByEmail(email) {
         throw error;
     }
 }
+async function getPatientByEmailAndPassword(email, password) {
+    try {
+        const patient = await Patient.findOne({ email });
+        console.log("pat-" , patient);
+        // const isPasswordValid = await bcrypt.compare(password, patient.password);
+        // if (!isPasswordValid){
+        //     return {error: "invalid password"};
+        // }
+        return patient;
+    } catch (error) {
+        console.error('Error fetching patient by email and password:', error);
+        throw error;
+    }
+}
+
 
 async function getPatientById(_id) {
     try {
@@ -66,5 +81,6 @@ module.exports = {
     getPatientById,
     addPatient,
     deletePatientByEmail,
-    deletePatientById
+    deletePatientById,
+    getPatientByEmailAndPassword
 }

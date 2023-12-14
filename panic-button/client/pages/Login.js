@@ -1,36 +1,55 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, AsyncStorage } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { loginValidationSchema } from '../config/ValidationSchemas';
 import { Yup } from '../config/ValidationSchemas';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../redux/actions';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const checkLoggedInUser = async () => {
+      try {
+        const loggedInUser = await AsyncStorage.getItem('token');
+        console.log(loggedInUser);
+        if (loggedInUser !== null) {
+          // navigation.navigate('check');
+        } else {
+          console.log('No user is logged in');
+        }
+      } catch (e) {
+        console.error('Error fetching user data:', e);
+      }
+    };
+    checkLoggedInUser();
+  },[]);
 
   const handleLogin = async () => {
     try {
-      await loginValidationSchema.validate({ email, password }, { abortEarly: false });
+      // await loginValidationSchema.validate({ email, password }, { abortEarly: false });
 
-      
       // Make a POST request to your Node.js backend for user authentication- need the code from node
-      const response = await axios.post('YOUR_LOGIN_ENDPOINT', {
-        email,
-        password,
-      });
-      // const { token } = response.data; // Assuming server responds with a token upon successful login
-      // if (token) {
-      //   // Save the token securely (you can use AsyncStorage for this)
-      //   // await AsyncStorage.setItem('token', token);
-      //   // Assuming your backend responds with a success message upon successful authentication
-        if (response.data && response.data.success) {
-          console.log('Login successful');
-          navigation.navigate('Home');
-        } else {
-          console.error('Invalid credentials');
-        }
-      
+      const response = await checkEmailAndpassword(email, password)
+      console.log("issuch:", response)
+      if (response.success) {
+        dispatch(loginSuccess(response.user));
+        console.log(response.user)
+        const token = response.token;
+        await AsyncStorage.setItem('token', token);
+        navigation.navigate('check');
+      } else {
+        console.error('Invalid credentials');
+        setErrorMessage('user name or password invalid');
+      }
+
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const yupErrors = {};
@@ -42,6 +61,22 @@ const Login = ({ navigation }) => {
       console.error(error.message);
     }
   };
+  const checkEmailAndpassword = async (email, password) => {
+    try {
+      return await axios.post(`http://localhost:3000/api/patients/get-by-email-and-password/`, { email, password })
+        .then(response => {
+          console.log('Data:', response.data);
+          return response.data
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+    catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
 
   return (
     <View style={styles.container}>
@@ -49,7 +84,7 @@ const Login = ({ navigation }) => {
         <Button
           title="Register"
           style={styles.register}
-          onPress={() => navigation.navigate('Register')}
+          onPress={() => navigation.navigate('SignUpPage')}
         />
       </View>
       <Text style={styles.header}>Login</Text>
@@ -63,7 +98,7 @@ const Login = ({ navigation }) => {
         value={email}
       />
       {errors.email && <Text style={styles.warningText}>{errors.email}</Text>}
-  
+
       <TextInput
         style={[styles.input, errors.password && styles.invalidInput]}
         placeholder="Password"
@@ -75,17 +110,18 @@ const Login = ({ navigation }) => {
         value={password}
       />
       {errors.password && <Text style={styles.warningText}>{errors.password}</Text>}
-  
+
       <Text
         style={styles.forgotPassword}
-        onPress={() => navigation.navigate('ForgotPassword')}
+        onPress={() => navigation.navigate('ForgetPassword')}
       >
         Forgot Password?
       </Text>
+      {errorMessage ? <Text style={{ color: 'red' }}>{errorMessage}</Text> : null}
       <Button title="Login" onPress={handleLogin} />
     </View>
   );
-  
+
 };
 const styles = StyleSheet.create({
   container: {

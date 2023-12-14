@@ -4,7 +4,8 @@ const {
     getPatientById,
     addPatient,
     deletePatientByEmail,
-    deletePatientById } = require('../repositories/patientRepo');
+    deletePatientById,
+    getPatientByEmailAndPassword} = require('../repositories/patientRepo');
 
 async function getAllPatientsBL() {
     return await getAllPatients();
@@ -12,6 +13,10 @@ async function getAllPatientsBL() {
 
 async function getPatientByEmailBL(email) {
     return await getPatientByEmail(email);
+}
+
+async function getPatientByEmailAndPasswordBL(email, password) {
+    return await getPatientByEmailAndPassword(email, password);
 }
 
 async function getPatientByIdBL(email) {
@@ -38,5 +43,6 @@ module.exports = {
     getPatientByIdBL,
     addPatientBL,
     deletePatientByEmailBL,
-    deletePatientByIdBL
+    deletePatientByIdBL,
+    getPatientByEmailAndPasswordBL
 };
