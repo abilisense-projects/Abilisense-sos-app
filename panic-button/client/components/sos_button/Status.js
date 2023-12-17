@@ -7,7 +7,7 @@ const Status = ({ onStepChange, addParamsToAlert }) => {
     const handlePress = (level) => {
         const lev = {level: level}
         addParamsToAlert(lev);
-        onStepChange(3);
+        onStepChange();
     };
     const levels = ["Easy", "Medium", "Hard"];
     const levelsColors = ["yellow", "orange", "red"]

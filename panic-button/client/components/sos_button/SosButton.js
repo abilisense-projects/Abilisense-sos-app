@@ -72,8 +72,7 @@ const SosButton = ({ onStepChange }) => {
     });
 
     const onPress = () => {
-        console.log('SosButton');
-        onStepChange(2);
+        onStepChange();
     }
     return (
         <View style={styles.container}>

@@ -12,8 +12,8 @@ const Stack = createStackNavigator();
 const HomeScreem = () => {
     const [step, setStep] = useState(1);
     const [alert, setAlert] = useState();
-    const handleStepChange = (newStep) => {
-        setStep(newStep);
+    const handleStepChange = () => {
+        setStep(step + 1);
     };
     const addParamsToAlert = (jsonParams) => {
         setAlert({ ...alert, ...jsonParams })
@@ -21,10 +21,10 @@ const HomeScreem = () => {
     return (
         <>
             {step === 1 && <SosButton onStepChange={handleStepChange} />}
-            {step === 2 && <Status onStepChange={handleStepChange} addParamsToAlert = {addParamsToAlert}/>}
-            {step === 3 && <ProblemType onStepChange={handleStepChange} addParamsToAlert = {addParamsToAlert}/>}
-            {step === 4 && <FindLocation onStepChange={handleStepChange} addParamsToAlert = {addParamsToAlert}/>}
-            {step === 5 && <SendAlert alert = {alert}/>}
+            {step === 2 && <Status onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />}
+            {step === 3 && <ProblemType onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />}
+            {step === 4 && <FindLocation onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />}
+            {step === 5 && <SendAlert alert={alert} />}
         </>
     );
 };
