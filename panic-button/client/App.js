@@ -1,35 +1,34 @@
-
-import SignUpPage from './pages/SignUpPage';
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import PasswordValidation from "./components/password_validation";
-import EmailVerification from './components/forget_password/email_verification';
-import ResetPassword from './components/forget_password/reset_password';
-import ForgetPassword from './components/forget_password/forget_password'
-import HomeScreem from './pages/HomeScreen';
 
+// Import דפים ורכיבים
+import SignUpPage from './pages/SignUpPage';
+import HomeScreen from './pages/HomeScreen';
+import HistoryPage from './pages/HistoryPage';
+import SettingsPage from './pages/SettingsPage';
+import AccessibilityPage from './pages/AccessibilityPage';
+import SideBarMenu from './pages/SideBarMenu';
+import LogOut from './pages/Logout';
 
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+// const Stack = createStackNavigator();
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {/* <Stack.Screen name="SignUpPage" component={SignUpPage} /> */}
-        <Stack.Screen name="HomePage" component={HomeScreem} />
-      </Stack.Navigator>
+      <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}>
+        <Drawer.Screen name="SignUpPage" component={SignUpPage} options={{ drawerLabel: () => null }} />
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="History" component={HistoryPage} />
+        <Drawer.Screen name="Settings" component={SettingsPage} />
+        <Drawer.Screen name="LogOut" component={LogOut} />
+        <Drawer.Screen name="Accessibility" component={AccessibilityPage} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
