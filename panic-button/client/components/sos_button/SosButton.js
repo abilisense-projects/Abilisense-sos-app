@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View, TouchableOpacity, Animated, Easing, Text } from 'react-native';
 
-const SosButton = ({ navigation }) => {
+const SosButton = ({ onStepChange }) => {
     const animatedValues = useRef([
         new Animated.Value(0),
         new Animated.Value(0),
@@ -61,8 +61,8 @@ const SosButton = ({ navigation }) => {
                 },
             ],
             opacity: value.interpolate({
-                inputRange: [0, 0.7, 1], 
-                outputRange: [1, 0.3, 0], 
+                inputRange: [0, 0.7, 1],
+                outputRange: [1, 0.3, 0],
             }),
         };
 
@@ -72,8 +72,7 @@ const SosButton = ({ navigation }) => {
     });
 
     const onPress = () => {
-        console.log('SosButton');
-        navigation.navigate('Status');
+        onStepChange();
     }
     return (
         <View style={styles.container}>

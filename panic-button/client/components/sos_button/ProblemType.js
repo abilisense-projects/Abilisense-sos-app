@@ -3,19 +3,17 @@ import { StyleSheet, View, TouchableOpacity, TextInput, Text } from 'react-nativ
 
 import { useNavigation } from '@react-navigation/native';
 
-const ProblemType = ({ route }) => {
-    const navigation = useNavigation();
-    const level = route.params;
+const ProblemType = ({ onStepChange, addParamsToAlert }) => {
     const [anotherProblem, setAnotherProblem] = useState('');
 
     const changeText = (text) => {
         setAnotherProblem(text);
-        
+
     }
     const handlePress = (problem) => {
         const prob = { problem: problem }
-        const mergedJSON = { ...level, ...prob }
-        navigation.navigate('FindLocation', mergedJSON)
+        addParamsToAlert(prob)
+        onStepChange();
     };
     const problems = ["Injury", "health event"];
 
@@ -27,17 +25,6 @@ const ProblemType = ({ route }) => {
                     <Text style={styles.buttonText}>{item}</Text>
                 </TouchableOpacity>
             ))}
-            {/* <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Another problem"
-                    onChangeText={newText => changeText(newText)}
-                    value={anotherProblem}
-                />
-                <TouchableOpacity style={styles.submitButton} onPress={() => { handlePress(anotherProblem) }}>
-                    <Text style={styles.submitButtonText}>OK</Text>
-                </TouchableOpacity>
-            </View> */}
         </View>
     );
 };
@@ -62,32 +49,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         fontWeight: 'bold'
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    input: {
-        height: 50,
-        borderColor: 'blue',
-        borderWidth: 1,
-        width: 140,
-        marginVertical: 10,
-        borderRadius: 5,
-        paddingHorizontal: 10,
-    },
-    submitButton: {
-        width: 50,
-        height: 50,
-        backgroundColor: 'blue',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        marginLeft: 10,
-    },
-    submitButtonText: {
-        color: 'white',
-        fontSize: 16,
     },
 });
 
