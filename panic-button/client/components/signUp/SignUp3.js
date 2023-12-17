@@ -1,12 +1,55 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const MedicalConditionsComponent = ({ onStepChange, selectedConditions, addCondition, removeCondition }) => {
   const [newCondition, setNewCondition] = useState('');
 
+  const user = useSelector((state) => state.userData);
+
+  const data =  ({
+    fname:user.firstname,
+    lname:"Singer",
+    email:"m@c.com",
+    password:"1111",
+    address:
+  {country:"Israel", city:"Rechovot", street: "Herzel", buildingNumber: 12, floor: 4, apartmentNumber: 10, comments: "there is no elevator"},
+   dateOfBirth:"2022-02-02", 
+   medicalConditions:selectedConditions,
+  })
+
+
   const handleSelectConditions = (condition) => {
     addCondition(condition);
     setNewCondition('');
+  };
+
+  const GoToLoginPage = () => {
+    if(insertClientDataIntoDB(data)){
+      console.log("Moved to login!!!")
+      // <login></login>
+    }
+    else{
+      console.log("Didn't moved to login!!!")
+    }
+  }
+
+  const insertClientDataIntoDB = async (ClientData) =>{
+      try {
+          console.log(ClientData);
+          return await axios.post(`http://localhost:3000/api/patients//add-patient/`, ClientData)
+              .then(response => {
+                  console.log('!!!!!!!!!!!!!!!!!!!!Data:', response.data);
+                  return response.data
+              })
+              .catch(error => {
+                  console.error('!!!!!!!!!!!!!!!!!!Error:', error);
+              });
+      }
+      catch (error) {
+          console.error('Error fetching data:', error);
+      }
   };
 
   const renderConditions = () => {
@@ -42,7 +85,7 @@ const MedicalConditionsComponent = ({ onStepChange, selectedConditions, addCondi
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.registerButton}>
+      <TouchableOpacity style={styles.registerButton} onPress={() =>GoToLoginPage()}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
 
