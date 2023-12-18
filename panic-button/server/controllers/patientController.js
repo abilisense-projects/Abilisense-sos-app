@@ -5,7 +5,7 @@ const {
     addPatient,
     deletePatientByEmail,
     deletePatientById,
-    getPatientByEmailAndPassword} = require('../repositories/patientRepo');
+    getPatientByEmailAndPassword } = require('../repositories/patientRepo');
 
 async function getAllPatientsBL() {
     return await getAllPatients();

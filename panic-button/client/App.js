@@ -8,7 +8,7 @@ import ForgetPassword from "./pages/forget_password";
 import check from "./pages/check";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-// import HomeScreem from "./pages/HomeScreen";
+import HomeScreem from "./pages/HomeScreen";
 
 
 
@@ -22,8 +22,8 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="SignUpPage" component={SignUpPage} />
           <Stack.Screen name="check" component={check} />
-          {/* <Stack.Screen name="HomeScreem" component={HomeScreem} /> */}
-          {/* <Stack.Screen name="ForgetPassword" component={ForgetPassword} /> */}
+          <Stack.Screen name="HomeScreem" component={HomeScreem} />
+          <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

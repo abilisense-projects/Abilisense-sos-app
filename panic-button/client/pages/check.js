@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const check = () => {
     const user = useSelector((state) => state.user.user);
-    
+
     const logOut = () => {
         AsyncStorage.removeItem('email');
         AsyncStorage.removeItem('password');

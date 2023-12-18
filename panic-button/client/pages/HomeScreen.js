@@ -13,7 +13,6 @@ const Stack = createStackNavigator();
 const HomeScreem = () => {
     console.log("home")
     return (
-        // <View>
         <NavigationContainer>
             <Stack.Navigator initialRouteName='SosButton'>
                 <Stack.Screen name="SosButton" component={SosButton} />
@@ -23,7 +22,6 @@ const HomeScreem = () => {
                 <Stack.Screen name="SendAlert" component={SendAlert} />
             </Stack.Navigator>
         </NavigationContainer>
-        // </View>
     );
 };
 export default HomeScreem;

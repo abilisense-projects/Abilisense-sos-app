@@ -44,7 +44,7 @@ const Login = ({ navigation }) => {
 
         await AsyncStorage.setItem('email', response.user.email);
         await AsyncStorage.setItem('password', response.user.password);
-        
+
         navigation.navigate('HomeScreem');
       } else {
         console.error('Invalid credentials');

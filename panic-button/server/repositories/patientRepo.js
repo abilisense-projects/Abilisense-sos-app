@@ -23,10 +23,10 @@ async function getPatientByEmail(email) {
 async function getPatientByEmailAndPassword(email, password) {
     try {
         const patient = await Patient.findOne({ email });
-        console.log("pat-" , patient);
+        console.log("pat-", patient);
         const isPasswordValid = await bcrypt.compare(password, patient.password);
-        if (!isPasswordValid){
-            return {error: "invalid password"};
+        if (!isPasswordValid) {
+            return { error: "invalid password" };
         }
         return patient;
     } catch (error) {
