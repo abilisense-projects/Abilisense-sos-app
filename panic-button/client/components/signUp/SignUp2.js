@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   View,Text,TextInput,Pressable,ScrollView,KeyboardAvoidingView,Platform,StyleSheet,
 } from 'react-native';
-import { signUpValidationSchema } from '../../config/validations';
+import { signUpValidationSchema } from '../../config/ValidationSchemas';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const SignUp2 = ({ onStepChange }) => {

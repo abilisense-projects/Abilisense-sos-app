@@ -4,7 +4,7 @@ const alertsSchema = mongoose.Schema({
     date: Date,
     distressDescription: String,
     status: String,
-    location:String,
+    location: String,
     level: String
 })
 const Alert = new mongoose.model('alerts', alertsSchema);

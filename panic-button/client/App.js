@@ -1,27 +1,30 @@
-
+import { NavigationContainer } from "@react-navigation/native";
 import SignUpPage from './pages/SignUpPage';
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import PasswordValidation from "./components/password_validation";
-import EmailVerification from './components/forget_password/email_verification';
-import ResetPassword from './components/forget_password/reset_password';
-import ForgetPassword from './components/forget_password/forget_password'
-import HomeScreem from './pages/HomeScreen';
-
+import { createStackNavigator } from "@react-navigation/stack";
+import Login from "./pages/Login";
+import ForgetPassword from "./pages/forget_password";
+import check from "./pages/check";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import HomeScreem from "./pages/HomeScreen";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {/* <Stack.Screen name="SignUpPage" component={SignUpPage} /> */}
-        <Stack.Screen name="HomePage" component={HomeScreem} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="SignUpPage" component={SignUpPage} />
+          <Stack.Screen name="check" component={check} />
+          <Stack.Screen name="HomeScreem" component={HomeScreem} />
+          <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

@@ -20,6 +20,22 @@ async function getPatientByEmail(email) {
     }
 }
 
+async function getPatientByEmailAndPassword(email, password) {
+    try {
+        const patient = await Patient.findOne({ email });
+        console.log("pat-", patient);
+        const isPasswordValid = await bcrypt.compare(password, patient.password);
+        if (!isPasswordValid) {
+            return { error: "invalid password" };
+        }
+        return patient;
+    } catch (error) {
+        console.error('Error fetching patient by email and password:', error);
+        throw error;
+    }
+}
+
+
 async function getPatientById(_id) {
     try {
         const patient = await Patient.findById({ _id });
@@ -29,15 +45,28 @@ async function getPatientById(_id) {
     }
 }
 
+// add patient with hash password
+const bcrypt = require('bcrypt');
+
 async function addPatient(patient) {
+    const { password, ...otherData } = patient; // Extracting password from patient object
+    const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
+
+    // Create a new object with the hashed password and other patient data
+    const patientWithHashedPassword = {
+        ...otherData,
+        password: hashedPassword,
+    };
+
     let data = {};
     try {
-        data = await Patient.create(patient);
+        data = await Patient.create(patientWithHashedPassword); // Inserting patient with hashed password
     } catch (error) {
         console.error('Error creating new patient:', error);
     }
     return data;
 }
+
 
 async function deletePatientByEmail(email) {
     try {
@@ -66,5 +95,6 @@ module.exports = {
     getPatientById,
     addPatient,
     deletePatientByEmail,
-    deletePatientById
+    deletePatientById,
+    getPatientByEmailAndPassword
 }
