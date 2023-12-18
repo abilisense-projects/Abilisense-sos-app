@@ -10,8 +10,6 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import HomeScreem from "./pages/HomeScreen";
 
-
-
 const Stack = createStackNavigator();
 
 export default function App() {
