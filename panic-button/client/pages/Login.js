@@ -6,6 +6,8 @@ import { loginValidationSchema } from '../config/ValidationSchemas';
 import { Yup } from '../config/ValidationSchemas';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../redux/actions';
+import { useSelector } from 'react-redux';
+
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -18,10 +20,10 @@ const Login = ({ navigation }) => {
   useEffect(() => {
     const checkLoggedInUser = async () => {
       try {
-        const loggedInUser = await AsyncStorage.getItem('token');
-        console.log(loggedInUser);
-        if (loggedInUser !== null) {
-          // navigation.navigate('check');
+        const emailUser = await AsyncStorage.getItem('email');
+        const passwordUser = await AsyncStorage.getItem('password');
+        if (emailUser !== null && passwordUser !== null) {
+          navigation.navigate('check');
         } else {
           console.log('No user is logged in');
         }
@@ -30,21 +32,20 @@ const Login = ({ navigation }) => {
       }
     };
     checkLoggedInUser();
-  },[]);
+  }, []);
 
   const handleLogin = async () => {
     try {
       // await loginValidationSchema.validate({ email, password }, { abortEarly: false });
 
-      // Make a POST request to your Node.js backend for user authentication- need the code from node
       const response = await checkEmailAndpassword(email, password)
-      console.log("issuch:", response)
       if (response.success) {
         dispatch(loginSuccess(response.user));
-        console.log(response.user)
-        const token = response.token;
-        await AsyncStorage.setItem('token', token);
-        navigation.navigate('check');
+
+        await AsyncStorage.setItem('email', response.user.email);
+        await AsyncStorage.setItem('password', response.user.password);
+        
+        navigation.navigate('HomeScreem');
       } else {
         console.error('Invalid credentials');
         setErrorMessage('user name or password invalid');
@@ -61,6 +62,7 @@ const Login = ({ navigation }) => {
       console.error(error.message);
     }
   };
+
   const checkEmailAndpassword = async (email, password) => {
     try {
       return await axios.post(`http://localhost:3000/api/patients/get-by-email-and-password/`, { email, password })
