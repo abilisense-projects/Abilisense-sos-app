@@ -1,12 +1,11 @@
-import { View, Text } from "react-native"
 import React from 'react';
+import ShowHistory from '../components/history/ShowHistory';
 
 
-const HistoryPage = ()=>{
-    return(
-        <View>
-            <Text>HistoryPage</Text>
-        </View>
-    )
+const HistoryPage = () => {
+  return (
+    <ShowHistory />
+  );
 };
+
 export default HistoryPage;

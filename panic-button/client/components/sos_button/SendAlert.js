@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import axios from 'axios'; // Import המודול axios
+import axios from 'axios'; 
 import { SERVER_BASE_URL } from '@env';
 
 const SendAlert = ({ alert }) => {
