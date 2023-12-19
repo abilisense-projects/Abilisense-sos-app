@@ -1,29 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import axios from 'axios'; 
+import axios from 'axios';
 import { SERVER_BASE_URL } from '@env';
 
-const SendAlert = ({ alert }) => {
-    const [alertSent, setAlertSent] = useState(); 
-    console.log('alert: ', alert)
+const SendAlert = ({ onStepChange, alert }) => {
+    const [alertSent, setAlertSent] = useState();
     useEffect(() => {
         const addAlert = async () => {
             const url = `${SERVER_BASE_URL}/api/alerts/add-alert/`;
-            console.log(typeof(currentDate));
+            console.log(typeof (currentDate));
+            console.log(new Date());
+            const date = new Date();
+            console.log(date);
             const alertData = {
                 patient: '6578581ffaed8acb3697e399',
-                date: new Date(),
+                date: date,
                 distressDescription: alert.problem,
                 status: 'not treated',
                 location: alert.location,
-                level: alert.level,   
+                level: alert.level,
             };
+            console.log('alert data', alertData)
             try {
-                // const response = await axios.get(`${SERVER_BASE_URL}/api/alerts/get-all/`)
                 const response = await axios.post(url, alertData);
-                console.log("frghtgj")
                 console.log('Response from server: ', response.data);
                 setAlertSent(true);
+                setTimeout(() => {
+                    onStepChange();
+                }, 5000);
 
             } catch (error) {
                 console.error('Error sending data to server:', error);
@@ -37,7 +41,7 @@ const SendAlert = ({ alert }) => {
 
     return (
         <View style={styles.container}>
-           {alertSent != null && <Text>
+            {alertSent != null && <Text>
                 {alertSent ? 'Alert sent successfully!' : 'Sending the alert failed.'}
             </Text>}
         </View>

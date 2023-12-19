@@ -20,12 +20,14 @@ const App = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}>
-        <Drawer.Screen name="SignUpPage" component={SignUpPage} options={{ drawerLabel: () => null }} />
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="History" component={HistoryPage} />
-        <Drawer.Screen name="Settings" component={SettingsPage} />
-        <Drawer.Screen name="LogOut" component={LogOut} />
-        <Drawer.Screen name="Accessibility" component={AccessibilityPage} />
+        {/* <Drawer.Screen name="SignUpPage" component={SignUpPage} options={{
+          headerShown: false
+        }} /> */}
+        <Drawer.Screen name="Home" component={HomeScreen} options={{ title: "" }} />
+        <Drawer.Screen name="History" component={HistoryPage} options={{ title: "" }} />
+        <Drawer.Screen name="Settings" component={SettingsPage} options={{ title: "" }} />
+        <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "" }} />
+        <Drawer.Screen name="Accessibility" component={AccessibilityPage} options={{ title: "" }} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
