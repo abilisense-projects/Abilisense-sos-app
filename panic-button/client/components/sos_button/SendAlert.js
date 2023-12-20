@@ -5,16 +5,13 @@ import { SERVER_BASE_URL } from '@env';
 
 const SendAlert = ({ onStepChange, alert }) => {
     const [alertSent, setAlertSent] = useState();
+
     useEffect(() => {
         const addAlert = async () => {
             const url = `${SERVER_BASE_URL}/api/alerts/add-alert/`;
-            console.log(typeof (currentDate));
-            console.log(new Date());
-            const date = new Date();
-            console.log(date);
+
             const alertData = {
                 patient: '6578581ffaed8acb3697e399',
-                date: date,
                 distressDescription: alert.problem,
                 status: 'not treated',
                 location: alert.location,

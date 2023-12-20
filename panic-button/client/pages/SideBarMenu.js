@@ -19,7 +19,9 @@ const SideBarMenu = ({ navigation }) => {
         />
         <Text style={styles.userName}>User name</Text>
       </View>
+      <Text>{"\n"}</Text>
       <View style={styles.separator} />
+      <Text>{"\n\n"}</Text>
       {pages.map((item, index) => (
         <TouchableOpacity
           style={styles.drawerItem}
