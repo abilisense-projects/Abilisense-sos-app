@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import MapboxGeocoding from '@mapbox/mapbox-sdk/services/geocoding';
 import { ACCESS_TOKEN } from '@env';
+import { useSelector } from 'react-redux';
 
 const mapboxClient = MapboxGeocoding({ accessToken: ACCESS_TOKEN });
 
@@ -14,6 +15,7 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
     const [addressInput, setAddressInput] = useState('');
+    const user = useSelector((state) => state.user.user);
 
     const defaultAddress = "defaultAddress";
 

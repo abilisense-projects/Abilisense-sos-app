@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import axios from 'axios';
 import { SERVER_BASE_URL } from '@env';
+import { useSelector } from 'react-redux';
 
 const SendAlert = ({ onStepChange, alert }) => {
     const [alertSent, setAlertSent] = useState();
-
+    const user = useSelector((state) => state.user.user);
     useEffect(() => {
         const addAlert = async () => {
             const url = `${SERVER_BASE_URL}/api/alerts/add-alert/`;
 
             const alertData = {
-                patient: '6578581ffaed8acb3697e399',
+                patient: user._id,
                 distressDescription: alert.problem,
                 status: 'not treated',
                 location: alert.location,
