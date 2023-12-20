@@ -15,9 +15,23 @@ async function getPatientByEmailBL(email) {
     return await getPatientByEmail(email);
 }
 
+// async function getPatientByEmailAndPasswordBL(email, password) {
+//     return await getPatientByEmailAndPassword(email, password);
+// }
+
 async function getPatientByEmailAndPasswordBL(email, password) {
-    return await getPatientByEmailAndPassword(email, password);
+    try {
+        const user = await getPatientByEmailAndPassword(email, password);
+        if(user.success){
+            return { success: true, user: user.patient }; // Return success and user if successful
+        }
+        return {success: false, massege: user.massege}
+    } catch (error) {
+        return { success: false, message: error.message }; // Return failure and error message
+    }
 }
+
+
 
 async function getPatientByIdBL(email) {
     return await getPatientById(email);
