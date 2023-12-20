@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
-// Import דפים ורכיבים
 import SignUpPage from './pages/SignUpPage';
 import HomeScreen from './pages/HomeScreen';
 import HistoryPage from './pages/HistoryPage';
