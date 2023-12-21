@@ -10,18 +10,21 @@ const mapboxClient = MapboxGeocoding({ accessToken: ACCESS_TOKEN });
 
 const FindLocation = ({ onStepChange, addParamsToAlert }) => {
     const [location, setLocation] = useState(null);
-    const [address, setAddress] = useState(null);
-    const [street, setStreet] = useState('');
-    const [city, setCity] = useState('');
-    const [country, setCountry] = useState('');
+    const [address, setAddress] = useState({});
+    const [defaultAddress, setDefaultAddress] = useState({});
     const [addressInput, setAddressInput] = useState('');
     const user = useSelector((state) => state.user.user);
 
-    const defaultAddress = "defaultAddress";
-
     useEffect(() => {
+        findDefaultAddress();
         findUserLocation();
     }, []);
+    const findDefaultAddress = () => {
+        console.log("1");
+        console.log(user.address);
+        setDefaultAddress(user.address);
+        console.log(defaultAddress);
+    }
 
     const findUserLocation = () => {
         Geolocation.getCurrentPosition(
@@ -51,13 +54,16 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
 
             if (response && response.body && response.body.features && response.body.features.length > 0) {
                 const addressData = response.body.features[0];
-                setAddress(addressData.place_name);
+                // setAddress(addressData.place_name);
 
                 const separated = addressData.place_name.split(', ');
                 if (separated.length === 3) {
-                    setStreet(separated[0]);
-                    setCity(separated[1]);
-                    setCountry(separated[2]);
+                    const newAddress = {
+                        street: separated[0],
+                        city: separated[1],
+                        country: separated[2]
+                    };
+                    setAddress(newAddress);
                 }
             } else {
                 console.log('No address information was found for this location.');
@@ -69,9 +75,19 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
 
     const handlePress = (location) => {
         const loc = { location: location }
+        console.log("loc",loc);
         addParamsToAlert(loc);
         onStepChange();
     };
+
+    const handelInsertAdrees = () => {
+        console.log(addressInput);
+        const addressJson = {
+            address: addressInput
+        }
+        console.log(addressJson);
+        handlePress(addressJson);
+    }
 
     return (
         <View style={styles.container}>
@@ -82,15 +98,23 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
                 <View>
                     <TouchableOpacity style={styles.button} onPress={() => handlePress(address)}>
                         <Text style={styles.buttonText}>
-                            {street}{"\n"}
-                            {city}{"\n"}
-                            {country}
+                            {address.street}{"\n"}
+                            {address.city}{"\n"}
+                            {address.country}
                         </Text>
                     </TouchableOpacity>
                 </View>
             )}
             <TouchableOpacity style={styles.button} onPress={() => handlePress(defaultAddress)}>
-                <Text style={styles.buttonText}>{defaultAddress}</Text>
+                {defaultAddress ? <Text style={styles.buttonText}>
+                    {defaultAddress.street}{"\n"}
+                    {defaultAddress.city}{"\n"}
+                    {defaultAddress.country}
+                </Text> :
+                    <Text>
+                        There is no default address
+                    </Text>}
+
             </TouchableOpacity>
             <View style={styles.inputContainer}>
                 <TextInput
@@ -99,7 +123,7 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
                     value={addressInput}
                     onChangeText={handleInputChange}
                 />
-                <TouchableOpacity style={styles.submitButton} onPress={() => handlePress(addressInput)}>
+                <TouchableOpacity style={styles.submitButton} onPress={() => handelInsertAdrees()}>
                     <Text style={styles.submitButtonText}>OK</Text>
                 </TouchableOpacity>
             </View>

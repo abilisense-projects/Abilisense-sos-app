@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
-import LogoutAlert from "../components/logout/LogoutAlert";
 import { useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LogoutModel from "../components/logout/LogoutModel";
 
 const Logout = () => {
     const [modalVisible, setModalVisible] = useState(true);
@@ -28,7 +28,7 @@ const Logout = () => {
 
     return (
         <View>
-            <LogoutAlert
+            <LogoutModel
                 visible={modalVisible}
                 onClose={handleCancel}
                 onLogout={logoutUser}

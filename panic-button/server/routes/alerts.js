@@ -63,14 +63,14 @@ router.post('/add-alert/', async (req, res) => {
     res.send(await addAlertBL({ patient, distressDescription, level, date, location, status }));
 });
 
-router.delete('/delete-by-id/', async (req, res) => {
-    const { _id } = req.body;
-    if (!_id) {
-        return res.status(400).json({ error: '_id parameter is required.' });
-    }
+// router.delete('/delete-by-id/', async (req, res) => {
+//     const { _id } = req.body;
+//     if (!_id) {
+//         return res.status(400).json({ error: '_id parameter is required.' });
+//     }
 
 
-    res.send(await deleteAlertByIdBL(_id));
-});
+//     res.send(await deleteAlertByIdBL(_id));
+// });
 
 module.exports = router;
