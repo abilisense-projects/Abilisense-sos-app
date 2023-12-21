@@ -1,7 +1,7 @@
 import { View, Modal, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 
-const LogoutModel = ({ visible, onClose, onLogout }) => {
+const LogoutAlert = ({ visible, onClose, onLogout }) => {
     return (
         <Modal
             animationType="slide"
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LogoutModel;
+export default LogoutAlert;

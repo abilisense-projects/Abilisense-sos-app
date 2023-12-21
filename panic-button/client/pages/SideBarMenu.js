@@ -10,7 +10,12 @@ const SideBarMenu = ({ navigation }) => {
   const pages = ['Home', 'History', 'Settings', 'LogOut', 'Accessibility'];
   const icons = ['home', 'history', 'settings-sharp', 'logout', 'universal-access'];
   const user = useSelector((state) => state.user.user);
-  console.log(user);
+  const goToFirstScreen = (pageName) => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: pageName }]
+    });
+  };
 
   return (
     <View style={styles.drawerContent}>
@@ -29,7 +34,7 @@ const SideBarMenu = ({ navigation }) => {
         <TouchableOpacity
           style={styles.drawerItem}
           key={index}
-          onPress={() => { setPage(item); navigation.navigate(item) }}
+          onPress={() => { setPage(item); goToFirstScreen(item) }}
         >
           <View style={styles.iconTextContainer}>
             {(icons[index] == "settings-sharp") ?

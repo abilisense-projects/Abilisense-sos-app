@@ -3,16 +3,18 @@ import axios from 'axios';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Table, Row, TableWrapper, Cell } from 'react-native-table-component';
 import { SERVER_BASE_URL } from '@env';
+import { useSelector } from 'react-redux';
 
 const ShowHistory = () => {
     const [data, setData] = useState([]);
     const [popupVisible, setPopupVisible] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
-
+    const user = useSelector((state) => state.user.user);
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const patientId = '6578581ffaed8acb3697e399';
+                const patientId = user._id;
                 const response = await axios.post(`${SERVER_BASE_URL}/api/alerts/get-by-patient-id/`, {
                     patientId: patientId,
                 });
@@ -33,6 +35,17 @@ const ShowHistory = () => {
     const closePopup = () => {
         setPopupVisible(false);
         setSelectedRowData(null);
+    };
+
+    const renderKeyValuePairs = (data) => {
+        const keysWithValues = Object.entries(data).filter(([key, value]) => value !== null && value !== undefined && key != "_id");
+        console.log("keysWithValues", keysWithValues);
+        return keysWithValues.map(([key, value]) => (
+            <View key={key} style={styles.keyValueContainer}>
+                <Text style={styles.boldText}>{key}: </Text>
+                <Text>{value}</Text>
+            </View>
+        ));
     };
 
     return (
@@ -102,10 +115,13 @@ const ShowHistory = () => {
                                             <Text style={styles.boldText}>Date:</Text>
                                             <Text> {selectedRowData.date}</Text>
                                         </Text>
-                                        <Text>
-                                            <Text style={styles.boldText}>Location:</Text>
-                                            <Text> {selectedRowData.location}</Text>
-                                        </Text>
+                                        {/* <Text> */}
+                                        <Text style={styles.boldText}>Location:</Text>
+                                        {console.log(selectedRowData.location)}
+                                        {console.log(selectedRowData)}
+                                        {renderKeyValuePairs(selectedRowData.location)}
+                                        {/* <Text> {selectedRowData.location}</Text> */}
+                                        {/* </Text> */}
                                         <Text>
                                             <Text style={styles.boldText}>Distress description:</Text>
                                             <Text> {selectedRowData.distressDescription}</Text>
@@ -172,7 +188,12 @@ const styles = StyleSheet.create({
     },
     boldText: {
         fontWeight: 'bold',
-    }
+    },
+    keyValueContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 5,
+    },
 });
 
 export default ShowHistory;
