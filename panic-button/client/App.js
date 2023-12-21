@@ -1,17 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import SignUpPage from './pages/SignUpPage';
 import React from 'react';
-// import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet} from 'react-native';
 import { createStackNavigator } from "@react-navigation/stack";
+import store from "./redux/store";
 import { Provider } from "react-redux";
-import store from "./reducers/store";
-// import PasswordValidation from "./components/password_validation";
-// import EmailVerification from './components/forget_password/email_verification';
-// import ResetPassword from './components/forget_password/reset_password';
-// import ForgetPassword from './components/forget_password/forget_password'
-
 
 const Stack = createStackNavigator();
 

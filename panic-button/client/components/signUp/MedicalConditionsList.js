@@ -1,28 +1,58 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, TouchableOpacity, FlatList, Text, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { addMedicalConditions } from '../../redux/actions/registerActions';
+import medicalConditionsData from '../../medicinenetDiseases'; // Adjust the path accordingly
 
-const MedicalConditionsList = ({ onStepChange, addConditionButton }) => {
-  const medicalConditions = [
-    'Gallstones', 'Myocarditis', 'Infertility in Men', 'Infertility in Women', 'Chronic Instability of the Ankle',
-    'Alzheimer\'s Disease', 'Endometriosis', 'Insulin', 'Asthma of the Skin in Children', 'Hammer Finger',
-  ];
+const MedicalConditionsList = ({ onStepChange }) => {
+  const [inputValue, setInputValue] = useState('');
+  const [filteredConditions, setFilteredConditions] = useState([]);
+  const dispatch = useDispatch();
+  const medicalConditions = useSelector((state) => state.medicalConditions);
+
+  const handleInputChange = (text) => {
+    setInputValue(text);
+
+    // Filter the list of medical conditions according to the entered input
+    const filteredData = text.trim() !== ''
+      ? medicalConditionsData
+        .filter(conditionObj => conditionObj.disease.toLowerCase().startsWith(text.toLowerCase()))
+        .map(conditionObj => conditionObj.disease)
+      : [];
+
+    setFilteredConditions(filteredData);
+  };
 
   const handleSelectCondition = (condition) => {
-    addConditionButton(condition);
+    if (!medicalConditions.includes(condition)) {
+      dispatch(addMedicalConditions(condition));
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text>List of Medical Conditions:</Text>
-      {medicalConditions.map((condition, index) => (
-        <TouchableOpacity
-          key={index}
-          onPress={() => handleSelectCondition(condition)}
-          style={styles.conditionButton}
-        >
-          <Text>{condition}</Text>
-        </TouchableOpacity>
-      ))}
+      <TextInput
+        placeholder="Enter medical condition"
+        value={inputValue}
+        onChangeText={handleInputChange}
+        style={styles.input}
+      />
+
+      {filteredConditions.length > 0 && (
+        <FlatList
+          data={filteredConditions}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => handleSelectCondition(item)}
+              style={styles.conditionButton}
+            >
+              <Text>{item}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item}
+        />
+      )}
+
       <View style={styles.closeButtonContainer}>
         <TouchableOpacity style={styles.closeButton} onPress={() => onStepChange(3)}>
           <Text style={styles.closeButtonText}>Close</Text>
@@ -36,6 +66,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginBottom: 10,
+    padding: 10,
   },
   conditionButton: {
     backgroundColor: '#e0e0e0',
@@ -64,21 +102,27 @@ const styles = StyleSheet.create({
 
 export default MedicalConditionsList;
 
-//ישן טוב
 
 
 
-// import React from 'react';
+// import React, { useEffect, useState } from 'react';
 // import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+// import { useDispatch } from 'react-redux';
+// import { addMedicalConditions } from '../../redux/actions/registerActions';
+// import medicalConditionsData from '../../medicinenetDiseases';
 
 // const MedicalConditionsList = ({ onStepChange }) => {
-//   const medicalConditions = [
-//     'Gallstones', 'Myocarditis', 'Infertility in Men', 'Infertility in Women', 'Chronic Instability of the Ankle',
-//     'Alzheimer\'s Disease', 'Endometriosis', 'Insulin', 'Asthma of the Skin in Children', 'Hammer Finger',
-//   ];
+//   const [medicalConditions, setMedicalConditions] = useState([]);
+//   const dispach = useDispatch()
+
+//   useEffect(() => {
+//     // Extracting values from the "disease" key in the JSON data
+//     const conditions = medicalConditionsData.map((conditionObj) => conditionObj.disease);
+//     setMedicalConditions(conditions);
+//   }, []);
 
 //   const handleSelectCondition = (condition) => {
-//     addConditionButton(condition);
+//    dispach(addMedicalConditions(condition))
 //   };
 
 //   return (

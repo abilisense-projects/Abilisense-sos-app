@@ -4,22 +4,29 @@ import {
 } from 'react-native';
 import { signUpValidationSchema } from '../../config/validations';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAddressData } from '../../redux/actions/registerActions';
 
 const SignUp2 = ({ onStepChange }) => {
+
+  const addressData = useSelector((state) => state.addressData);
+
   const [formData, setFormData] = useState({
-    phoneNumber: '',
-    country: '',
-    city: '',
-    street: '',
-    buildingNumber: '',
-    entrance: '',
-    floor: '',
-    apartmentNumber: '',
-    additionalNotes: '',
-    dateOfBirth: '',
+    phoneNumber: addressData.phoneNumber,
+    dateOfBirth: addressData.dateOfBirth,
+    country: addressData.country,
+    city: addressData.city,
+    street: addressData.street,
+    buildingNumber: addressData.buildingNumber,
+    entrance: addressData.entrance,
+    floor: addressData.floor,
+    apartmentNumber: addressData.apartmentNumber,
+    additionalNotes: addressData.additionalNotes,
   });
 
   const [errors, setErrors] = useState({});
+
+  const dispatch = useDispatch();
 
   const handleInputChange = (key, text) => {
     setFormData({ ...formData, [key]: text });
@@ -60,6 +67,8 @@ const SignUp2 = ({ onStepChange }) => {
     if (Object.keys(formErrors).length === 0) {
       // No errors, proceed to the next step
       setErrors({});
+      //send data to store
+      dispatch(setAddressData(formData));
       onStepChange(newStep);
     } else {
       // Validation failed, set the errors
