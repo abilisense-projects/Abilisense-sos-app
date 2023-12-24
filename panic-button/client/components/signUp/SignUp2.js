@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import {
   View,Text,TextInput,Pressable,ScrollView,KeyboardAvoidingView,Platform,StyleSheet,
 } from 'react-native';
-import { signUpValidationSchema } from '../../config/validations';
+import { signUpValidationSchema } from '../../config/ValidationSchemas';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddressData } from '../../redux/actions/registerActions';
 
 const SignUp2 = ({ onStepChange }) => {
 
-  const addressData = useSelector((state) => state.addressData);
+  const addressData = useSelector((state) => state.register.addressData);
 
   const [formData, setFormData] = useState({
     phoneNumber: addressData.phoneNumber,

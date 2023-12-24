@@ -8,7 +8,7 @@ const MedicalConditionsList = ({ onStepChange }) => {
   const [inputValue, setInputValue] = useState('');
   const [filteredConditions, setFilteredConditions] = useState([]);
   const dispatch = useDispatch();
-  const medicalConditions = useSelector((state) => state.medicalConditions);
+  const medicalConditions = useSelector((state) => state.register.medicalConditions);
 
   const handleInputChange = (text) => {
     setInputValue(text);
@@ -101,79 +101,3 @@ const styles = StyleSheet.create({
 });
 
 export default MedicalConditionsList;
-
-
-
-
-// import React, { useEffect, useState } from 'react';
-// import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-// import { useDispatch } from 'react-redux';
-// import { addMedicalConditions } from '../../redux/actions/registerActions';
-// import medicalConditionsData from '../../medicinenetDiseases';
-
-// const MedicalConditionsList = ({ onStepChange }) => {
-//   const [medicalConditions, setMedicalConditions] = useState([]);
-//   const dispach = useDispatch()
-
-//   useEffect(() => {
-//     // Extracting values from the "disease" key in the JSON data
-//     const conditions = medicalConditionsData.map((conditionObj) => conditionObj.disease);
-//     setMedicalConditions(conditions);
-//   }, []);
-
-//   const handleSelectCondition = (condition) => {
-//    dispach(addMedicalConditions(condition))
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text>List of Medical Conditions:</Text>
-//       {medicalConditions.map((condition, index) => (
-//         <TouchableOpacity
-//           key={index}
-//           onPress={() => handleSelectCondition(condition)}
-//           style={styles.conditionButton}
-//         >
-//           <Text>{condition}</Text>
-//         </TouchableOpacity>
-//       ))}
-//       <View style={styles.closeButtonContainer}>
-//         <TouchableOpacity style={styles.closeButton} onPress={() => onStepChange(3)}>
-//           <Text style={styles.closeButtonText}>Close</Text>
-//         </TouchableOpacity>
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 20,
-//   },
-//   conditionButton: {
-//     backgroundColor: '#e0e0e0',
-//     borderRadius: 10,
-//     padding: 10,
-//     marginVertical: 5,
-//     alignItems: 'center',
-//   },
-//   closeButtonContainer: {
-//     position: 'absolute',
-//     bottom: 20,
-//     width: '100%',
-//     alignItems: 'center',
-//   },
-//   closeButton: {
-//     backgroundColor: 'red',
-//     padding: 15,
-//     borderRadius: 10,
-//   },
-//   closeButtonText: {
-//     color: 'white',
-//     fontSize: 16,
-//     fontWeight: 'bold',
-//   },
-// });
-
-// export default MedicalConditionsList;

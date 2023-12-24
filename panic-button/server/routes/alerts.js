@@ -47,8 +47,18 @@ router.post('/get-by-id/', async (req, res) => {
 
 
 router.post('/add-alert/', async (req, res) => {
-    const { patient, distressDescription, level, date, location, status } = req.body;
-    //validation
+    const { patient, distressDescription, level, location, status } = req.body;
+    const moment = require('moment-timezone');
+
+    const localTimeZone = moment.tz.guess();
+    const currentTime = moment().tz(localTimeZone);
+
+    const date = new Date();
+    const utcHours = currentTime.hours();
+    const utcMinutes = currentTime.minutes();
+    const utcSeconds = currentTime.seconds();
+
+    date.setUTCHours(utcHours, utcMinutes, utcSeconds);
 
     res.send(await addAlertBL({ patient, distressDescription, level, date, location, status }));
 });

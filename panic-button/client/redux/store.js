@@ -1,7 +1,16 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import registerReducers from './reducers/registerReducers';
-//change to toolkit
+import rootReducer from './reducers/reducers';
+// change to toolkit
 
-const store = createStore(registerReducers);
+// Assuming you have multiple reducers, use combineReducers
+const combinedReducers = combineReducers({
+  root: rootReducer,
+  register: registerReducers,
+  // Add other reducers as needed
+});
+
+const store = createStore(combinedReducers);
 
 export default store;
+

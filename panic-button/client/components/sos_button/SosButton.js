@@ -1,8 +1,7 @@
-// import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View, TouchableOpacity, Animated, Easing, Text } from 'react-native';
 
-const SosButton = ({ navigation }) => {
+const SosButton = ({ onStepChange }) => {
     const animatedValues = useRef([
         new Animated.Value(0),
         new Animated.Value(0),
@@ -41,29 +40,11 @@ const SosButton = ({ navigation }) => {
 
         const animatedStyle = {
             transform: [
-                {
-                    translateX: value.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0, 0],
-                    }),
-                },
-                {
-                    translateY: value.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0, 0],
-                    }),
-                },
-                {
-                    scale: value.interpolate({
-                        inputRange: [0, 0.3, 0.5],
-                        outputRange: [1, 1.1, 1.3],
-                    }),
-                },
+                { translateX: value.interpolate({ inputRange: [0, 1], outputRange: [0, 0] }) },
+                { translateY: value.interpolate({ inputRange: [0, 1], outputRange: [0, 0] }) },
+                { scale: value.interpolate({ inputRange: [0, 0.3, 0.5], outputRange: [1, 1.1, 1.3] }) },
             ],
-            opacity: value.interpolate({
-                inputRange: [0, 0.7, 1], 
-                outputRange: [1, 0.3, 0], 
-            }),
+            opacity: value.interpolate({ inputRange: [0, 0.7, 1], outputRange: [1, 0.3, 0] }),
         };
 
         return (
@@ -72,24 +53,19 @@ const SosButton = ({ navigation }) => {
     });
 
     const onPress = () => {
-        console.log('SosButton');
-        navigation.navigate('Status');
-    }
+        onStepChange();
+    };
+
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.button} onPress={onPress}>
                 <Text style={styles.buttonText}>S.O.S</Text>
                 {animatedCircles}
             </TouchableOpacity>
-            {/* <Button
-                onPress={onPress}
-                title="S.O.S"
-                color="#841584"
-                accessibilityLabel="Learn more about this purple button"
-            /> */}
         </View>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

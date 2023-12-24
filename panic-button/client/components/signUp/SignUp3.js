@@ -3,13 +3,17 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMedicalConditions, removeMedicalCondition } from '../../redux/actions/registerActions';
+import { useNavigate } from 'react-router-dom';
+import { useNavigation } from '@react-navigation/native';
 
 const MedicalConditionsComponent = ({ onStepChange }) => {
   const [newCondition, setNewCondition] = useState('');
 
-  const user = useSelector((state) => state.userData);
-  const address =  useSelector((state) => state.addressData);
-  const medicalConditions = useSelector((state) => state.medicalConditions);
+  const user = useSelector((state) => state.register.userData);
+  const address =  useSelector((state) => state.register.addressData);
+  const medicalConditions = useSelector((state) => state.register.medicalConditions);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const data =  ({
     fname:user.firstname,
@@ -24,8 +28,6 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
     medicalConditions:medicalConditions,
   })
 
-  const dispatch = useDispatch();
-
   const handleSelectConditions = (condition) => {
     // Check if the condition is not already in the list
     if (!medicalConditions.includes(condition)) {
@@ -34,14 +36,9 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
     setNewCondition('');
   };
 
-  // const handleSelectConditions = (condition) => {
-  //   dispatch(addMedicalConditions(condition))
-  //   setNewCondition('');
-  // };
-
   const GoToLoginPage = () => {
     if(insertClientDataIntoDB(data)){
-      // <login></login>
+      navigation.navigate("Login");
       console.log("Moved to login!!!")
     }
     else{

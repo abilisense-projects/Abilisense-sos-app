@@ -1,29 +1,45 @@
-import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import SosButton from '../components/sos_button/SosButton';
 import Status from '../components/sos_button/Status';
 import ProblemType from '../components/sos_button/ProblemType';
-import { createStackNavigator } from '@react-navigation/stack';
-import { View } from 'react-native';
 import SendAlert from '../components/sos_button/SendAlert';
 import FindLocation from '../components/sos_button/FindLocation';
 
-const Stack = createStackNavigator();
-
 const HomeScreem = () => {
-    console.log("home")
+    const [step, setStep] = useState(1);
+    const [alert, setAlert] = useState();
+
+    const handleStepChange = () => {
+        if (step == 5) {
+            setStep(1);
+        }
+        else {
+            setStep(step + 1);
+        }
+
+    };
+
+    const addParamsToAlert = (jsonParams) => {
+        setAlert({ ...alert, ...jsonParams })
+    };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setStep(1);
+        }, [])
+    );
+
     return (
-        // <View>
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='SosButton'>
-                <Stack.Screen name="SosButton" component={SosButton} />
-                <Stack.Screen name="Status" component={Status} />
-                <Stack.Screen name="ProblemType" component={ProblemType} />
-                <Stack.Screen name="FindLocation" component={FindLocation} />
-                <Stack.Screen name="SendAlert" component={SendAlert} />
-            </Stack.Navigator>
-        </NavigationContainer>
-        // </View>
+        <>
+            {step === 1 && <SosButton onStepChange={handleStepChange} />}
+            {step === 2 && <Status onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />}
+            {step === 3 && <ProblemType onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />}
+            {step === 4 && <FindLocation onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />}
+            {step === 5 && <SendAlert alert={alert} onStepChange={handleStepChange} />}
+        </>
     );
 };
+
 export default HomeScreem;

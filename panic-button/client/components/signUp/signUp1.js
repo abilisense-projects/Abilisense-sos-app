@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
-import { signUpValidationSchema } from '../../config/validations';
+import { signUpValidationSchema } from '../../config/ValidationSchemas';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import { setUserData } from '../../redux/actions/registerActions';
 
 const SignUpScreen = ({ onStepChange }) => {
 
-  const user = useSelector((state) => state.userData);
+  const user = useSelector((state) => state.register.userData);
   const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
@@ -73,7 +73,6 @@ const SignUpScreen = ({ onStepChange }) => {
     }
   }
 
-
   const checkIfEmailExistsFunction = async (newStep) => {
     // // Check if the email is valid
     // try {
@@ -99,23 +98,6 @@ const SignUpScreen = ({ onStepChange }) => {
       // You can also display a message to the user if needed
     }
   };
-  
-
-
-//   const checkIfEmailExistsFunction = async (newStep) =>{
-//  //בדיקה האם האיימיל קיים בדאטא בייס אחרת זורק אימייל לא תקין/קיים
-//     const result = await checkIfEmailExists(formData.email);
-//     if (!result){
-//      console.log("exelent There is no such email")
-//      //send data to store
-//      dispatch(setUserData(formData));
-//      onStepChange(newStep);
-//     }
-//     else{console.log("Invalid email")
-//    //לכתוב למשתמש שהאימייל אינו תקין - 'Invalid email address'
-//    }
-//   }
-
 
   const checkIfEmailExists = async (email) => {
     try {
