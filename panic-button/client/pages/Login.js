@@ -3,12 +3,13 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'rea
 // import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { loginValidationSchema } from '../config/ValidationSchemas';
+import { loginValidationSchema } from '../config/loginValidationSchema'; 
 import { Yup } from '../config/ValidationSchemas';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../redux/actions/actions';
 import { useSelector } from 'react-redux';
 import { BY_EMAIL_AND_PASSWORD, SERVER_BASE_URL } from '@env';
+
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -25,7 +26,7 @@ const Login = ({ navigation }) => {
   //         const emailUser = await AsyncStorage.getItem('email');
   //         const passwordUser = await AsyncStorage.getItem('password');
   //         if (emailUser !== null && passwordUser !== null) {
-  //           navigation.navigate('HomeScreem');
+  //           navigation.navigate('HomeScreen');
   //         } else {
   //           console.log('No user is logged in');
   //         }
@@ -44,18 +45,12 @@ const Login = ({ navigation }) => {
       await loginValidationSchema.validate({ email, password }, { abortEarly: false });
 
       const response = await checkEmailAndpassword(email, password)
-      // console.log(response.user)
-      // console.log('after checkEmailAndpassword')
       if (response.success === true) {
-        // console.log('in the if...')
         dispatch(loginSuccess(response.user));
-        // console.log('after dispach')
         await AsyncStorage.setItem('email', response.user.email);
         await AsyncStorage.setItem('password', response.user.password);
-        // console.log('after AsyncStorage')
-        navigation.navigate('HomeScreem');
+        navigation.navigate('HomeScreen');
       } else {
-        // console.error('Invalid credentials');
         setErrorMessage('user name or password invalid');
       }
 
@@ -73,21 +68,14 @@ const Login = ({ navigation }) => {
 
   const checkEmailAndpassword = async (email, password) => {
     // try {
-      const url = SERVER_BASE_URL + BY_EMAIL_AND_PASSWORD;
-      return await axios.post(url, { email, password })
+    const url = SERVER_BASE_URL + BY_EMAIL_AND_PASSWORD;
+    return await axios.post(url, { email, password })
       .then(response => {
         console.log('Data in checkEmailAndpassword:', response.data);
         return response.data
       })
-      // .catch(error => {
-      //   // console.error('Error:', error);
-      //   // console.log('error')
-      // });
-    }
-    // catch (error) {
-    //   console.error('Error fetching data:', error);
-    // }
-  
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.registerContainer}>
@@ -130,7 +118,8 @@ const Login = ({ navigation }) => {
       {errorMessage ? <Text style={{ color: 'red' }}>{errorMessage}</Text> : null}
       <Button title="Login" onPress={handleLogin} />
     </View>
-  );}
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

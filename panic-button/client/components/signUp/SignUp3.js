@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMedicalConditions, removeMedicalCondition } from '../../redux/actions/registerActions';
-import { useNavigate } from 'react-router-dom';
 import { useNavigation } from '@react-navigation/native';
 
 const MedicalConditionsComponent = ({ onStepChange }) => {

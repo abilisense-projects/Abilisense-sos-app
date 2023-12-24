@@ -7,7 +7,7 @@ import ProblemType from '../components/sos_button/ProblemType';
 import SendAlert from '../components/sos_button/SendAlert';
 import FindLocation from '../components/sos_button/FindLocation';
 
-const HomeScreem = () => {
+const HomeScreen = () => {
     const [step, setStep] = useState(1);
     const [alert, setAlert] = useState();
 
@@ -42,4 +42,4 @@ const HomeScreem = () => {
     );
 };
 
-export default HomeScreem;
+export default HomeScreen;
