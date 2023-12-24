@@ -6,7 +6,7 @@ import axios from 'axios';
 import { loginValidationSchema } from '../config/ValidationSchemas';
 import { Yup } from '../config/ValidationSchemas';
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../redux/actions';
+import { loginSuccess } from '../redux/actions/actions';
 import { useSelector } from 'react-redux';
 import { BY_EMAIL_AND_PASSWORD, SERVER_BASE_URL } from '@env';
 

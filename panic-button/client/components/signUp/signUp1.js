@@ -2,16 +2,21 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 import { signUpValidationSchema } from '../../config/ValidationSchemas';
 import { MaterialIcons } from '@expo/vector-icons';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserData } from '../../redux/actions/registerActions';
 
 const SignUpScreen = ({ onStepChange }) => {
-  const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-  });
 
+  const user = useSelector((state) => state.register.userData);
   const [errors, setErrors] = useState({});
+
+  const [formData, setFormData] = useState({
+    firstname: user.firstname,
+    lastname: user.lastname,
+    email: user.email,
+    password: user.password,
+  });
 
   const fieldDisplayNames = {
     firstname: 'First name',
@@ -19,6 +24,8 @@ const SignUpScreen = ({ onStepChange }) => {
     email: 'Email',
     password: 'Password',
   };
+  
+  const dispatch = useDispatch();
 
   const handleInputChange = (key, text) => {
     setFormData({ ...formData, [key]: text });
@@ -46,7 +53,7 @@ const SignUpScreen = ({ onStepChange }) => {
     );
   };
 
-  const handleSignUp = (newStep) => {
+  const handleSignUp = async (newStep) => {
     const formErrors = {};
     Object.keys(formData).forEach((key) => {
       try {
@@ -59,11 +66,54 @@ const SignUpScreen = ({ onStepChange }) => {
     if (Object.keys(formErrors).length === 0) {
       // No errors, proceed to the next step
       setErrors({});
-      onStepChange(newStep);
+      checkIfEmailExistsFunction(newStep);
     } else {
       // Validation failed, set the errors
       setErrors(formErrors);
     }
+  }
+
+  const checkIfEmailExistsFunction = async (newStep) => {
+    // // Check if the email is valid
+    // try {
+    //   signUpValidationSchema.validateSyncAt('email', formData);
+    // } catch (validationError) {
+    //   // If invalid, set the error for the 'email' key
+    //   const formErrors = { ...errors, email: validationError.message };
+    //   setErrors(formErrors);
+    //   return; // Exit the function, as the email is invalid
+    // }
+  
+    // Valid email, proceed with checking existence
+    const result = await checkIfEmailExists(formData.email);
+    if (!result) {
+      console.log("Excellent! There is no such email");
+      // send data to store
+      dispatch(setUserData(formData));
+      onStepChange(newStep);
+    } else {
+      console.log("Invalid email");
+      // Set the error for the 'email' key
+      setErrors({ ...errors, email: 'Invalid email address' });
+      // You can also display a message to the user if needed
+    }
+  };
+
+  const checkIfEmailExists = async (email) => {
+    try {
+        return await axios.post(`http://localhost:3000/api/patients//get-by-email/`, { email })
+            .then(response => {
+                console.log('The form data:', response.data);
+                return response.data
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    catch (error) {
+        console.error('Error fetching data:', error);
+    }
+
   };
 
   return (

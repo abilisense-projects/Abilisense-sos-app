@@ -1,33 +1,41 @@
-import { NavigationContainer } from "@react-navigation/native";
-import SignUpPage from './pages/SignUpPage';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from "@react-navigation/stack";
-import Login from "./pages/Login";
-// import ForgetPassword
-import check from "./pages/check";
-import { Provider } from "react-redux";
 import store from "./redux/store";
-import HomeScreem from "./pages/HomeScreen";
-import ForgetPassword from "./pages/forget_password";
+import { Provider } from "react-redux";
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import SignUpPage from './pages/SignUpPage';
+import HomeScreen from './pages/HomeScreen';
+import HistoryPage from './pages/HistoryPage';
+import SettingsPage from './pages/SettingsPage';
+import AccessibilityPage from './pages/AccessibilityPage';
+import SideBarMenu from './pages/SideBarMenu';
+import LogOut from './pages/Logout';
+import Login from './pages/Login';
 
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
-export default function App() {
+const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="SignUpPage" component={SignUpPage} />
-          <Stack.Screen name="check" component={check} />
-          <Stack.Screen name="HomeScreem" component={HomeScreem} />
-          <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}>
+        <Drawer.Screen name="SignUpPage" component={SignUpPage} options={{
+          headerShown: false
+        }} />
+        <Drawer.Screen name="Login" component={Login} options={{
+          headerShown: false
+        }} />
+        <Drawer.Screen name="Home" component={HomeScreen} options={{ title: "" }} />
+        <Drawer.Screen name="History" component={HistoryPage} options={{ title: "" }} />
+        <Drawer.Screen name="Settings" component={SettingsPage} options={{ title: "" }} />
+        <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "" }} />
+        <Drawer.Screen name="Accessibility" component={AccessibilityPage} options={{ title: "" }} />
+      </Drawer.Navigator>
+    </NavigationContainer>
     </Provider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -37,3 +45,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App;

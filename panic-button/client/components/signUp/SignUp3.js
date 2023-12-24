@@ -1,16 +1,74 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { addMedicalConditions, removeMedicalCondition } from '../../redux/actions/registerActions';
+import { useNavigate } from 'react-router-dom';
+import { useNavigation } from '@react-navigation/native';
 
-const MedicalConditionsComponent = ({ onStepChange, selectedConditions, addCondition, removeCondition }) => {
+const MedicalConditionsComponent = ({ onStepChange }) => {
   const [newCondition, setNewCondition] = useState('');
 
+  const user = useSelector((state) => state.register.userData);
+  const address =  useSelector((state) => state.register.addressData);
+  const medicalConditions = useSelector((state) => state.register.medicalConditions);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const data =  ({
+    fname:user.firstname,
+    lname:user.lastname,
+    email:user.email,
+    password:user.password,
+    phone:address.phoneNumber,
+    address:
+    {country:address.country, city:address.city, street: address.street, buildingNumber: address.buildingNumber,
+    floor:address.floor, apartmentNumber:address.apartmentNumber, comments: address.additionalNotes},
+    dateOfBirth:address.dateOfBirth, 
+    medicalConditions:medicalConditions,
+  })
+
   const handleSelectConditions = (condition) => {
-    addCondition(condition);
+    // Check if the condition is not already in the list
+    if (!medicalConditions.includes(condition)) {
+      dispatch(addMedicalConditions(condition));
+    }
     setNewCondition('');
   };
 
+  const GoToLoginPage = () => {
+    if(insertClientDataIntoDB(data)){
+      navigation.navigate("Login");
+      console.log("Moved to login!!!")
+    }
+    else{
+      console.log("Didn't moved to login!!!")
+    }
+  }
+
+  const insertClientDataIntoDB = async (ClientData) =>{
+      try {
+          console.log(ClientData);
+          return await axios.post(`http://localhost:3000/api/patients//add-patient/`, ClientData)
+              .then(response => {
+                  console.log(response.data);
+                  return response.data
+              })
+              .catch(error => {
+                  console.error(error);
+              });
+      }
+      catch (error) {
+          console.error('Error fetching data:', error);
+      }
+  };
+
+  const removeCondition = (conditionToRemove) => {
+    dispatch(removeMedicalCondition(conditionToRemove));
+  };
+
   const renderConditions = () => {
-    return selectedConditions.map((condition, index) => (
+    return medicalConditions.map((condition, index) => (
       <TouchableOpacity
         key={index}
         onPress={() => removeCondition(condition)}
@@ -37,12 +95,12 @@ const MedicalConditionsComponent = ({ onStepChange, selectedConditions, addCondi
           value={newCondition}
           onChangeText={(text) => setNewCondition(text)}
         />
-        <TouchableOpacity onPress={() => addCondition(newCondition)}>
+        <TouchableOpacity onPress={() => handleSelectConditions(newCondition)}>
           <Text style={styles.addButton}>Add</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.registerButton}>
+      <TouchableOpacity style={styles.registerButton} onPress={() =>GoToLoginPage()}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
 
