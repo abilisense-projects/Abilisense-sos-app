@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, TextInput, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
 
 const ProblemType = ({ onStepChange, addParamsToAlert }) => {
-    const [anotherProblem, setAnotherProblem] = useState('');
-
-    const changeText = (text) => {
-        setAnotherProblem(text);
-
-    }
     const handlePress = (problem) => {
         const prob = { problem: problem }
         addParamsToAlert(prob)
@@ -19,6 +12,7 @@ const ProblemType = ({ onStepChange, addParamsToAlert }) => {
 
     return (
         <View style={styles.container}>
+            
             <Text>Choose your problem: </Text>
             {problems.map((item, index) => (
                 <TouchableOpacity style={styles.button} key={index} onPress={() => handlePress(item)}>

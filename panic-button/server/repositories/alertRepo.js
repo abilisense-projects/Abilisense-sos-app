@@ -60,7 +60,15 @@ async function deleteAlertById(_id) {
     }
 }
 
-
+// async function deleteAlertsByStatus(statusToDelete) {
+//     try {
+//         const deletedAlerts = await Alert.deleteOne({ status: statusToDelete });
+//         return deletedAlerts;
+//     } catch (error) {
+//         console.error(`Error deleting alerts by status ${statusToDelete}:`, error);
+//         throw error;
+//     }
+// }
 
 module.exports = {
     getAlertById,
@@ -68,5 +76,6 @@ module.exports = {
     getAlertsByPatientId,
     getAlertsByPatientEmail,
     addAlert,
-    deleteAlertById
+    deleteAlertById,
+    // deleteAlertsByStatus
 }

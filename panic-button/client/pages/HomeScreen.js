@@ -6,13 +6,26 @@ import Status from '../components/sos_button/Status';
 import ProblemType from '../components/sos_button/ProblemType';
 import SendAlert from '../components/sos_button/SendAlert';
 import FindLocation from '../components/sos_button/FindLocation';
+import CancelButton from '../components/sos_button/CancelButton';
+import AlertSendingConfirmationModel from '../components/sos_button/AlertSendingConfirmationModel';
 
-const HomeScreem = () => {
+const HomeScreem = ({navigation}) => {
     const [step, setStep] = useState(1);
     const [alert, setAlert] = useState();
+    const [modalVisible, setModalVisible] = useState(true);
+
+    const handleCancel = () => {
+        setModalVisible(false);
+        setStep(1);
+
+    };
+
+    const onSendAlert = () => {
+        handleStepChange()
+    }
 
     const handleStepChange = () => {
-        if (step == 5) {
+        if (step == 6) {
             setStep(1);
         }
         else {
@@ -33,11 +46,48 @@ const HomeScreem = () => {
 
     return (
         <>
-            {step === 1 && <SosButton onStepChange={handleStepChange} />}
-            {step === 2 && <Status onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />}
-            {step === 3 && <ProblemType onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />}
-            {step === 4 && <FindLocation onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />}
-            {step === 5 && <SendAlert alert={alert} onStepChange={handleStepChange} />}
+            {
+                step === 1 &&
+                <SosButton onStepChange={handleStepChange} />
+            }
+            {
+                step === 2 &&
+                <>
+                    <CancelButton navigation={navigation}/>
+                    <Status onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />
+                </>
+            }
+            {
+                step === 3 &&
+                <>
+                    <CancelButton navigation={navigation}/>
+                    <ProblemType onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />
+                </>
+            }
+            {
+                step === 4 &&
+                <>
+                    <CancelButton navigation={navigation}/>
+                    <FindLocation onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />
+                </>
+            }
+            {
+                step === 5 &&
+                <>
+                    <CancelButton navigation={navigation}/>
+                    <AlertSendingConfirmationModel
+                        visible={modalVisible}
+                        onClose={handleCancel}
+                        onSendAlert={onSendAlert} />
+                </>
+            }
+            {
+                step === 6 &&
+                <>
+                    {/* <CancelButton navigation={navigation}/> */}
+                    <SendAlert alert={alert} onStepChange={handleStepChange} />
+                </>
+            }
         </>
     );
 };

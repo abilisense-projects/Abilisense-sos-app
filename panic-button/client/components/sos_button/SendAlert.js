@@ -23,9 +23,9 @@ const SendAlert = ({ onStepChange, alert }) => {
                 const response = await axios.post(url, alertData);
                 console.log('Response from server: ', response.data);
                 setAlertSent(true);
-                setTimeout(() => {
-                    onStepChange();
-                }, 5000);
+                // setTimeout(() => {
+                //     onStepChange();
+                // }, 5000);
 
             } catch (error) {
                 console.error('Error sending data to server:', error);

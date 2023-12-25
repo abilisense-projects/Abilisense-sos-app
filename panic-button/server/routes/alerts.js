@@ -5,7 +5,8 @@ const {
     getAlertsByPatientEmailBL,
     getAlertByIdBL,
     addAlertBL,
-    deleteAlertByIdBL
+    deleteAlertByIdBL,
+    deleteAlertsByStatusBL
 } = require('../controllers/alertController')
 const router = express.Router();
 
@@ -71,6 +72,14 @@ router.post('/add-alert/', async (req, res) => {
 
 
 //     res.send(await deleteAlertByIdBL(_id));
+// });
+
+// router.delete('/delete-by-status/', async (req, res) => {
+//     const { statusToDelete } = req.body;
+//     if (!statusToDelete) {
+//         return res.status(400).json({ error: '_id parameter is required.' });
+//     }
+//     res.send(await deleteAlertsByStatusBL(statusToDelete));
 // });
 
 module.exports = router;
