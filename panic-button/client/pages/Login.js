@@ -24,7 +24,9 @@ const Login = ({ navigation }) => {
           const emailUser = await AsyncStorage.getItem('email');
           const passwordUser = await AsyncStorage.getItem('password');
           if (emailUser !== null && passwordUser !== null) {
-            navigation.navigate('HomeScreen');
+            navigation.navigate('Home');
+          } else {
+            console.log('No user is logged in');
           }
         } catch (e) {
           console.error('Error fetching user data:', e);
@@ -45,19 +47,19 @@ const Login = ({ navigation }) => {
         dispatch(loginSuccess(response.user));
         await AsyncStorage.setItem('email', response.user.email);
         await AsyncStorage.setItem('password', response.user.password);
-        navigation.navigate('HomeScreen');
+        navigation.navigate('Home');
       } else {
         setErrorMessage('user name or password invalid');
       }
 
     } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        const yupErrors = {};
-        error.inner.forEach((e) => {
-          yupErrors[e.path] = e.message;
-        });
-        setErrors(yupErrors);
-      }
+      // if (error instanceof Yup.ValidationError) {
+      //   const yupErrors = {};
+      //   error.inner.forEach((e) => {
+      //     yupErrors[e.path] = e.message;
+      //   });
+      //   setErrors(yupErrors);
+      // }
       setErrorMessage('user name or password invalid');
     }
   };

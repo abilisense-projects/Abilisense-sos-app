@@ -3,11 +3,8 @@ import registerReducers from './reducers/registerReducers';
 import userReducer from './reducers/reducers';
 
 const combinedReducers = combineReducers({
-  userReducer: userReducer,
+  root: rootReducer,
   register: registerReducers,
 });
-
 const store = createStore(combinedReducers);
-
 export default store;
-
