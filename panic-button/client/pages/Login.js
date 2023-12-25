@@ -19,26 +19,26 @@ const Login = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     const checkLoggedInUser = async () => {
-  //       try {
-  //         const emailUser = await AsyncStorage.getItem('email');
-  //         const passwordUser = await AsyncStorage.getItem('password');
-  //         if (emailUser !== null && passwordUser !== null) {
-  //           navigation.navigate('HomeScreen');
-  //         } else {
-  //           console.log('No user is logged in');
-  //         }
-  //       } catch (e) {
-  //         console.error('Error fetching user data:', e);
-  //       }
-  //     };
-  //     checkLoggedInUser();
-  //   });
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      const checkLoggedInUser = async () => {
+        try {
+          const emailUser = await AsyncStorage.getItem('email');
+          const passwordUser = await AsyncStorage.getItem('password');
+          if (emailUser !== null && passwordUser !== null) {
+            navigation.navigate('HomeScreen');
+          } else {
+            console.log('No user is logged in');
+          }
+        } catch (e) {
+          console.error('Error fetching user data:', e);
+        }
+      };
+      checkLoggedInUser();
+    });
 
-  //   return unsubscribe;
-  // }, [navigation]);
+    return unsubscribe;
+  }, [navigation]);
 
   const handleLogin = async () => {
     try {
