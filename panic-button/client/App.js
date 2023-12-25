@@ -12,6 +12,7 @@ import LogOut from './pages/Logout';
 import Login from './pages/Login';
 import store from "./redux/store";
 import { Provider } from 'react-redux';
+import ForgetPassword from './components/forget_password/forget_password';
 const Drawer = createDrawerNavigator();
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
           <Drawer.Screen name="Settings" component={SettingsPage} options={{ title: "" }} />
           <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "" }} />
           <Drawer.Screen name="Accessibility" component={AccessibilityPage} options={{ title: "" }} />
+          <Drawer.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: "" }} />
         </Drawer.Navigator>
       </NavigationContainer>
     </Provider>

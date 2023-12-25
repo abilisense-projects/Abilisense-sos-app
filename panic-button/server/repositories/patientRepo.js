@@ -35,17 +35,15 @@ async function getPatientByEmail(email) {
 // }
 async function getPatientByEmailAndPassword(email, password) {
     try {
-        const success = false;
+        // const success = false;
         const patient = await Patient.findOne({ email });
         console.log('patient:', patient)
         if (!patient) {
-            console.log('no patient')
             return { success: false, massege: 'not good email' };
         }
 
         const isPasswordValid = await bcrypt.compare(password, patient.password);
         if (!isPasswordValid) {
-            console.log('not good password')
             return { success: false, massege: 'not good password' };
         }
 

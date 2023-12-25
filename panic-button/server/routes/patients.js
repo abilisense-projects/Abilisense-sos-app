@@ -46,11 +46,9 @@ router.post('/get-by-email-and-password/', async (req, res) => {
     // }
     try {
         const response = await getPatientByEmailAndPasswordBL(email, password);
-        console.log(response)
         if (response.success) {
             res.status(200).json({ success: true, user: response.user });
         } else{
-            console.log('in else')
             res.status(401).json({ success: false, message: response.message });
         }
     } catch (error) {

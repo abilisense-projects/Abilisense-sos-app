@@ -4,10 +4,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { loginValidationSchema } from '../config/loginValidationSchema'; 
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../redux/actions/actions';
+import { loginSuccess } from '../redux/actions/loginActions';
 import { useSelector } from 'react-redux';
 import { BY_EMAIL_AND_PASSWORD, SERVER_BASE_URL } from '@env';
-
+import * as Yup from 'yup';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -34,7 +34,6 @@ const Login = ({ navigation }) => {
       };
       checkLoggedInUser();
     });
-
     return unsubscribe;
   }, [navigation]);
 
@@ -53,13 +52,13 @@ const Login = ({ navigation }) => {
       }
 
     } catch (error) {
-      // if (error instanceof Yup.ValidationError) {
-      //   const yupErrors = {};
-      //   error.inner.forEach((e) => {
-      //     yupErrors[e.path] = e.message;
-      //   });
-      //   setErrors(yupErrors);
-      // }
+      if (error instanceof Yup.ValidationError) {
+        const yupErrors = {};
+        error.inner.forEach((e) => {
+          yupErrors[e.path] = e.message;
+        });
+        setErrors(yupErrors);
+      }
       setErrorMessage('user name or password invalid');
     }
   };
@@ -109,7 +108,7 @@ const Login = ({ navigation }) => {
 
       <Text
         style={styles.forgotPassword}
-        onPress={() => navigation.navigate('check')}
+        onPress={() => navigation.navigate('ForgetPassword')}
       >
         Forgot Password?
       </Text>
