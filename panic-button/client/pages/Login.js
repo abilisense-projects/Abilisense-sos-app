@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
-// import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { loginValidationSchema } from '../config/loginValidationSchema'; 
-import { Yup } from '../config/ValidationSchemas';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../redux/actions/actions';
 import { useSelector } from 'react-redux';
@@ -27,8 +25,6 @@ const Login = ({ navigation }) => {
           const passwordUser = await AsyncStorage.getItem('password');
           if (emailUser !== null && passwordUser !== null) {
             navigation.navigate('HomeScreen');
-          } else {
-            console.log('No user is logged in');
           }
         } catch (e) {
           console.error('Error fetching user data:', e);
