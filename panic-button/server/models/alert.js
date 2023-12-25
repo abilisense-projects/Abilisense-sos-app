@@ -1,5 +1,45 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
+const addressSchema = mongoose.Schema({
+    address: {
+        type: String,
+        require: false
+    },
+    country: {
+        type: String,
+        require: false
+    },
+    city: {
+        type: String,
+        require: false
+    },
+    street: {
+        type: String,
+        require: false
+    },
+    entrance: {
+        type: String,
+        require: false
+    },
+    buildingNumber: {
+        type: Number,
+        require: false
+    },
+    floor: {
+        type: Number,
+        require: false
+    },
+    apartmentNumber: {
+        type: Number,
+        require: false
+    },
+    comments: {
+        type: String,
+        require: false
+    }
+});
+
 const alertsSchema = new Schema({
     patient: {
         type: mongoose.Schema.Types.ObjectId,
@@ -19,7 +59,7 @@ const alertsSchema = new Schema({
         required: true,
     },
     location: {
-        type: String,
+        type: addressSchema,
         required: true,
     },
     level: {
