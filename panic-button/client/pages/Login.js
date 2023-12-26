@@ -72,51 +72,58 @@ const Login = ({ navigation }) => {
         return response.data
       })
   }
-
   return (
     <View style={styles.container}>
-      <View style={styles.registerContainer}>
-        <Button
-          title="Register"
-          style={styles.register}
-          onPress={() => navigation.navigate('SignUpPage')}
-        />
-      </View>
-      <Text style={styles.header}>Login</Text>
-      <TextInput
-        style={[styles.input, errors.email && styles.invalidInput]}
-        placeholder="Email"
-        onChangeText={(text) => {
-          setEmail(text);
-          setErrors({ ...errors, email: '' });
-        }}
-        value={email}
-      />
-      {errors.email && <Text style={styles.warningText}>{errors.email}</Text>}
+      <Text style={styles.title}>Login</Text>
 
-      <TextInput
-        style={[styles.input, errors.password && styles.invalidInput]}
-        placeholder="Password"
-        secureTextEntry
-        onChangeText={(text) => {
-          setPassword(text);
-          setErrors({ ...errors, password: '' });
-        }}
-        value={password}
-      />
-      {errors.password && <Text style={styles.warningText}>{errors.password}</Text>}
-
-      <Text
-        style={styles.forgotPassword}
-        onPress={() => navigation.navigate('ForgetPassword')}
+      <TouchableOpacity
+        style={styles.registerContainer}
+        onPress={() => navigation.navigate('SignUpPage')}
       >
-        Forgot Password?
-      </Text>
-      {errorMessage ? <Text style={{ color: 'red' }}>{errorMessage}</Text> : null}
-      <Button title="Login" onPress={handleLogin} />
+        <Text style={styles.register}>Register</Text>
+      </TouchableOpacity>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={[styles.input, errors.email && styles.invalidInput]}
+          placeholder="Email"
+          onChangeText={(text) => {
+            setEmail(text);
+            setErrors({ ...errors, email: '' });
+          }}
+          value={email}
+        />
+        {errors.email && <Text style={styles.warningText}>{errors.email}</Text>}
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={[styles.input, errors.password && styles.invalidInput]}
+          placeholder="Password"
+          secureTextEntry
+          onChangeText={(text) => {
+            setPassword(text);
+            setErrors({ ...errors, password: '' });
+          }}
+          value={password}
+        />
+        {errors.password && <Text style={styles.warningText}>{errors.password}</Text>}
+      </View>
+
+      <View style={styles.forgotPasswordContainer}>
+      <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
+        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+      </TouchableOpacity>
+    </View>
+
+      {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
+
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -124,13 +131,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  header: {
+  title: {
     fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 20,
   },
+  inputContainer: {
+    marginBottom: 20,
+    width: '80%',
+  },
   input: {
-    width: '25%',
-    height: 40,
+    width: '100%',
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
@@ -144,22 +156,128 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 5,
   },
+  forgotPasswordContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
   forgotPassword: {
     fontSize: 16,
     color: 'blue',
     textDecorationLine: 'underline',
+  },
+  errorMessage: {
+    color: 'red',
     marginBottom: 10,
+  },
+  registerContainer: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
   },
   register: {
     fontSize: 16,
     color: 'blue',
   },
-  registerContainer: {
-    position: 'absolute',
-    left: 10,
-    top: 10,
-    zIndex: 1,
+  loginButton: {
+    backgroundColor: 'blue',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
+
+//   return (
+//     <View style={styles.container}>
+//       <View style={styles.registerContainer}>
+//         <Button
+//           title="Register"
+//           style={styles.register}
+//           onPress={() => navigation.navigate('SignUpPage')}
+//         />
+//       </View>
+//       <Text style={styles.header}>Login</Text>
+//       <TextInput
+//         style={[styles.input, errors.email && styles.invalidInput]}
+//         placeholder="Email"
+//         onChangeText={(text) => {
+//           setEmail(text);
+//           setErrors({ ...errors, email: '' });
+//         }}
+//         value={email}
+//       />
+//       {errors.email && <Text style={styles.warningText}>{errors.email}</Text>}
+
+//       <TextInput
+//         style={[styles.input, errors.password && styles.invalidInput]}
+//         placeholder="Password"
+//         secureTextEntry
+//         onChangeText={(text) => {
+//           setPassword(text);
+//           setErrors({ ...errors, password: '' });
+//         }}
+//         value={password}
+//       />
+//       {errors.password && <Text style={styles.warningText}>{errors.password}</Text>}
+
+//       <Text
+//         style={styles.forgotPassword}
+//         onPress={() => navigation.navigate('ForgetPassword')}
+//       >
+//         Forgot Password?
+//       </Text>
+//       {errorMessage ? <Text style={{ color: 'red' }}>{errorMessage}</Text> : null}
+//       <Button title="Login" onPress={handleLogin} />
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   header: {
+//     fontSize: 24,
+//     marginBottom: 20,
+//   },
+//   input: {
+//     width: '70%',
+//     height: 50,
+//     borderColor: 'gray',
+//     borderWidth: 1,
+//     marginBottom: 10,
+//     padding: 10,
+//   },
+//   invalidInput: {
+//     borderColor: 'red',
+//   },
+//   warningText: {
+//     color: 'red',
+//     fontSize: 12,
+//     marginBottom: 5,
+//   },
+//   forgotPassword: {
+//     fontSize: 16,
+//     color: 'blue',
+//     textDecorationLine: 'underline',
+//     marginBottom: 10,
+//   },
+//   register: {
+//     fontSize: 16,
+//     color: 'blue',
+//   },
+//   registerContainer: {
+//     position: 'absolute',
+//     left: 10,
+//     top: 10,
+//     zIndex: 1,
+//   },
+// });
 
 export default Login;
