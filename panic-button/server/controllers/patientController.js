@@ -36,7 +36,6 @@ async function deletePatientByEmailBL(email) {
 }
 
 
-
 module.exports = {
     getAllPatientsBL,
     getPatientByEmailBL,

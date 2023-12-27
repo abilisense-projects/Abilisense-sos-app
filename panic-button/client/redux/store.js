@@ -13,4 +13,3 @@ const combinedReducers = combineReducers({
 const store = createStore(combinedReducers);
 
 export default store;
-

@@ -23,7 +23,7 @@ const Login = ({ navigation }) => {
         const emailUser = await AsyncStorage.getItem('email');
         const passwordUser = await AsyncStorage.getItem('password');
         if (emailUser !== null && passwordUser !== null) {
-          navigation.navigate('check');
+          // navigation.navigate('check');
         } else {
           console.log('No user is logged in');
         }
@@ -45,7 +45,7 @@ const Login = ({ navigation }) => {
         await AsyncStorage.setItem('email', response.user.email);
         await AsyncStorage.setItem('password', response.user.password);
 
-        navigation.navigate('HomeScreem');
+        navigation.navigate('HomeScreen');
       } else {
         console.error('Invalid credentials');
         setErrorMessage('user name or password invalid');

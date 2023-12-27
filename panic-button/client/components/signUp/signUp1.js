@@ -94,7 +94,7 @@ const SignUpScreen = ({ onStepChange }) => {
     } else {
       console.log("Invalid email");
       // Set the error for the 'email' key
-      setErrors({ ...errors, email: 'Invalid email address' });
+      setErrors({ ...errors, email: 'Provide a valid email' });
       // You can also display a message to the user if needed
     }
   };

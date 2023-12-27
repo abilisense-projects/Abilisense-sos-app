@@ -27,8 +27,17 @@ export const signUpValidationSchema = Yup.object().shape({
     .max(50, 'Last name is too long'),
 
   email: Yup.string()
+    .email('Provide a valid email')
     .required('Email is required')
-    .email('Invalid email address'),
+    .test(
+      'Validate Email',
+      'Provide a valid email',
+      (value) => {
+        const re =
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        return re.test(String(value).toLowerCase())
+      },
+    ),
 
   password: Yup.string()
     .required('Password is required')
