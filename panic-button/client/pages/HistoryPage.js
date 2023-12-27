@@ -25,9 +25,9 @@ const HistoryPage = ({ navigation }) => {
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     onShowActiveAlerts();
-  },[])
+  }, [])
 
   const onShowActiveAlerts = async () => {
     try {
@@ -42,19 +42,21 @@ const HistoryPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: showHistory ? 'lightblue' : 'white' }]}
-        onPress={() => onShowHistory()}
-      >
-        <Text style={styles.buttonText}>Show History</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: !showHistory ? 'lightblue' : 'white' }]}
-        onPress={() => onShowActiveAlerts()}
-      >
-        <Text style={styles.buttonText}>Show Active Alerts</Text>
-      </TouchableOpacity>
-      <ShowAlerts data={data} showHistory={showHistory} />
+      <View style={styles.alertStatusButtons}>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: showHistory ? 'lightblue' : 'white' }]}
+          onPress={() => onShowHistory()}
+        >
+          <Text style={styles.buttonText}>Show History</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: !showHistory ? 'lightblue' : 'white' }]}
+          onPress={() => onShowActiveAlerts()}
+        >
+          <Text style={styles.buttonText}>Show Active Alerts</Text>
+        </TouchableOpacity>
+      </View>
+      <ShowAlerts data={data} showHistory={showHistory} navigation={navigation}/>
       {/* {showHistory ? (
         <ShowHistory />
       ) : (
@@ -71,6 +73,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  alertStatusButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+},
   button: {
     padding: 10,
     borderRadius: 5,

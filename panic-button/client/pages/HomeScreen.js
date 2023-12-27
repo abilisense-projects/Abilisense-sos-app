@@ -17,7 +17,7 @@ const HomeScreen = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(true);
 
     const handleCancel = () => {
-        setModalVisible(false);
+        // setModalVisible(false);
         setStep(1);
 
     };
@@ -76,7 +76,7 @@ const HomeScreen = ({ navigation }) => {
             {
                 step === 5 &&
                 <>
-                    <CancelButton navigation={navigation} />
+                    {/* <CancelButton navigation={navigation} /> */}
                     <AlertSendingConfirmationModel
                         visible={modalVisible}
                         onClose={handleCancel}

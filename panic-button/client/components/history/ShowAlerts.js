@@ -6,7 +6,7 @@ import { SERVER_BASE_URL } from '@env';
 
 
 
-const ShowAlerts = ({ data, showHistory }) => {
+const ShowAlerts = ({ navigation, data, showHistory }) => {
     const [popupVisible, setPopupVisible] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
 
@@ -17,7 +17,9 @@ const ShowAlerts = ({ data, showHistory }) => {
 
     const closePopup = () => {
         setPopupVisible(false);
-        setSelectedRowData(null);
+        if (!selectedRowData) {
+            setSelectedRowData(null);
+        }
     };
 
     const cancelAlert = async (alertId) => {
@@ -26,6 +28,7 @@ const ShowAlerts = ({ data, showHistory }) => {
         try {
             const response = await axios.put(url, statusUpdate);
             console.log('Response from server: ', response.data);
+            closePopup();
             navigation.reset({
                 index: 0,
                 routes: [{ name: "Home" }]
@@ -38,7 +41,6 @@ const ShowAlerts = ({ data, showHistory }) => {
 
     const renderKeyValuePairs = (data) => {
         const keysWithValues = Object.entries(data).filter(([key, value]) => value !== null && value !== undefined && key != "_id");
-        console.log("keysWithValues", keysWithValues);
         return keysWithValues.map(([key, value]) => (
             <View key={key} style={styles.keyValueContainer}>
                 <Text style={styles.boldText}>{key}: </Text>
@@ -65,7 +67,8 @@ const ShowAlerts = ({ data, showHistory }) => {
                         {data.map((rowData, index) => (
                             <TableWrapper key={index} style={{ flexDirection: 'row' }}>
                                 <Cell
-                                    data={rowData.date}
+                                    data={`${new Date(rowData.date).toISOString().split('T')[0]}${"\n"}${
+                                        new Date(rowData.date).toISOString().split('T')[1].split('.')[0]}`}
                                     textStyle={[styles.cellText, { width: 100 }]}
                                     width={100}
                                     onPress={() => openPopup(rowData)}
@@ -93,7 +96,8 @@ const ShowAlerts = ({ data, showHistory }) => {
                                         <Text style={[styles.title, styles.boldText]}>Alert information: {"\n\n"}</Text>
                                         <Text>
                                             <Text style={styles.boldText}>Date:</Text>
-                                            <Text> {selectedRowData.date}</Text>
+                                            <Text>{`${new Date(selectedRowData.date).toISOString().split('T')[0]}   ${
+                                        new Date(selectedRowData.date).toISOString().split('T')[1].split('.')[0]}`}</Text>
                                         </Text>
                                         {/* <Text> */}
                                         <Text style={styles.boldText}>Location:</Text>
@@ -112,14 +116,16 @@ const ShowAlerts = ({ data, showHistory }) => {
                                             <Text style={styles.boldText}>Status:</Text>
                                             <Text> {selectedRowData.status}</Text>
                                         </Text>
-                                        {!showHistory && <TouchableOpacity onPress={cancelAlert(selectedRowData._id)}>
-                                            <Text style={styles.closeButton}>Cancel Alert</Text>
-                                        </TouchableOpacity>}
                                     </View>
                                 ) : null}
-                                <TouchableOpacity onPress={closePopup}>
-                                    <Text style={styles.closeButton}>Close</Text>
-                                </TouchableOpacity>
+                                <View style={styles.buttonContainer}>
+                                    {!showHistory && <TouchableOpacity onPress={() => cancelAlert(selectedRowData._id)}>
+                                        <Text style={styles.cancelButton}>Cancel Alert</Text>
+                                    </TouchableOpacity>}
+                                    <TouchableOpacity onPress={closePopup}>
+                                        <Text style={styles.closeButton}>Close</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                     </Modal>
@@ -143,6 +149,11 @@ const styles = StyleSheet.create({
     title: {
         textAlign: 'center'
     },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+    },
     cellText: {
         textAlign: 'center',
         overflow: 'hidden',
@@ -154,6 +165,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    cancelButton: {
+        marginTop: 20,
+        color: 'red',
+        fontWeight: 'bold',
     },
     modalContent: {
         backgroundColor: 'white',
