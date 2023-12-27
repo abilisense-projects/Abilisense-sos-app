@@ -4,7 +4,7 @@ import axios from 'axios';
 import { SERVER_BASE_URL } from '@env';
 import { useSelector } from 'react-redux';
 
-const SendAlert = ({ onStepChange, alert }) => {
+const SendAlert = ({ onStepChange, alert, setAlertId }) => {
     const [alertSent, setAlertSent] = useState();
     const user = useSelector((state) => state.userReducer.user);
     useEffect(() => {
@@ -23,6 +23,7 @@ const SendAlert = ({ onStepChange, alert }) => {
                 const response = await axios.post(url, alertData);
                 console.log('Response from server: ', response.data);
                 setAlertSent(true);
+                setAlertId(response.data._id);
                 // setTimeout(() => {
                 //     onStepChange();
                 // }, 5000);

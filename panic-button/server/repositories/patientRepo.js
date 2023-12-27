@@ -28,7 +28,6 @@ async function getPatientByEmailAndPassword(email, password) {
         if (!patient) {
             return { success: false, massege: 'not good email' };
         }
-
         //Checks whether the user found has the same password as the entered password 
         //Encrypts the received password and compares it with the encrypted password on DB 
         const isPasswordValid = await bcrypt.compare(password, patient.password);
@@ -59,8 +58,8 @@ const bcrypt = require('bcrypt');
 async function addPatient(patient) {
     const { password, ...otherData } = patient; // Extracting password from patient object
     console.log('!!!!!!!!!!!!!!!!!')
-    console.log('password' , password)
-    console.log('otherData' , otherData)
+    console.log('password', password)
+    console.log('otherData', otherData)
     const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
 
     // Create a new object with the hashed password and other patient data
@@ -107,5 +106,5 @@ module.exports = {
     addPatient,
     deletePatientByEmail,
     deletePatientById,
-    getPatientByEmailAndPassword
+    getPatientByEmailAndPassword,
 }

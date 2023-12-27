@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useSelector } from "react-redux";
+import { useFocusEffect } from '@react-navigation/native';
 
 const SideBarMenu = ({ navigation }) => {
   const [page, setPage] = useState('');
   const pages = ['Home', 'History', 'Settings', 'LogOut', 'Accessibility'];
   const icons = ['home', 'history', 'settings-sharp', 'logout', 'universal-access'];
   const user = useSelector((state) => state.userReducer.user);
+
+  //Code that gets the current page
+  useFocusEffect(() => {
+    const currentPage = navigation.getState().routes[navigation.getState().index].name;
+    setPage(currentPage)
+  }
+  );
+
+
   const goToFirstScreen = (pageName) => {
     navigation.reset({
       index: 0,
