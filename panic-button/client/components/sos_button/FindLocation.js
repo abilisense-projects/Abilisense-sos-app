@@ -20,7 +20,6 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
         findUserLocation();
     }, []);
     const findDefaultAddress = () => {
-        console.log("1");
         console.log(user.address);
         setDefaultAddress(user.address);
         console.log(defaultAddress);

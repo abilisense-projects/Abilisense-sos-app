@@ -6,7 +6,9 @@ const {
     getAlertByIdBL,
     addAlertBL,
     deleteAlertByIdBL,
-    deleteAlertsByStatusBL
+    deleteAlertsByStatusBL,
+    updateAlertByIdBL,
+    getActiveAlertsByPatientIdBL
 } = require('../controllers/alertController')
 const router = express.Router();
 
@@ -46,6 +48,26 @@ router.post('/get-by-id/', async (req, res) => {
     res.send(await getAlertByIdBL(_id));
 });
 
+router.get('/get-active-alerts-by-patient-id/:id', async (req, res) => {
+    console.log(req.params.id)
+    const _id = req.params.id;
+    if (!_id) {
+        return res.status(400).json({ error: '_id parameter is required.' });
+    }
+
+    res.send(await getActiveAlertsByPatientIdBL(_id));
+});
+
+router.put('/update-alert/:id', async (req, res) => {
+    const alertId = req.params.id;
+    const updateData = req.body;
+    
+    if (!updateData) {
+        return res.status(400).json({ error: 'Alert not found' });
+    }
+    res.send(await updateAlertByIdBL(alertId, updateData))
+
+});
 
 router.post('/add-alert/', async (req, res) => {
     const { patient, distressDescription, level, location, status } = req.body;
@@ -63,6 +85,8 @@ router.post('/add-alert/', async (req, res) => {
 
     res.send(await addAlertBL({ patient, distressDescription, level, date, location, status }));
 });
+
+
 
 // router.delete('/delete-by-id/', async (req, res) => {
 //     const { _id } = req.body;

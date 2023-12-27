@@ -1,31 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Table, Row, TableWrapper, Cell } from 'react-native-table-component';
 import { SERVER_BASE_URL } from '@env';
-// import { useSelector } from 'react-redux';
 
-const ShowHistory = ({user}) => {
-    const [data, setData] = useState([]);
+
+
+const ShowAlerts = ({ data, showHistory }) => {
     const [popupVisible, setPopupVisible] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
-    // const user = useSelector((state) => state.userReducer.user);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const patientId = user._id;
-                const response = await axios.post(`${SERVER_BASE_URL}/api/alerts/get-by-patient-id/`, {
-                    patientId: patientId,
-                });
-                setData(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     const openPopup = (rowData) => {
         setSelectedRowData(rowData);
@@ -35,6 +18,22 @@ const ShowHistory = ({user}) => {
     const closePopup = () => {
         setPopupVisible(false);
         setSelectedRowData(null);
+    };
+
+    const cancelAlert = async (alertId) => {
+        const url = `${SERVER_BASE_URL}/api/alerts/update-alert/${alertId}`;
+        const statusUpdate = { "status": "canceled" };
+        try {
+            const response = await axios.put(url, statusUpdate);
+            console.log('Response from server: ', response.data);
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "Home" }]
+            });
+
+        } catch (error) {
+            console.error('Error updating alert:', error);
+        }
     };
 
     const renderKeyValuePairs = (data) => {
@@ -71,24 +70,6 @@ const ShowHistory = ({user}) => {
                                     width={100}
                                     onPress={() => openPopup(rowData)}
                                 />
-                                {/* <Cell
-                                    data={rowData.location}
-                                    textStyle={[styles.cellText, { width: 100 }]}
-                                    width={100}
-                                    onPress={() => openPopup(rowData)}
-                                />
-                                <Cell
-                                    data={rowData.distressDescription}
-                                    textStyle={[styles.cellText, { width: 100 }]}
-                                    width={100}
-                                    onPress={() => openPopup(rowData)}
-                                />
-                                <Cell
-                                    data={rowData.level}
-                                    textStyle={[styles.cellText, { width: 100 }]}
-                                    width={100}
-                                    onPress={() => openPopup(rowData)}
-                                /> */}
                                 <Cell
                                     data={rowData.status}
                                     textStyle={[styles.cellText, { width: 100 }]}
@@ -116,8 +97,6 @@ const ShowHistory = ({user}) => {
                                         </Text>
                                         {/* <Text> */}
                                         <Text style={styles.boldText}>Location:</Text>
-                                        {console.log(selectedRowData.location)}
-                                        {console.log(selectedRowData)}
                                         {renderKeyValuePairs(selectedRowData.location)}
                                         {/* <Text> {selectedRowData.location}</Text> */}
                                         {/* </Text> */}
@@ -133,6 +112,9 @@ const ShowHistory = ({user}) => {
                                             <Text style={styles.boldText}>Status:</Text>
                                             <Text> {selectedRowData.status}</Text>
                                         </Text>
+                                        {!showHistory && <TouchableOpacity onPress={cancelAlert(selectedRowData._id)}>
+                                            <Text style={styles.closeButton}>Cancel Alert</Text>
+                                        </TouchableOpacity>}
                                     </View>
                                 ) : null}
                                 <TouchableOpacity onPress={closePopup}>
@@ -195,4 +177,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ShowHistory;
+export default ShowAlerts;
