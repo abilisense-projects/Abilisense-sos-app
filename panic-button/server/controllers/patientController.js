@@ -15,10 +15,7 @@ async function getPatientByEmailBL(email) {
     return await getPatientByEmail(email);
 }
 
-// async function getPatientByEmailAndPasswordBL(email, password) {
-//     return await getPatientByEmailAndPassword(email, password);
-// }
-
+//called from the routes send to repository with the request and return the answer
 async function getPatientByEmailAndPasswordBL(email, password) {
     try {
         const user = await getPatientByEmailAndPassword(email, password);

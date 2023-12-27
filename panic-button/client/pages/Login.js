@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { loginValidationSchema } from '../config/loginValidationSchema'; 
+import { loginValidationSchema } from '../config/loginValidationSchema';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../redux/actions/loginActions';
 import { useSelector } from 'react-redux';
@@ -17,6 +17,7 @@ const Login = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
+  // on start the app or on reload check in local-storege If there is a logged in user
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       const checkLoggedInUser = async () => {
@@ -37,20 +38,28 @@ const Login = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
+  //on click the button handelLogin:
   const handleLogin = async () => {
     try {
+      //validate the email and password valid 
       await loginValidationSchema.validate({ email, password }, { abortEarly: false });
 
+      // Runs the function that accesses the database and waits for an answer
       const response = await checkEmailAndpassword(email, password)
       if (response.success === true) {
+        // save the result - the user details to the redux store
         dispatch(loginSuccess(response.user));
+        // set the async-storege for staying connected feature
         await AsyncStorage.setItem('email', response.user.email);
         await AsyncStorage.setItem('password', response.user.password);
+        // navigate to home page
         navigation.navigate('Home');
       } else {
+        // if the response is not good there is a error on login
         setErrorMessage('user name or password invalid');
       }
 
+      // if there is error show them
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const yupErrors = {};
@@ -63,36 +72,36 @@ const Login = ({ navigation }) => {
     }
   };
 
+  // go to DB
   const checkEmailAndpassword = async (email, password) => {
-    // try {
+    // build the url from .env file
     const url = SERVER_BASE_URL + BY_EMAIL_AND_PASSWORD;
+    //send post request to server
     return await axios.post(url, { email, password })
       .then(response => {
-        console.log('Data in checkEmailAndpassword:', response.data);
         return response.data
       })
   }
-
   return (
     <View style={styles.container}>
-      <View style={styles.registerContainer}>
-        <Button
-          title="Register"
-          style={styles.register}
-          onPress={() => navigation.navigate('SignUpPage')}
-        />
-      </View>
-      <Text style={styles.header}>Login</Text>
+      <Text style={styles.title}>Login</Text>
+
+      <TouchableOpacity
+        style={styles.registerContainer}
+        onPress={() => navigation.navigate('SignUpPage')}
+      >
+        <Text style={styles.register}>Register</Text>
+      </TouchableOpacity>
+
       <TextInput
         style={[styles.input, errors.email && styles.invalidInput]}
         placeholder="Email"
         onChangeText={(text) => {
           setEmail(text);
-          setErrors({ ...errors, email: '' });
+          setErrors((prevErrors) => ({ ...prevErrors, email: '' })); // Merge state updates
         }}
         value={email}
       />
-      {errors.email && <Text style={styles.warningText}>{errors.email}</Text>}
 
       <TextInput
         style={[styles.input, errors.password && styles.invalidInput]}
@@ -100,23 +109,25 @@ const Login = ({ navigation }) => {
         secureTextEntry
         onChangeText={(text) => {
           setPassword(text);
-          setErrors({ ...errors, password: '' });
+          setErrors((prevErrors) => ({ ...prevErrors, password: '' })); // Merge state updates
         }}
         value={password}
       />
-      {errors.password && <Text style={styles.warningText}>{errors.password}</Text>}
+      
+      <View style={styles.forgotPasswordContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
+          <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        </TouchableOpacity>
+      </View>
 
-      <Text
-        style={styles.forgotPassword}
-        onPress={() => navigation.navigate('ForgetPassword')}
-      >
-        Forgot Password?
-      </Text>
-      {errorMessage ? <Text style={{ color: 'red' }}>{errorMessage}</Text> : null}
-      <Button title="Login" onPress={handleLogin} />
+      {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
+
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -124,13 +135,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  header: {
+  title: {
     fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 20,
   },
+  inputContainer: {
+    marginBottom: 20,
+    width: '80%',
+  },
   input: {
-    width: '25%',
-    height: 40,
+    width: '100%',
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
@@ -144,21 +160,38 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 5,
   },
+  forgotPasswordContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
   forgotPassword: {
     fontSize: 16,
     color: 'blue',
     textDecorationLine: 'underline',
+  },
+  errorMessage: {
+    color: 'red',
     marginBottom: 10,
+  },
+  registerContainer: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
   },
   register: {
     fontSize: 16,
     color: 'blue',
   },
-  registerContainer: {
-    position: 'absolute',
-    left: 10,
-    top: 10,
-    zIndex: 1,
+  loginButton: {
+    backgroundColor: 'blue',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 

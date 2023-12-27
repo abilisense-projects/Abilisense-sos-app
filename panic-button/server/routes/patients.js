@@ -21,29 +21,12 @@ router.post('/get-by-email/', async (req, res) => {
     res.send(await getPatientByEmailBL(email));
 });
 
+// get post request with email and password - login and return the right answer
 router.post('/get-by-email-and-password/', async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).json({ error: 'Email and Password parameters are required.' });
     }
-    // const bcrypt = require('bcrypt');
-
-    // const hashedPassword = bcrypt.hashSync(password, 10); // 10 הוא מספר הסיבובים להצפנה
-
-    // console.log('Hashed Password:', hashedPassword);
-    // try {
-    //     // Authenticate user - this is just an example, replace with your own authentication logic
-    //     const user = await getPatientByEmailAndPasswordBL(email, password);
-
-    //     if (user & user!== AuthenticationError) {
-    //         // Respond with success
-    //         res.status(200).json({ success: true, user: user });
-    //     } else {
-    //         res.status(401).json({ success: false, message: 'Auth fail' });
-    //     }
-    // } catch (error) {
-    //     res.status(500).json({ success: false, message: 'Internal server error' });
-    // }
     try {
         const response = await getPatientByEmailAndPasswordBL(email, password);
         if (response.success) {
