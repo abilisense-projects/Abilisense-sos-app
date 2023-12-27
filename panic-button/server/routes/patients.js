@@ -21,6 +21,7 @@ router.post('/get-by-email/', async (req, res) => {
     res.send(await getPatientByEmailBL(email));
 });
 
+// get post request with email and password - login and return the right answer
 router.post('/get-by-email-and-password/', async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {

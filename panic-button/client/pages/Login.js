@@ -14,6 +14,8 @@ const Login = ({ navigation }) => {
   const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
+
+  // on start the app or on reload check in local-storege If there is a logged in user
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       const checkLoggedInUser = async () => {
@@ -33,18 +35,29 @@ const Login = ({ navigation }) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  //on click the button handelLogin:
   const handleLogin = async () => {
     try {
+      //validate the email and password valid 
       await loginValidationSchema.validate({ email, password }, { abortEarly: false });
+
+      // Runs the function that accesses the database and waits for an answer
       const response = await checkEmailAndpassword(email, password)
       if (response.success === true) {
+        // save the result - the user details to the redux store
         dispatch(loginSuccess(response.user));
+        // set the async-storege for staying connected feature
         await AsyncStorage.setItem('email', response.user.email);
         await AsyncStorage.setItem('password', response.user.password);
+        // navigate to home page
         navigation.navigate('Home');
       } else {
+        // if the response is not good there is a error on login
         setErrorMessage('user name or password invalid');
       }
+
+      // if there is error show them
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const yupErrors = {};
@@ -56,12 +69,14 @@ const Login = ({ navigation }) => {
       setErrorMessage('user name or password invalid');
     }
   };
+
+  // go to DB
   const checkEmailAndpassword = async (email, password) => {
-    // try {
+    // build the url from .env file
     const url = SERVER_BASE_URL + BY_EMAIL_AND_PASSWORD;
+    //send post request to server
     return await axios.post(url, { email, password })
       .then(response => {
-        console.log('Data in checkEmailAndpassword:', response.data);
         return response.data
       })
   }
@@ -74,37 +89,34 @@ const Login = ({ navigation }) => {
       >
         <Text style={styles.register}>Register</Text>
       </TouchableOpacity>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={[styles.input, errors.email && styles.invalidInput]}
-          placeholder="Email"
-          onChangeText={(text) => {
-            setEmail(text);
-            setErrors({ ...errors, email: '' });
-          }}
-          value={email}
-        />
-        {errors.email && <Text style={styles.warningText}>{errors.email}</Text>}
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={[styles.input, errors.password && styles.invalidInput]}
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={(text) => {
-            setPassword(text);
-            setErrors({ ...errors, password: '' });
-          }}
-          value={password}
-        />
-        {errors.password && <Text style={styles.warningText}>{errors.password}</Text>}
-      </View>
+      <TextInput
+        style={[styles.input, errors.email && styles.invalidInput]}
+        placeholder="Email"
+        onChangeText={(text) => {
+          setEmail(text);
+          setErrors((prevErrors) => ({ ...prevErrors, email: '' })); // Merge state updates
+        }}
+        value={email}
+      />
+
+      <TextInput
+        style={[styles.input, errors.password && styles.invalidInput]}
+        placeholder="Password"
+        secureTextEntry
+        onChangeText={(text) => {
+          setPassword(text);
+          setErrors((prevErrors) => ({ ...prevErrors, password: '' })); // Merge state updates
+        }}
+        value={password}
+      />
+      
       <View style={styles.forgotPasswordContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
       </View>
       {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
+
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -121,6 +133,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  inputContainer: {
+    marginBottom: 20,
+    width: '80%',
   },
   inputContainer: {
     marginBottom: 20,

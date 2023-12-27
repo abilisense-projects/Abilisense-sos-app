@@ -20,27 +20,16 @@ async function getPatientByEmail(email) {
     }
 }
 
-// async function getPatientByEmailAndPassword(email, password) {
-//     try {
-//         const patient = await Patient.findOne({ email });
-//         const isPasswordValid = await bcrypt.compare(password, patient.password);
-//         if (!isPasswordValid) {
-//             throw new AuthenticationError('Auto faild');
-//         }
-//         return patient;
-//     } catch (error) {
-//         console.error('Error fetching patient by email and password:', error);
-//         throw error;
-//     }
-// }
 async function getPatientByEmailAndPassword(email, password) {
     try {
-        // const success = false;
+        // check if there is user with such email
         const patient = await Patient.findOne({ email });
         console.log('patient:', patient)
         if (!patient) {
             return { success: false, massege: 'not good email' };
         }
+        //Checks whether the user found has the same password as the entered password 
+        //Encrypts the received password and compares it with the encrypted password on DB 
         const isPasswordValid = await bcrypt.compare(password, patient.password);
         if (!isPasswordValid) {
             return { success: false, massege: 'not good password' };
