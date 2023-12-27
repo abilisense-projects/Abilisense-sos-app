@@ -17,7 +17,7 @@ const Login = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-// on start the app or on reload check in local-storege If there is a logged in user
+  // on start the app or on reload check in local-storege If there is a logged in user
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       const checkLoggedInUser = async () => {
@@ -93,33 +93,27 @@ const Login = ({ navigation }) => {
         <Text style={styles.register}>Register</Text>
       </TouchableOpacity>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={[styles.input, errors.email && styles.invalidInput]}
-          placeholder="Email"
-          onChangeText={(text) => {
-            setEmail(text);
-            setErrors({ ...errors, email: '' });
-          }}
-          value={email}
-        />
-        {errors.email && <Text style={styles.warningText}>{errors.email}</Text>}
-      </View>
+      <TextInput
+        style={[styles.input, errors.email && styles.invalidInput]}
+        placeholder="Email"
+        onChangeText={(text) => {
+          setEmail(text);
+          setErrors((prevErrors) => ({ ...prevErrors, email: '' })); // Merge state updates
+        }}
+        value={email}
+      />
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={[styles.input, errors.password && styles.invalidInput]}
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={(text) => {
-            setPassword(text);
-            setErrors({ ...errors, password: '' });
-          }}
-          value={password}
-        />
-        {errors.password && <Text style={styles.warningText}>{errors.password}</Text>}
-      </View>
-
+      <TextInput
+        style={[styles.input, errors.password && styles.invalidInput]}
+        placeholder="Password"
+        secureTextEntry
+        onChangeText={(text) => {
+          setPassword(text);
+          setErrors((prevErrors) => ({ ...prevErrors, password: '' })); // Merge state updates
+        }}
+        value={password}
+      />
+      
       <View style={styles.forgotPasswordContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>

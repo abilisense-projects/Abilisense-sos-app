@@ -1,7 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // Defaults to localStorage for web
-
 import registerReducers from './reducers/registerReducers';
 import userReducer from './reducers/loginReducers';
 
