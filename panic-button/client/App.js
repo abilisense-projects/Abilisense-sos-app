@@ -20,10 +20,10 @@ const App = () => {
     <Provider store={store}>
     <NavigationContainer>
       <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}>
-        <Drawer.Screen name="SignUpPage" component={SignUpPage} options={{
+        <Drawer.Screen name="Login" component={Login} options={{
           headerShown: false
         }} />
-        <Drawer.Screen name="Login" component={Login} options={{
+         <Drawer.Screen name="SignUpPage" component={SignUpPage} options={{
           headerShown: false
         }} />
         <Drawer.Screen name="Home" component={HomeScreen} options={{ title: "" }} />
