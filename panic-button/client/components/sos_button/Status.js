@@ -2,10 +2,10 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 
-const Status = ({ onStepChange, addParamsToAlert }) => {
 
+const Status = ({ onStepChange, addParamsToAlert }) => {
     const handlePress = (level) => {
-        const lev = {level: level}
+        const lev = { level: level }
         addParamsToAlert(lev);
         onStepChange();
     };

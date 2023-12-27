@@ -3,11 +3,19 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { useSelector } from "react-redux";
 
 const SideBarMenu = ({ navigation }) => {
   const [page, setPage] = useState('');
   const pages = ['Home', 'History', 'Settings', 'LogOut', 'Accessibility'];
   const icons = ['home', 'history', 'settings-sharp', 'logout', 'universal-access'];
+  const user = useSelector((state) => state.userReducer.user);
+  const goToFirstScreen = (pageName) => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: pageName }]
+    });
+  };
 
   return (
     <View style={styles.drawerContent}>
@@ -17,7 +25,7 @@ const SideBarMenu = ({ navigation }) => {
           size={30}
           style={styles.userIcon}
         />
-        <Text style={styles.userName}>User name</Text>
+        {user && <Text style={styles.userName}>{user.fname}</Text>}
       </View>
       <Text>{"\n"}</Text>
       <View style={styles.separator} />
@@ -26,7 +34,7 @@ const SideBarMenu = ({ navigation }) => {
         <TouchableOpacity
           style={styles.drawerItem}
           key={index}
-          onPress={() => { setPage(item); navigation.navigate(item) }}
+          onPress={() => { setPage(item); goToFirstScreen(item) }}
         >
           <View style={styles.iconTextContainer}>
             {(icons[index] == "settings-sharp") ?

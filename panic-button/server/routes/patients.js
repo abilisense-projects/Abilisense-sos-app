@@ -23,22 +23,39 @@ router.post('/get-by-email/', async (req, res) => {
 
 router.post('/get-by-email-and-password/', async (req, res) => {
     const { email, password } = req.body;
-    console.log('email' + email, 'password' + password);
     if (!email || !password) {
         return res.status(400).json({ error: 'Email and Password parameters are required.' });
     }
+    // const bcrypt = require('bcrypt');
+
+    // const hashedPassword = bcrypt.hashSync(password, 10); // 10 הוא מספר הסיבובים להצפנה
+
+    // console.log('Hashed Password:', hashedPassword);
+    // try {
+    //     // Authenticate user - this is just an example, replace with your own authentication logic
+    //     const user = await getPatientByEmailAndPasswordBL(email, password);
+
+    //     if (user & user!== AuthenticationError) {
+    //         // Respond with success
+    //         res.status(200).json({ success: true, user: user });
+    //     } else {
+    //         res.status(401).json({ success: false, message: 'Auth fail' });
+    //     }
+    // } catch (error) {
+    //     res.status(500).json({ success: false, message: 'Internal server error' });
+    // }
     try {
-        // Authenticate user - this is just an example, replace with your own authentication logic
-        const user = await getPatientByEmailAndPasswordBL(email, password);
-        if (user) {
-            // Respond with success and token
-            res.status(200).json({ success: true, user: user });
-        } else {
-            res.status(401).json({ success: false, message: 'Auth fail' });
+        const response = await getPatientByEmailAndPasswordBL(email, password);
+        if (response.success) {
+            res.status(200).json({ success: true, user: response.user });
+        } else{
+            res.status(401).json({ success: false, message: response.message });
         }
     } catch (error) {
+        console.log('in catch')
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
+
 });
 
 router.post('/get-by-id/', async (req, res) => {

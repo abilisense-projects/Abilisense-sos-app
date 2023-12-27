@@ -20,20 +20,40 @@ async function getPatientByEmail(email) {
     }
 }
 
+// async function getPatientByEmailAndPassword(email, password) {
+//     try {
+//         const patient = await Patient.findOne({ email });
+//         const isPasswordValid = await bcrypt.compare(password, patient.password);
+//         if (!isPasswordValid) {
+//             throw new AuthenticationError('Auto faild');
+//         }
+//         return patient;
+//     } catch (error) {
+//         console.error('Error fetching patient by email and password:', error);
+//         throw error;
+//     }
+// }
 async function getPatientByEmailAndPassword(email, password) {
     try {
+        // const success = false;
         const patient = await Patient.findOne({ email });
-        console.log("pat-", patient);
+        console.log('patient:', patient)
+        if (!patient) {
+            return { success: false, massege: 'not good email' };
+        }
+
         const isPasswordValid = await bcrypt.compare(password, patient.password);
         if (!isPasswordValid) {
-            return { error: "invalid password" };
+            return { success: false, massege: 'not good password' };
         }
-        return patient;
+
+        return { success: true, patient: patient };
     } catch (error) {
         console.error('Error fetching patient by email and password:', error);
         throw error;
     }
 }
+
 
 
 async function getPatientById(_id) {
@@ -50,6 +70,9 @@ const bcrypt = require('bcrypt');
 
 async function addPatient(patient) {
     const { password, ...otherData } = patient; // Extracting password from patient object
+    console.log('!!!!!!!!!!!!!!!!!')
+    console.log('password' , password)
+    console.log('otherData' , otherData)
     const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
 
     // Create a new object with the hashed password and other patient data

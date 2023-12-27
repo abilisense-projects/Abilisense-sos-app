@@ -3,7 +3,8 @@ const { getAlertById,
     getAlertsByPatientId,
     getAlertsByPatientEmail,
     addAlert,
-    deleteAlertById } = require('../repositories/alertRepo');
+    deleteAlertById, 
+    deleteAlertsByStatus} = require('../repositories/alertRepo');
 
 async function getAllAlertsBL() {
     return await getAllAlerts();
@@ -29,6 +30,10 @@ async function deleteAlertByIdBL(_id) {
     return await deleteAlertById(_id);
 }
 
+// async function deleteAlertsByStatusBL(statusToDelete){
+//     return await deleteAlertsByStatus(statusToDelete);
+// }
+
 
 
 
@@ -38,5 +43,6 @@ module.exports = {
     getAlertsByPatientEmailBL,
     getAlertByIdBL,
     addAlertBL,
-    deleteAlertByIdBL
+    deleteAlertByIdBL,
+    // deleteAlertsByStatusBL,
 };

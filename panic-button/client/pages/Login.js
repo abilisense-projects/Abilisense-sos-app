@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { loginValidationSchema } from '../config/ValidationSchemas';
-import { Yup } from '../config/ValidationSchemas';
+import { loginValidationSchema } from '../config/loginValidationSchema'; 
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../redux/actions/actions';
+import { loginSuccess } from '../redux/actions/loginActions';
 import { useSelector } from 'react-redux';
-
+import { BY_EMAIL_AND_PASSWORD, SERVER_BASE_URL } from '@env';
+import * as Yup from 'yup';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -18,36 +18,36 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const checkLoggedInUser = async () => {
-      try {
-        const emailUser = await AsyncStorage.getItem('email');
-        const passwordUser = await AsyncStorage.getItem('password');
-        if (emailUser !== null && passwordUser !== null) {
-          // navigation.navigate('check');
-        } else {
-          console.log('No user is logged in');
+    const unsubscribe = navigation.addListener('focus', () => {
+      const checkLoggedInUser = async () => {
+        try {
+          const emailUser = await AsyncStorage.getItem('email');
+          const passwordUser = await AsyncStorage.getItem('password');
+          if (emailUser !== null && passwordUser !== null) {
+            navigation.navigate('Home');
+          } else {
+            console.log('No user is logged in');
+          }
+        } catch (e) {
+          console.error('Error fetching user data:', e);
         }
-      } catch (e) {
-        console.error('Error fetching user data:', e);
-      }
-    };
-    checkLoggedInUser();
-  }, []);
+      };
+      checkLoggedInUser();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const handleLogin = async () => {
     try {
-      // await loginValidationSchema.validate({ email, password }, { abortEarly: false });
+      await loginValidationSchema.validate({ email, password }, { abortEarly: false });
 
       const response = await checkEmailAndpassword(email, password)
-      if (response.success) {
+      if (response.success === true) {
         dispatch(loginSuccess(response.user));
-
         await AsyncStorage.setItem('email', response.user.email);
         await AsyncStorage.setItem('password', response.user.password);
-
-        navigation.navigate('HomeScreen');
+        navigation.navigate('Home');
       } else {
-        console.error('Invalid credentials');
         setErrorMessage('user name or password invalid');
       }
 
@@ -59,26 +59,19 @@ const Login = ({ navigation }) => {
         });
         setErrors(yupErrors);
       }
-      console.error(error.message);
+      setErrorMessage('user name or password invalid');
     }
   };
 
   const checkEmailAndpassword = async (email, password) => {
-    try {
-      return await axios.post(`http://localhost:3000/api/patients/get-by-email-and-password/`, { email, password })
-        .then(response => {
-          console.log('Data:', response.data);
-          return response.data
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    }
-    catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
+    // try {
+    const url = SERVER_BASE_URL + BY_EMAIL_AND_PASSWORD;
+    return await axios.post(url, { email, password })
+      .then(response => {
+        console.log('Data in checkEmailAndpassword:', response.data);
+        return response.data
+      })
+  }
 
   return (
     <View style={styles.container}>
@@ -123,8 +116,8 @@ const Login = ({ navigation }) => {
       <Button title="Login" onPress={handleLogin} />
     </View>
   );
+}
 
-};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
