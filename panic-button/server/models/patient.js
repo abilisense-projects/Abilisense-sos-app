@@ -19,7 +19,6 @@ const patientsSchema = mongoose.Schema({
     phone: String,
     address: addressSchema,
     dateOfBirth: Date,
-    medicalConditions: [String]
 });
 
 const Patient = new mongoose.model('patients', patientsSchema);
