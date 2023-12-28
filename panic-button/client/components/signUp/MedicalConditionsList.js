@@ -7,6 +7,7 @@ import medicalConditionsData from '../../medicinenetDiseases'; // Adjust the pat
 const MedicalConditionsList = ({ onStepChange }) => {
   const [inputValue, setInputValue] = useState('');
   const [filteredConditions, setFilteredConditions] = useState([]);
+  const [selectedCondition, setSelectedCondition] = useState(null); // Track the selected condition
   const dispatch = useDispatch();
   const medicalConditions = useSelector((state) => state.register.medicalConditions);
 
@@ -26,8 +27,18 @@ const MedicalConditionsList = ({ onStepChange }) => {
   const handleSelectCondition = (condition) => {
     if (!medicalConditions.includes(condition)) {
       dispatch(addMedicalConditions(condition));
+      setSelectedCondition(condition); // Set the selected condition
     }
   };
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => handleSelectCondition(item)}
+      style={[styles.conditionButton, selectedCondition === item && styles.selectedConditionButton]}
+    >
+      <Text>{item}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
@@ -41,14 +52,7 @@ const MedicalConditionsList = ({ onStepChange }) => {
       {filteredConditions.length > 0 && (
         <FlatList
           data={filteredConditions}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => handleSelectCondition(item)}
-              style={styles.conditionButton}
-            >
-              <Text>{item}</Text>
-            </TouchableOpacity>
-          )}
+          renderItem={renderItem}
           keyExtractor={(item) => item}
         />
       )}
@@ -81,6 +85,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 5,
     alignItems: 'center',
+  },
+  selectedConditionButton: {
+    backgroundColor: 'pink', // Choose your preferred color for selected condition
   },
   closeButtonContainer: {
     position: 'absolute',
