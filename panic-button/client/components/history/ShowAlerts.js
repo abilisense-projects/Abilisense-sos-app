@@ -67,8 +67,7 @@ const ShowAlerts = ({ navigation, data, showHistory }) => {
                         {data.map((rowData, index) => (
                             <TableWrapper key={index} style={{ flexDirection: 'row' }}>
                                 <Cell
-                                    data={`${new Date(rowData.date).toISOString().split('T')[0]}${"\n"}${
-                                        new Date(rowData.date).toISOString().split('T')[1].split('.')[0]}`}
+                                    data={`${new Date(rowData.date).toISOString().split('T')[1].split('.')[0]}${"\n"}${new Date(rowData.date).toISOString().split('T')[0]}`}
                                     textStyle={[styles.cellText, { width: 100 }]}
                                     width={100}
                                     onPress={() => openPopup(rowData)}
@@ -96,8 +95,7 @@ const ShowAlerts = ({ navigation, data, showHistory }) => {
                                         <Text style={[styles.title, styles.boldText]}>Alert information: {"\n\n"}</Text>
                                         <Text>
                                             <Text style={styles.boldText}>Date:</Text>
-                                            <Text>{`${new Date(selectedRowData.date).toISOString().split('T')[0]}   ${
-                                        new Date(selectedRowData.date).toISOString().split('T')[1].split('.')[0]}`}</Text>
+                                            <Text>{` ${new Date(selectedRowData.date).toISOString().split('T')[1].split('.')[0]}  ${new Date(selectedRowData.date).toISOString().split('T')[0]}`}</Text>
                                         </Text>
                                         {/* <Text> */}
                                         <Text style={styles.boldText}>Location:</Text>

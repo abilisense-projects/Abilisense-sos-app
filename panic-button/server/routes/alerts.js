@@ -61,7 +61,7 @@ router.get('/get-active-alerts-by-patient-id/:id', async (req, res) => {
 router.put('/update-alert/:id', async (req, res) => {
     const alertId = req.params.id;
     const updateData = req.body;
-    
+
     if (!updateData) {
         return res.status(400).json({ error: 'Alert not found' });
     }
@@ -69,21 +69,12 @@ router.put('/update-alert/:id', async (req, res) => {
 
 });
 
+
+
 router.post('/add-alert/', async (req, res) => {
     const { patient, distressDescription, level, location, status } = req.body;
-    const moment = require('moment-timezone');
 
-    const localTimeZone = moment.tz.guess();
-    const currentTime = moment().tz(localTimeZone);
-
-    const date = new Date();
-    const utcHours = currentTime.hours();
-    const utcMinutes = currentTime.minutes();
-    const utcSeconds = currentTime.seconds();
-
-    date.setUTCHours(utcHours, utcMinutes, utcSeconds);
-
-    res.send(await addAlertBL({ patient, distressDescription, level, date, location, status }));
+    res.send(await addAlertBL({ patient, distressDescription, level, location, status }));
 });
 
 
