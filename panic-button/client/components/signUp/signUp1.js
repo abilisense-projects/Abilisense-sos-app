@@ -74,17 +74,6 @@ const SignUpScreen = ({ onStepChange }) => {
   }
 
   const checkIfEmailExistsFunction = async (newStep) => {
-    // // Check if the email is valid
-    // try {
-    //   signUpValidationSchema.validateSyncAt('email', formData);
-    // } catch (validationError) {
-    //   // If invalid, set the error for the 'email' key
-    //   const formErrors = { ...errors, email: validationError.message };
-    //   setErrors(formErrors);
-    //   return; // Exit the function, as the email is invalid
-    // }
-  
-    // Valid email, proceed with checking existence
     const result = await checkIfEmailExists(formData.email);
     if (!result) {
       console.log("Excellent! There is no such email");
@@ -219,6 +208,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 10,
     top: -8,
+    fontSize: 12,
     backgroundColor: 'rgb(243, 243, 243)',
     paddingHorizontal: 5,
     color: 'black',
