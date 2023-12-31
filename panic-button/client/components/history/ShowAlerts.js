@@ -43,7 +43,7 @@ const ShowAlerts = ({ navigation, data, showHistory }) => {
         const keysWithValues = Object.entries(data).filter(([key, value]) => value !== null && value !== undefined && key != "_id");
         return keysWithValues.map(([key, value]) => (
             <View key={key} style={styles.keyValueContainer}>
-                <Text style={styles.boldText}>{key}: </Text>
+                <Text /*style={styles.boldText}*/>{key}: </Text>
                 <Text>{value}</Text>
             </View>
         ));
