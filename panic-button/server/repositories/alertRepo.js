@@ -1,6 +1,21 @@
 const { Alert } = require('../models/alert');
 const { getPatientByEmail } = require('./patientRepo')
 
+function getCurrentDate() {
+    const moment = require('moment-timezone');
+
+    const localTimeZone = moment.tz.guess();
+    const currentTime = moment().tz(localTimeZone);
+
+    const date = new Date();
+    const utcHours = currentTime.hours();
+    const utcMinutes = currentTime.minutes();
+    const utcSeconds = currentTime.seconds();
+
+    date.setUTCHours(utcHours, utcMinutes, utcSeconds);
+    return date;
+}
+
 async function getAlertById(_id) {
     try {
         const alert = await Alert.findById({ _id });
@@ -51,8 +66,13 @@ async function getAlertsByPatientEmail(email) {
     }
 }
 
+
 async function addAlert(newAlert) {
     try {
+        date = getCurrentDate();
+        update = date;
+        newAlert.date = date;
+        newAlert.update = update;
         const alert = await Alert.create(newAlert);
         return alert;
     } catch (error) {
@@ -62,6 +82,8 @@ async function addAlert(newAlert) {
 
 async function updateAlertById(_id, updateData) {
     try {
+        update = getCurrentDate();
+        updateData.update = update;
         const updatedAlert = await Alert.findByIdAndUpdate(_id, updateData, { new: true });
         return updatedAlert;
     } catch (error) {
