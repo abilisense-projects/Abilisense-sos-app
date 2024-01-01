@@ -56,7 +56,7 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
   const insertClientDataIntoDB = async (ClientData) => {
     try {
       return await axios
-        .post(`http://localhost:3000/api/patients//add-patient/`, ClientData)
+        .post(`${SERVER_BASE_URL}/api/patients//add-patient/`, ClientData)
         .then((response) => response.data)
         .catch((error) => {
           console.error(error);
