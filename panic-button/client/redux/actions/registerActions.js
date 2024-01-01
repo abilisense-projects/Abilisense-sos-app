@@ -17,3 +17,8 @@
     type: 'REMOVE_MEDICAL_CONDITION',
     payload: condition,
   });
+
+  export const resetRegisterData = () => ({
+    type: 'RESET_REGISTER_DATA',
+  });
+  
