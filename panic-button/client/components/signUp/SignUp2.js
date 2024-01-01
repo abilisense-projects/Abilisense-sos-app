@@ -179,25 +179,6 @@ const styles = StyleSheet.create({
     color: 'red',
     marginTop: 5,
   },
-  // buttonContainer: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   width: '80%',
-  //   marginTop: 20,
-  // },
-  // buttonPrev: {
-  //   backgroundColor: '#ccc',
-  //   padding: 10,
-  //   borderRadius: 5,
-  //   flex: 1,
-  //   marginRight: 10,
-  // },
-  // buttonNext: {
-  //   backgroundColor: 'blue',
-  //   padding: 10,
-  //   borderRadius: 5,
-  //   flex: 1,
-  // },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center', // Center the buttons horizontally
