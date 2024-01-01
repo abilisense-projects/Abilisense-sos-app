@@ -4,8 +4,7 @@ const { getAllPatientsBL,
     getPatientByIdBL,
     addPatientBL,
     deletePatientByEmailBL,
-    deletePatientByIdBL,
-    getPatientByEmailAndPasswordBL } = require('../controllers/patientController')
+    deletePatientByIdBL } = require('../controllers/patientController')
 const router = express.Router();
 
 router.get('/get-all/', async (req, res) => {
@@ -17,47 +16,7 @@ router.post('/get-by-email/', async (req, res) => {
     if (!email) {
         return res.status(400).json({ error: 'Email parameter is required.' });
     }
-
     res.send(await getPatientByEmailBL(email));
-});
-
-router.post('/get-by-email-and-password/', async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).json({ error: 'Email and Password parameters are required.' });
-    }
-    // const bcrypt = require('bcrypt');
-
-    // const hashedPassword = bcrypt.hashSync(password, 10); // 10 הוא מספר הסיבובים להצפנה
-
-    // console.log('Hashed Password:', hashedPassword);
-    // try {
-    //     // Authenticate user - this is just an example, replace with your own authentication logic
-    //     const user = await getPatientByEmailAndPasswordBL(email, password);
-
-    //     if (user & user!== AuthenticationError) {
-    //         // Respond with success
-    //         res.status(200).json({ success: true, user: user });
-    //     } else {
-    //         res.status(401).json({ success: false, message: 'Auth fail' });
-    //     }
-    // } catch (error) {
-    //     res.status(500).json({ success: false, message: 'Internal server error' });
-    // }
-    try {
-        const response = await getPatientByEmailAndPasswordBL(email, password);
-        console.log(response)
-        if (response.success) {
-            res.status(200).json({ success: true, user: response.user });
-        } else{
-            console.log('in else')
-            res.status(401).json({ success: false, message: response.message });
-        }
-    } catch (error) {
-        console.log('in catch')
-        res.status(500).json({ success: false, message: 'Internal server error' });
-    }
-
 });
 
 router.post('/get-by-id/', async (req, res) => {
@@ -114,5 +73,6 @@ router.delete('/delete-by-email/', async (req, res) => {
 
     res.send(await deletePatientByEmailBL(email));
 });
+
 
 module.exports = router;

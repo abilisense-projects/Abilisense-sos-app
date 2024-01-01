@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const { connectToDB } = require('./db');
 const patients = require('./routes/patients');
-const alerts = require('./routes/alerts')
+const alerts = require('./routes/alerts');
+const passwordReset = require('./routes/passwordReset');
+
 require('dotenv').config();
 
 const app = express();
@@ -12,7 +14,7 @@ app.use(cors());
 
 app.use('/api/patients', patients);
 app.use('/api/alerts', alerts);
-
+app.use('/api/reset-password', passwordReset);
 
 
 const startApp = async () => {

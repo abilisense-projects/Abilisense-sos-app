@@ -12,6 +12,7 @@ import LogOut from './pages/Logout';
 import Login from './pages/Login';
 import store from "./redux/store";
 import { Provider } from 'react-redux';
+import ResetPassword from './pages/ResetPassword';
 const Drawer = createDrawerNavigator();
 
 const App = () => {
@@ -25,6 +26,10 @@ const App = () => {
           <Drawer.Screen name="SignUpPage" component={SignUpPage} options={{
             headerShown: false
           }} />
+          <Drawer.Screen name="ResetPassword" component={ResetPassword} options={{
+            headerShown: false
+          }} />
+
           <Drawer.Screen name="Home" component={HomeScreen} options={{ title: "" }} />
           <Drawer.Screen name="History" component={HistoryPage} options={{ title: "" }} />
           <Drawer.Screen name="Settings" component={SettingsPage} options={{ title: "" }} />

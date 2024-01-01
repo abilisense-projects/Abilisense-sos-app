@@ -12,10 +12,8 @@ async function getAllPatients() {
 async function getPatientByEmail(email) {
     try {
         const patient = await Patient.findOne({ email });
-        console.log(patient);
         return patient;
     } catch (error) {
-        console.error('Error fetching patient by email:', error);
         throw error;
     }
 }
@@ -92,6 +90,14 @@ async function addPatient(patient) {
     return data;
 }
 
+async function updatePassword(email, password) {
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
+        await Patient.updateOne({ email }, { password : hashedPassword});
+    } catch (error) {
+        console.error('Error update password:', error);
+    }
+}
 
 async function deletePatientByEmail(email) {
     try {
@@ -119,6 +125,7 @@ module.exports = {
     getPatientByEmail,
     getPatientById,
     addPatient,
+    updatePassword,
     deletePatientByEmail,
     deletePatientById,
     getPatientByEmailAndPassword

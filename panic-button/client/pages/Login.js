@@ -109,12 +109,17 @@ const Login = ({ navigation }) => {
       />
       {errors.password && <Text style={styles.warningText}>{errors.password}</Text>}
 
-      <Text
+      {/* <Text
         style={styles.forgotPassword}
         onPress={() => navigation.navigate('check')}
       >
         Forgot Password?
-      </Text>
+      </Text> */}
+      <View style={styles.forgotPasswordContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
+          <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        </TouchableOpacity>
+      </View>
       {errorMessage ? <Text style={{ color: 'red' }}>{errorMessage}</Text> : null}
       <Button title="Login" onPress={handleLogin} />
     </View>
