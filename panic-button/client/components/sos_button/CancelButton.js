@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const CancelButton = ({ navigation }) => {
-    console.log(navigation);
     const handleCancel = () => {
         navigation.reset({
             index: 0,

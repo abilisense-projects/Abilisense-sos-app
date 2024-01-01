@@ -1,6 +1,21 @@
 const { Alert } = require('../models/alert');
 const { getPatientByEmail } = require('./patientRepo')
 
+function getCurrentDate() {
+    const moment = require('moment-timezone');
+
+    const localTimeZone = moment.tz.guess();
+    const currentTime = moment().tz(localTimeZone);
+
+    const date = new Date();
+    const utcHours = currentTime.hours();
+    const utcMinutes = currentTime.minutes();
+    const utcSeconds = currentTime.seconds();
+
+    date.setUTCHours(utcHours, utcMinutes, utcSeconds);
+    return date;
+}
+
 async function getAlertById(_id) {
     try {
         const alert = await Alert.findById({ _id });
@@ -28,6 +43,16 @@ async function getAlertsByPatientId(patientId) {
     }
 }
 
+async function getActiveAlertsByPatientId(patientId) {
+    const status = ["not treated", "in treated"];
+    try {
+        const alerts = await Alert.find({ patient: patientId, status: { $in: status } });
+        return alerts;
+    } catch (error) {
+        console.error('Error fetching alerts by patient id:', error);
+    }
+}
+
 async function getAlertsByPatientEmail(email) {
     try {
         const patient = await getPatientByEmail(email);
@@ -41,12 +66,29 @@ async function getAlertsByPatientEmail(email) {
     }
 }
 
+
 async function addAlert(newAlert) {
     try {
+        date = getCurrentDate();
+        update = date;
+        newAlert.date = date;
+        newAlert.update = update;
         const alert = await Alert.create(newAlert);
         return alert;
     } catch (error) {
         console.error('Error fetching alert:', error);
+    }
+}
+
+async function updateAlertById(_id, updateData) {
+    try {
+        update = getCurrentDate();
+        updateData.update = update;
+        const updatedAlert = await Alert.findByIdAndUpdate(_id, updateData, { new: true });
+        return updatedAlert;
+    } catch (error) {
+        console.error('Error updating alert by _id:', error);
+        throw error;
     }
 }
 
@@ -77,5 +119,7 @@ module.exports = {
     getAlertsByPatientEmail,
     addAlert,
     deleteAlertById,
+    updateAlertById,
+    getActiveAlertsByPatientId,
     // deleteAlertsByStatus
 }

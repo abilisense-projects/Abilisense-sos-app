@@ -15,17 +15,14 @@ async function getPatientByEmailBL(email) {
     return await getPatientByEmail(email);
 }
 
-// async function getPatientByEmailAndPasswordBL(email, password) {
-//     return await getPatientByEmailAndPassword(email, password);
-// }
-
+//called from the routes send to repository with the request and return the answer
 async function getPatientByEmailAndPasswordBL(email, password) {
     try {
         const user = await getPatientByEmailAndPassword(email, password);
-        if(user.success){
+        if (user.success) {
             return { success: true, user: user.patient }; // Return success and user if successful
         }
-        return {success: false, massege: user.massege}
+        return { success: false, massege: user.massege }
     } catch (error) {
         return { success: false, message: error.message }; // Return failure and error message
     }
@@ -48,7 +45,6 @@ async function deletePatientByIdBL(_id) {
 async function deletePatientByEmailBL(email) {
     return await deletePatientByEmail(email);
 }
-
 
 
 module.exports = {

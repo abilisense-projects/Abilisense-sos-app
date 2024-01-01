@@ -18,35 +18,20 @@ async function getPatientByEmail(email) {
     }
 }
 
-// async function getPatientByEmailAndPassword(email, password) {
-//     try {
-//         const patient = await Patient.findOne({ email });
-//         const isPasswordValid = await bcrypt.compare(password, patient.password);
-//         if (!isPasswordValid) {
-//             throw new AuthenticationError('Auto faild');
-//         }
-//         return patient;
-//     } catch (error) {
-//         console.error('Error fetching patient by email and password:', error);
-//         throw error;
-//     }
-// }
 async function getPatientByEmailAndPassword(email, password) {
     try {
-        const success = false;
+        // check if there is user with such email
         const patient = await Patient.findOne({ email });
         console.log('patient:', patient)
         if (!patient) {
-            console.log('no patient')
             return { success: false, massege: 'not good email' };
         }
-
+        //Checks whether the user found has the same password as the entered password 
+        //Encrypts the received password and compares it with the encrypted password on DB 
         const isPasswordValid = await bcrypt.compare(password, patient.password);
         if (!isPasswordValid) {
-            console.log('not good password')
             return { success: false, massege: 'not good password' };
         }
-
         return { success: true, patient: patient };
     } catch (error) {
         console.error('Error fetching patient by email and password:', error);
@@ -71,8 +56,8 @@ const bcrypt = require('bcrypt');
 async function addPatient(patient) {
     const { password, ...otherData } = patient; // Extracting password from patient object
     console.log('!!!!!!!!!!!!!!!!!')
-    console.log('password' , password)
-    console.log('otherData' , otherData)
+    console.log('password', password)
+    console.log('otherData', otherData)
     const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
 
     // Create a new object with the hashed password and other patient data
@@ -128,5 +113,5 @@ module.exports = {
     updatePassword,
     deletePatientByEmail,
     deletePatientById,
-    getPatientByEmailAndPassword
+    getPatientByEmailAndPassword,
 }
