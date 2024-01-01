@@ -5,6 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../../redux/actions/registerActions';
+import BackButton from './LoginButton';
 
 const SignUpScreen = ({ onStepChange }) => {
 
@@ -107,6 +108,7 @@ const SignUpScreen = ({ onStepChange }) => {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <Text style={styles.title}>Sign Up</Text>
 
       {Object.keys(formData).map((key) => (
@@ -134,10 +136,6 @@ const SignUpScreen = ({ onStepChange }) => {
       ))}
 
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.buttonPrev} onPress={() => onStepChange(1)}>
-          <Text style={styles.buttonText}>Prev</Text>
-        </Pressable>
-
         <Pressable style={styles.buttonNext} onPress={() => handleSignUp(2)}>
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
@@ -156,6 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    marginTop: 30,
   },
   inputContainer: {
     position: 'relative',
@@ -179,23 +178,18 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center', // Center the buttons horizontally
     width: '80%',
     marginTop: 20,
-  },
-  buttonPrev: {
-    backgroundColor: '#ccc',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginRight: 10,
   },
   buttonNext: {
     backgroundColor: 'blue',
     padding: 10,
     borderRadius: 5,
     flex: 1,
+    maxWidth: 150, // Set your desired maximum width
   },
+  
   icon: {
     marginLeft: 10, // Adjust the margin as needed
   },

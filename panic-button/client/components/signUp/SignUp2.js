@@ -6,6 +6,7 @@ import { signUpValidationSchema } from '../../config/ValidationSchemas';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddressData } from '../../redux/actions/registerActions';
+import BackButton from './LoginButton';
 
 const SignUp2 = ({ onStepChange }) => {
   const addressData = useSelector((state) => state.register.addressData);
@@ -94,6 +95,8 @@ const SignUp2 = ({ onStepChange }) => {
       style={{ flex: 1 }}
     >
       <ScrollView contentContainerStyle={styles.container}>
+      <BackButton />
+      
         <Text style={styles.title}>Sign Up - Step 2</Text>
 
         {Object.keys(formData).map((key) => (
@@ -154,6 +157,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    marginTop: 30,
   },
   inputContainer: {
     position: 'relative',
@@ -175,9 +179,28 @@ const styles = StyleSheet.create({
     color: 'red',
     marginTop: 5,
   },
+  // buttonContainer: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   width: '80%',
+  //   marginTop: 20,
+  // },
+  // buttonPrev: {
+  //   backgroundColor: '#ccc',
+  //   padding: 10,
+  //   borderRadius: 5,
+  //   flex: 1,
+  //   marginRight: 10,
+  // },
+  // buttonNext: {
+  //   backgroundColor: 'blue',
+  //   padding: 10,
+  //   borderRadius: 5,
+  //   flex: 1,
+  // },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center', // Center the buttons horizontally
     width: '80%',
     marginTop: 20,
   },
@@ -187,12 +210,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flex: 1,
     marginRight: 10,
+    maxWidth: 150, // Set your desired maximum width
   },
   buttonNext: {
     backgroundColor: 'blue',
     padding: 10,
     borderRadius: 5,
     flex: 1,
+    maxWidth: 150, // Set your desired maximum width
   },
   icon: {
     marginLeft: 10, // Adjust the margin as needed

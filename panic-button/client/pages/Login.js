@@ -85,7 +85,11 @@ const Login = ({ navigation }) => {
       <Text style={styles.title}>Login</Text>
       <TouchableOpacity
         style={styles.registerContainer}
-        onPress={() => navigation.navigate('SignUpPage')}
+        onPress={() =>{
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'SignUpPage' }]
+          });}}
       >
         <Text style={styles.register}>Register</Text>
       </TouchableOpacity>

@@ -35,6 +35,8 @@ const initialState = {
           (condition) => condition !== action.payload
         ),
       };
+      case 'RESET_REGISTER_DATA':
+      return initialState;
       default:
         return state;
     }
