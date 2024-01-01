@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../../redux/actions/registerActions';
 import BackButton from './LoginButton';
+import { SERVER_BASE_URL } from '@env';
 
 const SignUpScreen = ({ onStepChange }) => {
 
@@ -91,7 +92,7 @@ const SignUpScreen = ({ onStepChange }) => {
 
   const checkIfEmailExists = async (email) => {
     try {
-        return await axios.post(`http://localhost:3000/api/patients//get-by-email/`, { email })
+        return await axios.post(`${SERVER_BASE_URL}/api/patients//get-by-email/`, { email })
             .then(response => {
                 console.log('The form data:', response.data);
                 return response.data
