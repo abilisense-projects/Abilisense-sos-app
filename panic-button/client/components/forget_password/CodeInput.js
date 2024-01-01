@@ -1,30 +1,10 @@
-// import React from 'react';
-// import { View, Text, Button, TextInput } from 'react-native';
-
-
-// const EmailVerification = () => {
-//     const [code, onChangeCode] = React.useState('');
-
-//     return (
-//         <View>
-//             <Text>Check your email inbox - a verification code has been sent now</Text>
-//             <TextInput
-//                 onChangeText={onChangeCode}
-//                 value={code}
-//             />
-//             <Button title='verify password' onPress={() => console.log(pwd === verifyPwd ? "yes" : "No")}></Button>
-//         </View>
-//     )
-// }
-
-// export default EmailVerification;
-
-
-
 import React, { useState, useRef } from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet, Dimensions } from 'react-native';
 
-const EmailVerification = () => {
+const { width } = Dimensions.get('window');
+const inputWidth = width * 0.12;
+
+const CodeInput = ({ onCodeChange }) => {
     const [codes, setCodes] = useState(['', '', '', '', '', '']);
     const refs = useRef([]);
 
@@ -43,6 +23,9 @@ const EmailVerification = () => {
         if (key === 'Backspace' && text.length === 0 && index > 0) {
             refs.current[index - 1].focus();
         }
+
+        // Send the verification code to the parent component
+        onCodeChange(newCodes.join(''));
     };
 
     return (
@@ -70,18 +53,18 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     input: {
-        width: 70,
-        height: 70,
-        borderWidth: 2,
+        width: inputWidth,
+        height: inputWidth,
+        borderWidth: 1,
         textAlign: 'center',
-        fontSize: 18,
+        fontSize: inputWidth * 0.35
     },
     inputGreenBorder: {
         borderColor: 'green',
     },
     inputMarginLeft: {
-        marginLeft: 10, // Adjust the space between inputs
+        marginLeft: inputWidth * 0.1
     }
 });
 
-export default EmailVerification;
+export default CodeInput;

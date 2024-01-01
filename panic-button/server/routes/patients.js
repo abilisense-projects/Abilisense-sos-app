@@ -4,8 +4,7 @@ const { getAllPatientsBL,
     getPatientByIdBL,
     addPatientBL,
     deletePatientByEmailBL,
-    deletePatientByIdBL,
-    getPatientByEmailAndPasswordBL } = require('../controllers/patientController')
+    deletePatientByIdBL } = require('../controllers/patientController')
 const router = express.Router();
 
 router.get('/get-all/', async (req, res) => {
@@ -17,7 +16,6 @@ router.post('/get-by-email/', async (req, res) => {
     if (!email) {
         return res.status(400).json({ error: 'Email parameter is required.' });
     }
-
     res.send(await getPatientByEmailBL(email));
 });
 
@@ -92,7 +90,8 @@ router.post('/get-by-email-and-password/', async (req, res) => {
         }
 
 
-        res.send(await deletePatientByEmailBL(email));
-    });
+    res.send(await deletePatientByEmailBL(email));
+});
+
 
     module.exports = router;

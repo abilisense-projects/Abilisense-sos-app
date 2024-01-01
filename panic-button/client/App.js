@@ -12,33 +12,32 @@ import LogOut from './pages/Logout';
 import Login from './pages/Login';
 import { store, persistor } from "./redux/store";
 import { Provider } from 'react-redux';
-import ForgetPassword from './components/forget_password/forget_password';
-import { PersistGate } from 'redux-persist/integration/react';
-
+import ResetPassword from './pages/ResetPassword';
 const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <NavigationContainer>
-          <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}>
-            <Drawer.Screen name="Login" component={Login} options={{
-              headerShown: false
-            }} />
-            <Drawer.Screen name="SignUpPage" component={SignUpPage} options={{
-              headerShown: false
-            }} />
-            <Drawer.Screen name="Home" component={HomeScreen} options={{ title: "" }} />
-            <Drawer.Screen name="History" component={HistoryPage} options={{ title: "" }} />
-            <Drawer.Screen name="Settings" component={SettingsPage} options={{ title: "" }} />
-            <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "" }} />
-            <Drawer.Screen name="Accessibility" component={AccessibilityPage} options={{ title: "" }} />
-            <Drawer.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: "" }} />
-          </Drawer.Navigator>
-        </NavigationContainer>
-      </PersistGate>
-    </Provider >
+      <NavigationContainer>
+        <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}>
+          <Drawer.Screen name="Login" component={Login} options={{
+            headerShown: false
+          }} />
+          <Drawer.Screen name="SignUpPage" component={SignUpPage} options={{
+            headerShown: false
+          }} />
+          <Drawer.Screen name="ResetPassword" component={ResetPassword} options={{
+            headerShown: false
+          }} />
+
+          <Drawer.Screen name="Home" component={HomeScreen} options={{ title: "" }} />
+          <Drawer.Screen name="History" component={HistoryPage} options={{ title: "" }} />
+          <Drawer.Screen name="Settings" component={SettingsPage} options={{ title: "" }} />
+          <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "" }} />
+          <Drawer.Screen name="Accessibility" component={AccessibilityPage} options={{ title: "" }} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
