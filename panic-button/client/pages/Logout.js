@@ -13,6 +13,7 @@ const Logout = () => {
 
     const handleCancel = () => {
         setModalVisible(false);
+        navigation.navigate('Login');
     };
 
     const logoutUser = async () => {

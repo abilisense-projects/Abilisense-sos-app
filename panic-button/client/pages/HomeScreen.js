@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import SosButton from '../components/sos_button/SosButton';
 import Status from '../components/sos_button/Status';
@@ -8,6 +8,8 @@ import SendAlert from '../components/sos_button/SendAlert';
 import FindLocation from '../components/sos_button/FindLocation';
 import CancelButton from '../components/sos_button/CancelButton';
 import AlertSendingConfirmationModel from '../components/sos_button/AlertSendingConfirmationModel';
+import SquareIconButton from '../components/home/SquareIconButton';
+import { LocationButton } from '../components/home/locationButton';
 import CancelAlertButton from '../components/sos_button/CancelAlertButton';
 
 const HomeScreen = ({ navigation }) => {
@@ -15,6 +17,8 @@ const HomeScreen = ({ navigation }) => {
     const [alert, setAlert] = useState();
     const [alertId, setAlertId] = useState('');
     const [modalVisible, setModalVisible] = useState(true);
+    const [locationPressed, setlocationPressed] = useState();
+    // const { locationPressed } = route.params;
 
     const handleCancel = () => {
         // setModalVisible(false);
@@ -46,11 +50,34 @@ const HomeScreen = ({ navigation }) => {
         }, [])
     );
 
+    const handlelocationPress = () => {
+        console.log('Button pressed!');
+        setlocationPressed(!locationPressed);
+        console.log('loc', locationPressed)
+        LocationButton(locationPressed)
+        // setStep(7)
+    };
+
     return (
         <>
             {
                 step === 1 &&
-                <SosButton onStepChange={handleStepChange} />
+                <View style={styles.container}>
+                    <View style={styles.buttonsContainer}>
+                        <SosButton onStepChange={handleStepChange} style={{ backgroundColor: 'transparent' }} />
+                        <View style={styles.iconsContainer}>
+                            <View style={styles.iconRow}>
+                                <SquareIconButton iconName="location-on" isPressed={locationPressed} />
+                                <View style={styles.iconSpacing} />
+                                <SquareIconButton iconName="keyboard" />
+                                <View style={styles.iconSpacing} />
+                                <SquareIconButton iconName="keyboard" />
+                                <View style={styles.iconSpacing} />
+                                <SquareIconButton iconName="keyboard" />
+                            </View>
+                        </View>
+                    </View>
+                </View>
             }
             {
                 step === 2 &&
@@ -76,6 +103,7 @@ const HomeScreen = ({ navigation }) => {
             {
                 step === 5 &&
                 <>
+
                     {/* <CancelButton navigation={navigation} /> */}
                     <AlertSendingConfirmationModel
                         visible={modalVisible}
@@ -91,8 +119,39 @@ const HomeScreen = ({ navigation }) => {
                     <SendAlert alert={alert} onStepChange={handleStepChange} setAlertId={setAlertId} />
                 </>
             }
+            {
+                step === 7 &&
+                <>
+                    <LocationButton/>
+                </>
+            }
         </>
     );
 };
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+    },
+    buttonsContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingTop: 20,
+    },
+    iconsContainer: {
+        alignItems: 'center',
+        marginTop: 50
+    },
+    iconRow: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    iconSpacing: {
+        width: 20, // Adjust spacing between icons
+    },
+});
 export default HomeScreen;
