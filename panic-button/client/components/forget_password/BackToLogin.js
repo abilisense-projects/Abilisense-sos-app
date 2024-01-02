@@ -1,18 +1,18 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const CancelButton = ({ navigation }) => {
-    const handleCancel = () => {
+const BackToLoginButton = ({ navigation }) => {
+    const handleNavigation = () => {
         navigation.reset({
             index: 0,
-            routes: [{ name: "Home" }]
+            routes: [{ name: "Login" }]
         });
     };
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.submitButton} onPress={() => handleCancel()}>
-                <Text style={styles.submitButtonText}>Cancel</Text>
+            <TouchableOpacity style={styles.submitButton} onPress={() => handleNavigation()}>
+                <Text style={styles.submitButtonText}>Back</Text>
             </TouchableOpacity>
         </View>
     )
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CancelButton;
+export default BackToLoginButton;

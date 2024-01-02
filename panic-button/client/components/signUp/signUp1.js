@@ -5,6 +5,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../../redux/actions/registerActions';
+import BackButton from './LoginButton';
+import { SERVER_BASE_URL } from '@env';
 
 const SignUpScreen = ({ onStepChange }) => {
 
@@ -74,17 +76,6 @@ const SignUpScreen = ({ onStepChange }) => {
   }
 
   const checkIfEmailExistsFunction = async (newStep) => {
-    // // Check if the email is valid
-    // try {
-    //   signUpValidationSchema.validateSyncAt('email', formData);
-    // } catch (validationError) {
-    //   // If invalid, set the error for the 'email' key
-    //   const formErrors = { ...errors, email: validationError.message };
-    //   setErrors(formErrors);
-    //   return; // Exit the function, as the email is invalid
-    // }
-  
-    // Valid email, proceed with checking existence
     const result = await checkIfEmailExists(formData.email);
     if (!result) {
       console.log("Excellent! There is no such email");
@@ -94,14 +85,14 @@ const SignUpScreen = ({ onStepChange }) => {
     } else {
       console.log("Invalid email");
       // Set the error for the 'email' key
-      setErrors({ ...errors, email: 'Invalid email address' });
+      setErrors({ ...errors, email: 'Provide a valid email' });
       // You can also display a message to the user if needed
     }
   };
 
   const checkIfEmailExists = async (email) => {
     try {
-        return await axios.post(`http://localhost:3000/api/patients//get-by-email/`, { email })
+        return await axios.post(`${SERVER_BASE_URL}/api/patients//get-by-email/`, { email })
             .then(response => {
                 console.log('The form data:', response.data);
                 return response.data
@@ -118,6 +109,7 @@ const SignUpScreen = ({ onStepChange }) => {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <Text style={styles.title}>Sign Up</Text>
 
       {Object.keys(formData).map((key) => (
@@ -145,10 +137,6 @@ const SignUpScreen = ({ onStepChange }) => {
       ))}
 
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.buttonPrev} onPress={() => onStepChange(1)}>
-          <Text style={styles.buttonText}>Prev</Text>
-        </Pressable>
-
         <Pressable style={styles.buttonNext} onPress={() => handleSignUp(2)}>
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
@@ -167,6 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    marginTop: 30,
   },
   inputContainer: {
     position: 'relative',
@@ -190,23 +179,18 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center', // Center the buttons horizontally
     width: '80%',
     marginTop: 20,
-  },
-  buttonPrev: {
-    backgroundColor: '#ccc',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginRight: 10,
   },
   buttonNext: {
     backgroundColor: 'blue',
     padding: 10,
     borderRadius: 5,
     flex: 1,
+    maxWidth: 150, // Set your desired maximum width
   },
+  
   icon: {
     marginLeft: 10, // Adjust the margin as needed
   },
@@ -219,6 +203,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 10,
     top: -8,
+    fontSize: 12,
     backgroundColor: 'rgb(243, 243, 243)',
     paddingHorizontal: 5,
     color: 'black',

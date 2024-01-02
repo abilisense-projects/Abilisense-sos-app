@@ -20,11 +20,10 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
         findUserLocation();
     }, []);
     const findDefaultAddress = () => {
-        console.log("1");
         console.log(user.address);
         setDefaultAddress(user.address);
         console.log(defaultAddress);
-    }
+    };
 
     const findUserLocation = () => {
         Geolocation.getCurrentPosition(
@@ -56,12 +55,12 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
                 const addressData = response.body.features[0];
                 // setAddress(addressData.place_name);
 
-                const separated = addressData.place_name.split(', ');
-                if (separated.length === 3) {
+                const separatedAddress = addressData.place_name.split(', ');
+                if (separatedAddress.length === 3) {
                     const newAddress = {
-                        street: separated[0],
-                        city: separated[1],
-                        country: separated[2]
+                        street: separatedAddress[0],
+                        city: separatedAddress[1],
+                        country: separatedAddress[2]
                     };
                     setAddress(newAddress);
                 }
@@ -107,7 +106,7 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
             )}
             <TouchableOpacity style={styles.button} onPress={() => handlePress(defaultAddress)}>
                 {defaultAddress ? <Text style={styles.buttonText}>
-                    {defaultAddress.street}{"\n"}
+                    {defaultAddress.street} {defaultAddress.buildingNumber}{"\n"}
                     {defaultAddress.city}{"\n"}
                     {defaultAddress.country}
                 </Text> :

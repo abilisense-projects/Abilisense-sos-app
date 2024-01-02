@@ -12,10 +12,8 @@ async function getAllPatients() {
 async function getPatientByEmail(email) {
     try {
         const patient = await Patient.findOne({ email });
-        console.log(patient);
         return patient;
     } catch (error) {
-        console.error('Error fetching patient by email:', error);
         throw error;
     }
 }
@@ -28,7 +26,6 @@ async function getPatientByEmailAndPassword(email, password) {
         if (!patient) {
             return { success: false, massege: 'not good email' };
         }
-
         //Checks whether the user found has the same password as the entered password 
         //Encrypts the received password and compares it with the encrypted password on DB 
         const isPasswordValid = await bcrypt.compare(password, patient.password);
@@ -59,8 +56,8 @@ const bcrypt = require('bcrypt');
 async function addPatient(patient) {
     const { password, ...otherData } = patient; // Extracting password from patient object
     console.log('!!!!!!!!!!!!!!!!!')
-    console.log('password' , password)
-    console.log('otherData' , otherData)
+    console.log('password', password)
+    console.log('otherData', otherData)
     const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
 
     // Create a new object with the hashed password and other patient data
@@ -78,6 +75,14 @@ async function addPatient(patient) {
     return data;
 }
 
+async function updatePassword(email, password) {
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
+        await Patient.updateOne({ email }, { password : hashedPassword});
+    } catch (error) {
+        console.error('Error update password:', error);
+    }
+}
 
 async function deletePatientByEmail(email) {
     try {
@@ -105,7 +110,8 @@ module.exports = {
     getPatientByEmail,
     getPatientById,
     addPatient,
+    updatePassword,
     deletePatientByEmail,
     deletePatientById,
-    getPatientByEmailAndPassword
+    getPatientByEmailAndPassword,
 }

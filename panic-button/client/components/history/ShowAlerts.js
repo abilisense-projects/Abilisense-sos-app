@@ -1,31 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Table, Row, TableWrapper, Cell } from 'react-native-table-component';
 import { SERVER_BASE_URL } from '@env';
-import { useSelector } from 'react-redux';
 
-const ShowHistory = () => {
-    const [data, setData] = useState([]);
+
+
+const ShowAlerts = ({ navigation, data, showHistory }) => {
     const [popupVisible, setPopupVisible] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
-    const user = useSelector((state) => state.userReducer.user);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const patientId = user._id;
-                const response = await axios.post(`${SERVER_BASE_URL}/api/alerts/get-by-patient-id/`, {
-                    patientId: patientId,
-                });
-                setData(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     const openPopup = (rowData) => {
         setSelectedRowData(rowData);
@@ -34,15 +17,33 @@ const ShowHistory = () => {
 
     const closePopup = () => {
         setPopupVisible(false);
-        setSelectedRowData(null);
+        if (!selectedRowData) {
+            setSelectedRowData(null);
+        }
+    };
+
+    const cancelAlert = async (alertId) => {
+        const url = `${SERVER_BASE_URL}/api/alerts/update-alert/${alertId}`;
+        const statusUpdate = { "status": "canceled" };
+        try {
+            const response = await axios.put(url, statusUpdate);
+            console.log('Response from server: ', response.data);
+            closePopup();
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "Home" }]
+            });
+
+        } catch (error) {
+            console.error('Error updating alert:', error);
+        }
     };
 
     const renderKeyValuePairs = (data) => {
         const keysWithValues = Object.entries(data).filter(([key, value]) => value !== null && value !== undefined && key != "_id");
-        console.log("keysWithValues", keysWithValues);
         return keysWithValues.map(([key, value]) => (
             <View key={key} style={styles.keyValueContainer}>
-                <Text style={styles.boldText}>{key}: </Text>
+                <Text /*style={styles.boldText}*/>{key}: </Text>
                 <Text>{value}</Text>
             </View>
         ));
@@ -50,7 +51,6 @@ const ShowHistory = () => {
 
     return (
         <View style={styles.container}>
-            {console.log(new Date())}
             {data.length !== 0 &&
                 <Text style={[styles.title, styles.boldText]}>You can see more information by tapping on one of the table rows {"\n\n\n"}</Text>}
             {data.length !== 0 ? (
@@ -67,29 +67,11 @@ const ShowHistory = () => {
                         {data.map((rowData, index) => (
                             <TableWrapper key={index} style={{ flexDirection: 'row' }}>
                                 <Cell
-                                    data={rowData.date}
+                                    data={`${new Date(rowData.date).toISOString().split('T')[1].split('.')[0]}${"\n"}${new Date(rowData.date).toISOString().split('T')[0]}`}
                                     textStyle={[styles.cellText, { width: 100 }]}
                                     width={100}
                                     onPress={() => openPopup(rowData)}
                                 />
-                                {/* <Cell
-                                    data={rowData.location}
-                                    textStyle={[styles.cellText, { width: 100 }]}
-                                    width={100}
-                                    onPress={() => openPopup(rowData)}
-                                />
-                                <Cell
-                                    data={rowData.distressDescription}
-                                    textStyle={[styles.cellText, { width: 100 }]}
-                                    width={100}
-                                    onPress={() => openPopup(rowData)}
-                                />
-                                <Cell
-                                    data={rowData.level}
-                                    textStyle={[styles.cellText, { width: 100 }]}
-                                    width={100}
-                                    onPress={() => openPopup(rowData)}
-                                /> */}
                                 <Cell
                                     data={rowData.status}
                                     textStyle={[styles.cellText, { width: 100 }]}
@@ -113,12 +95,10 @@ const ShowHistory = () => {
                                         <Text style={[styles.title, styles.boldText]}>Alert information: {"\n\n"}</Text>
                                         <Text>
                                             <Text style={styles.boldText}>Date:</Text>
-                                            <Text> {selectedRowData.date}</Text>
+                                            <Text>{` ${new Date(selectedRowData.date).toISOString().split('T')[1].split('.')[0]}  ${new Date(selectedRowData.date).toISOString().split('T')[0]}`}</Text>
                                         </Text>
                                         {/* <Text> */}
                                         <Text style={styles.boldText}>Location:</Text>
-                                        {console.log(selectedRowData.location)}
-                                        {console.log(selectedRowData)}
                                         {renderKeyValuePairs(selectedRowData.location)}
                                         {/* <Text> {selectedRowData.location}</Text> */}
                                         {/* </Text> */}
@@ -136,9 +116,14 @@ const ShowHistory = () => {
                                         </Text>
                                     </View>
                                 ) : null}
-                                <TouchableOpacity onPress={closePopup}>
-                                    <Text style={styles.closeButton}>Close</Text>
-                                </TouchableOpacity>
+                                <View style={styles.buttonContainer}>
+                                    {!showHistory && <TouchableOpacity onPress={() => cancelAlert(selectedRowData._id)}>
+                                        <Text style={styles.cancelButton}>Cancel Alert</Text>
+                                    </TouchableOpacity>}
+                                    <TouchableOpacity onPress={closePopup}>
+                                        <Text style={styles.closeButton}>Close</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                     </Modal>
@@ -162,6 +147,11 @@ const styles = StyleSheet.create({
     title: {
         textAlign: 'center'
     },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+    },
     cellText: {
         textAlign: 'center',
         overflow: 'hidden',
@@ -173,6 +163,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    cancelButton: {
+        marginTop: 20,
+        color: 'red',
+        fontWeight: 'bold',
     },
     modalContent: {
         backgroundColor: 'white',
@@ -196,4 +191,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ShowHistory;
+export default ShowAlerts;

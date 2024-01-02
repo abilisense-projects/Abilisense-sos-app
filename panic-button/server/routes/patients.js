@@ -4,8 +4,7 @@ const { getAllPatientsBL,
     getPatientByIdBL,
     addPatientBL,
     deletePatientByEmailBL,
-    deletePatientByIdBL,
-    getPatientByEmailAndPasswordBL } = require('../controllers/patientController')
+    deletePatientByIdBL } = require('../controllers/patientController')
 const router = express.Router();
 
 router.get('/get-all/', async (req, res) => {
@@ -17,7 +16,6 @@ router.post('/get-by-email/', async (req, res) => {
     if (!email) {
         return res.status(400).json({ error: 'Email parameter is required.' });
     }
-
     res.send(await getPatientByEmailBL(email));
 });
 
@@ -31,69 +29,69 @@ router.post('/get-by-email-and-password/', async (req, res) => {
         const response = await getPatientByEmailAndPasswordBL(email, password);
         if (response.success) {
             res.status(200).json({ success: true, user: response.user });
-        } else{
+        } else {
             res.status(401).json({ success: false, message: response.message });
         }
     } catch (error) {
         console.log('in catch')
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
-
 });
 
-router.post('/get-by-id/', async (req, res) => {
-    const { _id } = req.body;
-    if (!_id) {
-        return res.status(400).json({ error: '_id parameter is required.' });
-    }
+    router.post('/get-by-id/', async (req, res) => {
+        const { _id } = req.body;
+        if (!_id) {
+            return res.status(400).json({ error: '_id parameter is required.' });
+        }
 
 
-    res.send(await getPatientByIdBL(_id));
-});
+        res.send(await getPatientByIdBL(_id));
+    });
 
 
 
-router.post('/add-patient/', async (req, res) => {
-    const { fname,
-        lname,
-        email,
-        password,
-        phone,
-        dateOfBirth,
-        medicalConditions,
-        address } = req.body;
-    //validation
+    router.post('/add-patient/', async (req, res) => {
+        const { fname,
+            lname,
+            email,
+            password,
+            phone,
+            dateOfBirth,
+            medicalConditions,
+            address } = req.body;
+        //validation
 
-    res.send(await addPatientBL({
-        fname,
-        lname,
-        email,
-        password,
-        phone,
-        dateOfBirth,
-        medicalConditions,
-        address
-    }));
-});
+        res.send(await addPatientBL({
+            fname,
+            lname,
+            email,
+            password,
+            phone,
+            dateOfBirth,
+            medicalConditions,
+            address
+        }));
+    });
 
-router.delete('/delete-by-id/', async (req, res) => {
-    const { _id } = req.body;
-    if (!_id) {
-        return res.status(400).json({ error: '_id parameter is required.' });
-    }
+    router.delete('/delete-by-id/', async (req, res) => {
+        const { _id } = req.body;
+        if (!_id) {
+            return res.status(400).json({ error: '_id parameter is required.' });
+        }
 
 
-    res.send(await deletePatientByIdBL(_id));
-});
+        res.send(await deletePatientByIdBL(_id));
+    });
 
-router.delete('/delete-by-email/', async (req, res) => {
-    const { email } = req.body;
-    if (!email) {
-        return res.status(400).json({ error: 'email parameter is required.' });
-    }
+    router.delete('/delete-by-email/', async (req, res) => {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ error: 'email parameter is required.' });
+        }
 
 
     res.send(await deletePatientByEmailBL(email));
 });
 
-module.exports = router;
+
+    module.exports = router;

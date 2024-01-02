@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import {
-  View,Text,TextInput,Pressable,ScrollView,KeyboardAvoidingView,Platform,StyleSheet,
+  View, Text, TextInput, Pressable, ScrollView, KeyboardAvoidingView, Platform, StyleSheet,
 } from 'react-native';
 import { signUpValidationSchema } from '../../config/ValidationSchemas';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddressData } from '../../redux/actions/registerActions';
+import BackButton from './LoginButton';
 
 const SignUp2 = ({ onStepChange }) => {
-
   const addressData = useSelector((state) => state.register.addressData);
 
   const [formData, setFormData] = useState({
@@ -23,6 +23,19 @@ const SignUp2 = ({ onStepChange }) => {
     apartmentNumber: addressData.apartmentNumber,
     additionalNotes: addressData.additionalNotes,
   });
+
+  const placeholderText = {
+    phoneNumber: 'Phone number',
+    dateOfBirth: 'YYYY-MM-DD',
+    country: 'Country',
+    city: 'City',
+    street: 'Street',
+    buildingNumber: 'Building number',
+    entrance: 'Entrance',
+    floor: 'Floor',
+    apartmentNumber: 'Apartment number',
+    additionalNotes: 'Additional notes',
+  };
 
   const [errors, setErrors] = useState({});
 
@@ -49,7 +62,7 @@ const SignUp2 = ({ onStepChange }) => {
   const renderLabel = (key) => {
     return (
       <Text style={styles.placeholderLabel}>
-        {formData[key] ? key.charAt(0).toUpperCase() + key.slice(1) : ''}
+        {key === 'dateOfBirth' ? 'Date of birth' : formData[key] ? placeholderText[key] : ''}
       </Text>
     );
   };
@@ -67,7 +80,7 @@ const SignUp2 = ({ onStepChange }) => {
     if (Object.keys(formErrors).length === 0) {
       // No errors, proceed to the next step
       setErrors({});
-      //send data to store
+      // Send data to store
       dispatch(setAddressData(formData));
       onStepChange(newStep);
     } else {
@@ -82,6 +95,8 @@ const SignUp2 = ({ onStepChange }) => {
       style={{ flex: 1 }}
     >
       <ScrollView contentContainerStyle={styles.container}>
+      <BackButton />
+      
         <Text style={styles.title}>Sign Up - Step 2</Text>
 
         {Object.keys(formData).map((key) => (
@@ -94,13 +109,13 @@ const SignUp2 = ({ onStepChange }) => {
                 borderColor: isFieldValid(key)
                   ? 'green'
                   : errors[key]
-                  ? 'red'
-                  : 'gray',
+                    ? 'red'
+                    : 'gray',
               }}
-              placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+              placeholder={placeholderText[key]}
               onChangeText={(text) => handleInputChange(key, text)}
               value={formData[key]}
-              keyboardType={key === 'dob' ? 'numeric' : 'default'}
+              keyboardType={key === 'dateOfBirth' ? 'numeric' : 'default'}
             />
             {isFieldValid(key) && (
               <View style={styles.iconContainer}>
@@ -108,6 +123,12 @@ const SignUp2 = ({ onStepChange }) => {
               </View>
             )}
             {errors[key] && <Text style={styles.error}>{errors[key]}</Text>}
+
+            {key === 'dateOfBirth' && (
+              <Text style={styles.additionalText}>
+               {"Year-Month-Day"}
+              </Text>
+            )}
           </View>
         ))}
 
@@ -136,6 +157,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    marginTop: 30,
   },
   inputContainer: {
     position: 'relative',
@@ -159,7 +181,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center', // Center the buttons horizontally
     width: '80%',
     marginTop: 20,
   },
@@ -169,12 +191,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flex: 1,
     marginRight: 10,
+    maxWidth: 150, // Set your desired maximum width
   },
   buttonNext: {
     backgroundColor: 'blue',
     padding: 10,
     borderRadius: 5,
     flex: 1,
+    maxWidth: 150, // Set your desired maximum width
   },
   icon: {
     marginLeft: 10, // Adjust the margin as needed
@@ -188,9 +212,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 10,
     top: -8,
+    fontSize: 12,
     backgroundColor: 'rgb(243, 243, 243)',
     paddingHorizontal: 5,
     color: 'black',
+  },
+  additionalText: {
+    fontSize: 12,
+    color: 'gray',
+    marginLeft: 10,
   },
 });
 

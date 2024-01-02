@@ -8,13 +8,11 @@ import { loginSuccess } from '../redux/actions/loginActions';
 import { useSelector } from 'react-redux';
 import { BY_EMAIL_AND_PASSWORD, SERVER_BASE_URL } from '@env';
 import * as Yup from 'yup';
-
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
-
   const dispatch = useDispatch();
 
   // on start the app or on reload check in local-storege If there is a logged in user
@@ -85,14 +83,16 @@ const Login = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-
       <TouchableOpacity
         style={styles.registerContainer}
-        onPress={() => navigation.navigate('SignUpPage')}
+        onPress={() =>{
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'SignUpPage' }]
+          });}}
       >
         <Text style={styles.register}>Register</Text>
       </TouchableOpacity>
-
       <TextInput
         style={[styles.input, errors.email && styles.invalidInput]}
         placeholder="Email"
@@ -115,11 +115,10 @@ const Login = ({ navigation }) => {
       />
       
       <View style={styles.forgotPasswordContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
+        <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
       </View>
-
       {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
 
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
@@ -128,7 +127,6 @@ const Login = ({ navigation }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -139,6 +137,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  inputContainer: {
+    marginBottom: 20,
+    width: '80%',
   },
   inputContainer: {
     marginBottom: 20,
@@ -194,5 +196,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
 export default Login;

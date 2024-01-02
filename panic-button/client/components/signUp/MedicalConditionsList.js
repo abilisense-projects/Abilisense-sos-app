@@ -7,6 +7,7 @@ import medicalConditionsData from '../../medicinenetDiseases'; // Adjust the pat
 const MedicalConditionsList = ({ onStepChange }) => {
   const [inputValue, setInputValue] = useState('');
   const [filteredConditions, setFilteredConditions] = useState([]);
+  const [selectedCondition, setSelectedCondition] = useState(null); // Track the selected condition
   const dispatch = useDispatch();
   const medicalConditions = useSelector((state) => state.register.medicalConditions);
 
@@ -26,38 +27,52 @@ const MedicalConditionsList = ({ onStepChange }) => {
   const handleSelectCondition = (condition) => {
     if (!medicalConditions.includes(condition)) {
       dispatch(addMedicalConditions(condition));
+      setSelectedCondition(condition); // Set the selected condition
     }
   };
 
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => handleSelectCondition(item)}
+      style={[
+        styles.conditionButton,
+        selectedCondition === item && styles.selectedConditionButton,
+      ]}
+    >
+      <Text style={[selectedCondition === item && { color: 'white' }]}>
+        {item}
+      </Text>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
-      <TextInput
-        placeholder="Enter medical condition"
-        value={inputValue}
-        onChangeText={handleInputChange}
-        style={styles.input}
-      />
+      <TouchableOpacity style={styles.closeButton} onPress={() => onStepChange(3)}>
+        <Text style={styles.closeButtonText}>Close</Text>
+      </TouchableOpacity>
 
-      {filteredConditions.length > 0 && (
-        <FlatList
-          data={filteredConditions}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => handleSelectCondition(item)}
-              style={styles.conditionButton}
-            >
-              <Text>{item}</Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item}
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Enter medical condition"
+          value={inputValue}
+          onChangeText={handleInputChange}
+          style={styles.input}
         />
-      )}
-
-      <View style={styles.closeButtonContainer}>
-        <TouchableOpacity style={styles.closeButton} onPress={() => onStepChange(3)}>
-          <Text style={styles.closeButtonText}>Close</Text>
-        </TouchableOpacity>
       </View>
+
+      <View style={styles.centeredContainer}>
+        {filteredConditions.length > 0 && (
+          <FlatList
+            data={filteredConditions}
+            renderItem={renderItem}
+            keyExtractor={(item) => item}
+            contentContainerStyle={styles.listContainer} // Added contentContainerStyle
+          />
+        )}
+      </View>
+
+
     </View>
   );
 };
@@ -67,36 +82,46 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+  inputContainer: {
+    marginTop: 30,
+  },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: 'green',
     borderWidth: 1,
     borderRadius: 10,
     marginBottom: 10,
     padding: 10,
   },
+
   conditionButton: {
     backgroundColor: '#e0e0e0',
     borderRadius: 10,
     padding: 10,
     marginVertical: 5,
     alignItems: 'center',
+    minWidth: 300, // Adjust the minimum width as needed
   },
-  closeButtonContainer: {
-    position: 'absolute',
-    bottom: 20,
-    width: '100%',
-    alignItems: 'center',
+
+  selectedConditionButton: {
+    backgroundColor: 'blue',
   },
+
   closeButton: {
-    backgroundColor: 'red',
-    padding: 15,
-    borderRadius: 10,
+    position: 'absolute',
+    top: 10,
+    left: 10,
   },
   closeButtonText: {
-    color: 'white',
     fontSize: 16,
-    fontWeight: 'bold',
+    color: 'blue',
+  },
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center', // Center the content vertically
+  },
+  listContainer: {
+    alignItems: 'center', // Center the items horizontally
   },
 });
 

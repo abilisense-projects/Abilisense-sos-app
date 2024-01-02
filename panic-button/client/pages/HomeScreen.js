@@ -10,17 +10,18 @@ import CancelButton from '../components/sos_button/CancelButton';
 import AlertSendingConfirmationModel from '../components/sos_button/AlertSendingConfirmationModel';
 import SquareIconButton from '../components/home/SquareIconButton';
 import { LocationButton } from '../components/home/locationButton';
-
+import CancelAlertButton from '../components/sos_button/CancelAlertButton';
 
 const HomeScreen = ({ navigation }) => {
     const [step, setStep] = useState(1);
     const [alert, setAlert] = useState();
+    const [alertId, setAlertId] = useState('');
     const [modalVisible, setModalVisible] = useState(true);
     const [locationPressed, setlocationPressed] = useState();
     // const { locationPressed } = route.params;
 
     const handleCancel = () => {
-        setModalVisible(false);
+        // setModalVisible(false);
         setStep(1);
 
     };
@@ -102,7 +103,8 @@ const HomeScreen = ({ navigation }) => {
             {
                 step === 5 &&
                 <>
-                    <CancelButton navigation={navigation} />
+
+                    {/* <CancelButton navigation={navigation} /> */}
                     <AlertSendingConfirmationModel
                         visible={modalVisible}
                         onClose={handleCancel}
@@ -113,7 +115,8 @@ const HomeScreen = ({ navigation }) => {
                 step === 6 &&
                 <>
                     {/* <CancelButton navigation={navigation}/> */}
-                    <SendAlert alert={alert} onStepChange={handleStepChange} />
+                    <CancelAlertButton navigation={navigation} alertId={alertId} />
+                    <SendAlert alert={alert} onStepChange={handleStepChange} setAlertId={setAlertId} />
                 </>
             }
             {

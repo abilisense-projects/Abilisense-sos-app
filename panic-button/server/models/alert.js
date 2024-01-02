@@ -50,6 +50,10 @@ const alertsSchema = new Schema({
         type: Date,
         required: true,
     },
+    update:{
+        type: Date,
+        required: true,
+    },
     distressDescription: {
         type: String,
         required: true,
