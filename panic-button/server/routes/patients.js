@@ -4,7 +4,8 @@ const { getAllPatientsBL,
     getPatientByIdBL,
     addPatientBL,
     deletePatientByEmailBL,
-    deletePatientByIdBL } = require('../controllers/patientController')
+    deletePatientByIdBL,
+    getPatientByEmailAndPasswordBL } = require('../controllers/patientController')
 const router = express.Router();
 
 router.get('/get-all/', async (req, res) => {
