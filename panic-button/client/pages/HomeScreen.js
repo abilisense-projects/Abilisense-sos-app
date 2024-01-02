@@ -9,13 +9,15 @@ import FindLocation from '../components/sos_button/FindLocation';
 import CancelButton from '../components/sos_button/CancelButton';
 import AlertSendingConfirmationModel from '../components/sos_button/AlertSendingConfirmationModel';
 import SquareIconButton from '../components/home/SquareIconButton';
-import LocationButton from '../components/home/LocationButton'
+import { LocationButton } from '../components/home/locationButton';
 
 
 const HomeScreen = ({ navigation }) => {
     const [step, setStep] = useState(1);
     const [alert, setAlert] = useState();
     const [modalVisible, setModalVisible] = useState(true);
+    const [locationPressed, setlocationPressed] = useState();
+    // const { locationPressed } = route.params;
 
     const handleCancel = () => {
         setModalVisible(false);
@@ -49,10 +51,10 @@ const HomeScreen = ({ navigation }) => {
 
     const handlelocationPress = () => {
         console.log('Button pressed!');
-        setStep(7)
-    };
-    const handleButtonPress = () => {
-        console.log('Button pressed!');
+        setlocationPressed(!locationPressed);
+        console.log('loc', locationPressed)
+        LocationButton(locationPressed)
+        // setStep(7)
     };
 
     return (
@@ -64,13 +66,13 @@ const HomeScreen = ({ navigation }) => {
                         <SosButton onStepChange={handleStepChange} style={{ backgroundColor: 'transparent' }} />
                         <View style={styles.iconsContainer}>
                             <View style={styles.iconRow}>
-                                <SquareIconButton onPress={handlelocationPress} iconName="location-on" />
+                                <SquareIconButton iconName="location-on" isPressed={locationPressed} />
                                 <View style={styles.iconSpacing} />
-                                <SquareIconButton onPress={handleButtonPress} iconName="keyboard" />
+                                <SquareIconButton iconName="keyboard" />
                                 <View style={styles.iconSpacing} />
-                                <SquareIconButton onPress={handleButtonPress} iconName="keyboard" />
+                                <SquareIconButton iconName="keyboard" />
                                 <View style={styles.iconSpacing} />
-                                <SquareIconButton onPress={handleButtonPress} iconName="keyboard" />
+                                <SquareIconButton iconName="keyboard" />
                             </View>
                         </View>
                     </View>
