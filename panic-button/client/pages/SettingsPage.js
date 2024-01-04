@@ -14,7 +14,7 @@
 import * as React from 'react';
 import { Switch } from 'react-native-paper';
 import { View, Text, StyleSheet } from "react-native"
-import { LocationButton } from '../components/home/locationButton';
+import { ListenLocationButton } from '../components/home/locationButton';
 
 const SettingsPage = () => {
     const [isSwitchOn, setIsSwitchOn] = React.useState(true);
@@ -23,14 +23,17 @@ const SettingsPage = () => {
         setIsSwitchOn(previousState => !previousState);
         console.log("isSwitchOn", isSwitchOn);
         // navigation.navigate('HomeScreen', {locationPressed: isSwitchOn});
-        LocationButton(isSwitchOn);
+        ListenLocationButton(isSwitchOn);
     }
 
     return (
         <View style={styles.pageContainer}>
             <Text>SettingsPage</Text>
-            <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
-        </View>
+            <View style={{ flexDirection: 'row' }}>
+                <Text style={{ marginRight: 10 }}>location: </Text>
+                <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
+            </View>
+        </View >
     )
 };
 const styles = StyleSheet.create({

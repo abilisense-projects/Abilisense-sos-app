@@ -119,12 +119,6 @@ const HomeScreen = ({ navigation }) => {
                     <SendAlert alert={alert} onStepChange={handleStepChange} setAlertId={setAlertId} />
                 </>
             }
-            {
-                step === 7 &&
-                <>
-                    <LocationButton/>
-                </>
-            }
         </>
     );
 };

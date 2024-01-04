@@ -1,13 +1,21 @@
 const mongoose = require('mongoose');
 
 const patientLocationSchema = mongoose.Schema({
-    patient: {
+    alert: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'alert',
         required: true,
-        ref: 'Patient'
     },
+    LocationBeforeOpeningTheCall: [{
+        type: String,
+    }],
+    LocationAfterOpeningTheCall: [{
+        type: String,
+    }],
+    
+
 });
 
-const patientLocation = new mongoose.model('patient-locations', patientLocationSchema);
+const patientLocation = new mongoose.model('patientLocations', patientLocationSchema);
 
 module.exports = { patientLocation };

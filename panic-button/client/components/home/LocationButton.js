@@ -1,45 +1,15 @@
-// import React from 'react';
-// import { Text, View } from 'react-native';
-
-// const LocationButton = () => {
-
-//     return (
-//         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//             <Text>Hello</Text>
-//         </View>
-//     ) 
-// }
-// export default LocationButton;
-
-// export function LocationButton(status) {
-//     //need to go to DB every minitues and set the location arry
-//     //if status is on/off 
-
-// }
-
-// export function LocationButton(status) {
-//     // Check status and perform actions accordingly
-//     if (status==true) {
-//         // Start checking location every minute
-//         console.log('Location checking started...');
-//         // Implement the logic for checking location at intervals here
-//     } else {
-//         // Stop checking location
-//         console.log('Location checking stopped.');
-//         // Implement logic to stop location checks, if needed
-//     }
-// }
-
-// This function handles the behavior of a location button based on the 'status' parameter.
-// This function handles the behavior of a location button based on the 'status' parameter.
+import Geolocation from '@react-native-community/geolocation';
 
 
-export function LocationButton(status) {
+export function ListenLocationButton(status) {
     let locationInterval; // Variable to store the interval reference
 
      // Function to be executed at intervals for location checking
      function checkLocation() {
         console.log('Checking location...'); // Placeholder action, replace with actual location checking logic
+        findUserLocation();
+        //write to the arry the location
+        //need to delete the first location if grader then 10
     }
     // Check status and perform actions accordingly
     if (status === true) {
@@ -54,6 +24,21 @@ export function LocationButton(status) {
 
    
 }
+
+const findUserLocation = () => {
+    Geolocation.getCurrentPosition(
+        position => {
+            const { latitude, longitude } = position.coords;
+            // setLocation({ latitude: latitude, longitude: longitude });
+            // getAddressFromCoordinates(latitude, longitude);
+        },
+        error => {
+            console.log('Error:', error.message);
+            // Handle error
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    );
+};
 
 
 
