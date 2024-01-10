@@ -11,8 +11,8 @@ const CancelButton = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.submitButton} onPress={() => handleCancel()}>
-                <Text style={styles.submitButtonText}>Cancel</Text>
+            <TouchableOpacity style={styles.cancelButton} onPress={() => handleCancel()}>
+                <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
         </View>
     )
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
     },
-    submitButton: {
+    cancelButton: {
         width: 80,
         height: 35,
         backgroundColor: 'blue',
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginTop: 5
     },
-    submitButtonText: {
+    cancelButtonText: {
         color: 'white',
         fontSize: 16,
     },
