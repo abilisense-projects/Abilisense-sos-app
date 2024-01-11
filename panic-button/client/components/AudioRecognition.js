@@ -12,7 +12,7 @@ const AudioRecognition = ({ isRecording }) => {
             await recordingObject.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
             await recordingObject.startAsync();
             setRecording(recordingObject);
-            return recordingObject; // החזרת האובייקט לשימוש בפונקציות אחרות
+            return recordingObject; 
         } catch (error) {
             console.error('Failed to start recording', error);
         }

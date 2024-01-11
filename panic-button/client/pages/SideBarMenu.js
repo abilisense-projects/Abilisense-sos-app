@@ -6,8 +6,13 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 
+import { Button } from 'react-native'
+
+import { useTranslation } from "react-i18next";
+
 const SideBarMenu = ({ navigation }) => {
   const [page, setPage] = useState('');
+  const { t, i18n } = useTranslation();
   const pages = ['Home', 'History', 'Settings', 'LogOut', 'Accessibility'];
   const icons = ['home', 'history', 'settings-sharp', 'logout', 'universal-access'];
   const user = useSelector((state) => state.userReducer.user);
@@ -35,11 +40,22 @@ const SideBarMenu = ({ navigation }) => {
           size={30}
           style={styles.userIcon}
         />
-        {user && <Text style={styles.userName}>{user.fname}</Text>}
+        {user && <Text style={styles.userName}>{t("Hello!")} {user.fname}</Text>}
       </View>
       <Text>{"\n"}</Text>
       <View style={styles.separator} />
       <Text>{"\n\n"}</Text>
+      {/* <Button title="Yo hablo Español" onPress={() => i18n.changeLanguage('he')} />
+      <Button title="I speak English" onPress={() => i18n.changeLanguage('en')} /> */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => i18n.changeLanguage('he')}>
+          <Text style={styles.buttonText}>עברית</Text>
+        </TouchableOpacity>
+        <Text> / </Text>
+        <TouchableOpacity style={styles.button} onPress={() => i18n.changeLanguage('en')}>
+          <Text style={styles.buttonText}>English</Text>
+        </TouchableOpacity>
+      </View>
       {pages.map((item, index) => (
         <TouchableOpacity
           style={styles.drawerItem}
@@ -109,6 +125,14 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: 'black',
     marginBottom: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+  },
+  button: {
+    flex: 1,
+  },
+  buttonText: {
   },
 });
 
