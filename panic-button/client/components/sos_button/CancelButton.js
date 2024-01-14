@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from 'react-i18next';
 
 const CancelButton = ({ navigation }) => {
+    const { t, i18n } = useTranslation();
     const handleCancel = () => {
         navigation.reset({
             index: 0,
@@ -12,7 +14,7 @@ const CancelButton = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.cancelButton} onPress={() => handleCancel()}>
-                <Text style={styles.cancelButtonText}>Cancel</Text>
+                <Text style={styles.cancelButtonText}>{t("Cancel")}</Text>
             </TouchableOpacity>
         </View>
     )

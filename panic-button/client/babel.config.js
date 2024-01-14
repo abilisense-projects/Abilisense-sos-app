@@ -12,6 +12,17 @@ module.exports = function (api) {
         safe: false,
         allowUndefined: true,
       }],
+      [
+        "i18next-extract",
+        {
+          locales: ["en"],
+          outputPath: "locales/{{locale}}/{{ns}}.json",
+          keyAsDefaultValue: ["en"],
+          keySeparator: null,
+          nsSeparator: null,
+        },
+      ],
+      // ...other plugins here
     ],
   };
 };
