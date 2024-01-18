@@ -3,8 +3,10 @@ import { View, TextInput, TouchableOpacity, FlatList, Text, StyleSheet } from 'r
 import { useDispatch, useSelector } from 'react-redux';
 import { addMedicalConditions } from '../../redux/actions/registerActions';
 import medicalConditionsData from '../../medicinenetDiseases'; // Adjust the path accordingly
+import { useTranslation } from 'react-i18next';
 
 const MedicalConditionsList = ({ onStepChange }) => {
+  const { t, i18n } = useTranslation();
   const [inputValue, setInputValue] = useState('');
   const [filteredConditions, setFilteredConditions] = useState([]);
   const [selectedCondition, setSelectedCondition] = useState(null); // Track the selected condition
@@ -43,7 +45,7 @@ const MedicalConditionsList = ({ onStepChange }) => {
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder="Enter medical condition"
+        placeholder={t("Enter medical condition")}
         value={inputValue}
         onChangeText={handleInputChange}
         style={styles.input}
@@ -59,7 +61,7 @@ const MedicalConditionsList = ({ onStepChange }) => {
 
       <View style={styles.closeButtonContainer}>
         <TouchableOpacity style={styles.closeButton} onPress={() => onStepChange(3)}>
-          <Text style={styles.closeButtonText}>Close</Text>
+          <Text style={styles.closeButtonText}>{t("Close")}</Text>
         </TouchableOpacity>
       </View>
     </View>

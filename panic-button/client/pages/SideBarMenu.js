@@ -32,7 +32,7 @@ const SideBarMenu = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.drawerContent}>
+    <View style={styles.drawerContent} >
       <View style={styles.userContainer}>
         <Icon
           name="user-circle"

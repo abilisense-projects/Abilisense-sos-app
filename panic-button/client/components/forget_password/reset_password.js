@@ -8,7 +8,7 @@ const ResetPassword = () => {
 
     return (
         <View>
-            <Text>enter an email address:</Text>
+            <Text>{t("enter an email address:")}</Text>
             <TextInput
                 onChangeText={onChangePwd}
                 value={pwd}
@@ -17,7 +17,7 @@ const ResetPassword = () => {
                 onChangeText={onChangeVerifyPwd}
                 value={verifyPwd}
             />
-            <Button title='verify password' onPress={() => console.log(pwd === verifyPwd ? "yes" : "No")}></Button>
+            <Button title={t('verify password')} onPress={() => console.log(pwd === verifyPwd ? "yes" : "No")}></Button>
         </View>
     )
 }

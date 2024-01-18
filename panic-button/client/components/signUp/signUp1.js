@@ -5,11 +5,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../../redux/actions/registerActions';
+import { useTranslation } from 'react-i18next';
 
 const SignUpScreen = ({ onStepChange }) => {
 
   const user = useSelector((state) => state.register.userData);
   const [errors, setErrors] = useState({});
+  const { t, i18n } = useTranslation();
 
   const [formData, setFormData] = useState({
     firstname: user.firstname,
@@ -19,12 +21,12 @@ const SignUpScreen = ({ onStepChange }) => {
   });
 
   const fieldDisplayNames = {
-    firstname: 'First name',
-    lastname: 'Last name',
-    email: 'Email',
-    password: 'Password',
+    firstname: t('First name'),
+    lastname: t('Last name'),
+    email: t('Email'),
+    password: t('Password'),
   };
-  
+
   const dispatch = useDispatch();
 
   const handleInputChange = (key, text) => {
@@ -83,31 +85,31 @@ const SignUpScreen = ({ onStepChange }) => {
     } else {
       console.log("Invalid email");
       // Set the error for the 'email' key
-      setErrors({ ...errors, email: 'Provide a valid email' });
+      setErrors({ ...errors, email: t('Provide a valid email') });
       // You can also display a message to the user if needed
     }
   };
 
   const checkIfEmailExists = async (email) => {
     try {
-        return await axios.post(`http://localhost:3000/api/patients//get-by-email/`, { email })
-            .then(response => {
-                console.log('The form data:', response.data);
-                return response.data
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+      return await axios.post(`http://localhost:3000/api/patients//get-by-email/`, { email })
+        .then(response => {
+          console.log('The form data:', response.data);
+          return response.data
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     }
     catch (error) {
-        console.error('Error fetching data:', error);
+      console.error('Error fetching data:', error);
     }
 
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}>{("Sign Up")}</Text>
 
       {Object.keys(formData).map((key) => (
         <View key={key} style={styles.inputContainer}>
@@ -135,11 +137,11 @@ const SignUpScreen = ({ onStepChange }) => {
 
       <View style={styles.buttonContainer}>
         <Pressable style={styles.buttonPrev} onPress={() => onStepChange(1)}>
-          <Text style={styles.buttonText}>Prev</Text>
+          <Text style={styles.buttonText}>{t("Prev")}</Text>
         </Pressable>
 
         <Pressable style={styles.buttonNext} onPress={() => handleSignUp(2)}>
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>{t("Next")}</Text>
         </Pressable>
       </View>
     </View>

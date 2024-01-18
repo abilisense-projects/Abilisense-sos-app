@@ -66,7 +66,8 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
-          <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}>
+          <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}
+            screenOptions={i18n.language == "he" ? { drawerPosition: 'right' } : { drawerPosition: 'left' }}>
             <Drawer.Screen name="Login" component={Login} options={{
               headerShown: false
             }} />

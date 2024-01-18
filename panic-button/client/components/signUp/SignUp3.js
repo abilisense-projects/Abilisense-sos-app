@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addMedicalConditions, removeMedicalCondition } from '../../redux/actions/registerActions';
 import { useNavigation } from '@react-navigation/native';
 import { SERVER_BASE_URL } from '@env';
+import { useTranslation } from 'react-i18next';
 
 const MedicalConditionsComponent = ({ onStepChange }) => {
   const [newCondition, setNewCondition] = useState('');
-
+  const { t, i18n } = useTranslation();
   const user = useSelector((state) => state.register.userData);
   const address = useSelector((state) => state.register.addressData);
   const medicalConditions = useSelector((state) => state.register.medicalConditions);
@@ -106,7 +107,7 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => onStepChange(4)} style={styles.selectConditionsButton}>
-        <Text style={styles.selectConditionsButtonText}>Select Medical Conditions</Text>
+        <Text style={styles.selectConditionsButtonText}>{t("Select Medical Conditions")}</Text>
       </TouchableOpacity>
 
       <View style={styles.selectedConditionsContainer}>{renderConditions()}</View>
@@ -114,22 +115,22 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Other medical condition"
+          placeholder={t("Other medical condition")}
           value={newCondition}
           onChangeText={(text) => setNewCondition(text)}
         />
         <TouchableOpacity onPress={() => handleSelectConditions(newCondition)}>
-          <Text style={styles.addButton}>Add</Text>
+          <Text style={styles.addButton}>{t("Add")}</Text>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.registerButton} onPress={() => GoToLoginPage()}>
-        <Text style={styles.buttonText}>Register</Text>
+        <Text style={styles.buttonText}>{t("Register")}</Text>
       </TouchableOpacity>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.buttonPrev} onPress={() => onStepChange(2)}>
-          <Text style={styles.buttonText}>Prev</Text>
+          <Text style={styles.buttonText}>{t("Prev")}</Text>
         </TouchableOpacity>
       </View>
     </View>

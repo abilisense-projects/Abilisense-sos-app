@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import { View, Text, Button, TextInput } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const ForgetPassword = ({ }) => {
     const [email, onChangeEmail] = React.useState('');
     const [messageToUser, onChangeMessageToUser] = React.useState('');
+    const { t, i18n } = useTranslation();
 
     const checkIfEmailExists = async (email) => {
         try {
@@ -27,21 +29,21 @@ const ForgetPassword = ({ }) => {
         const result = await checkIfEmailExists(email);
         console.log("result:", result);
         if (!result) {
-            onChangeMessageToUser('not valid email');
+            onChangeMessageToUser(t('not valid email'));
         } else {
-            onChangeMessageToUser('succeeded!');
+            onChangeMessageToUser(t('succeeded!'));
             //navigation.navigate('EmailVerification');
         }
     }
 
     return (
         <View>
-            <Text>enter an email address:</Text>
+            <Text>{t("enter an email address:")}</Text>
             <TextInput
                 onChangeText={onChangeEmail}
                 value={email}
             />
-            <Button title='send me verification code' onPress={handleVerificationCode}></Button>
+            <Button title={t('send me verification code')} onPress={handleVerificationCode}></Button>
             <Text>{messageToUser}</Text>
         </View>
     )

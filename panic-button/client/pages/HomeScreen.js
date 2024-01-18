@@ -67,10 +67,10 @@ const HomeScreen = ({ navigation }) => {
 
                     {/* <AudioRecognition audio={audio} /> */}
                     <SosButton onStepChange={handleStepChange} />
-                    <TouchableOpacity style={styles.button} onPress={AudioButtonPress}>
+                    {/* <TouchableOpacity style={styles.button} onPress={AudioButtonPress}>
                         <Text style={styles.buttonText}>Audio</Text>
                     </TouchableOpacity>
-                    {audio && <AudioRecognition isRecording={audio}/>}
+                    {audio && <AudioRecognition isRecording={audio}/>} */}
                 </>
             }
             {
