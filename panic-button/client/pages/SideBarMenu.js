@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
     paddingTop: 50,
-    paddingLeft: 20,
+    paddingLeft: 10,
   },
   drawerItem: {
     marginBottom: 20,
