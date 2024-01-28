@@ -5,7 +5,6 @@ import axios from 'axios';
 import { loginValidationSchema } from '../config/loginValidationSchema';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../redux/actions/loginActions';
-import { useSelector } from 'react-redux';
 import { BY_EMAIL_AND_PASSWORD, SERVER_BASE_URL } from '@env';
 import * as Yup from 'yup';
 
@@ -66,7 +65,7 @@ const Login = ({ navigation }) => {
           yupErrors[e.path] = e.message;
         });
         setErrors(yupErrors);
-      }
+      }       
       setErrorMessage('user name or password invalid');
     }
   };

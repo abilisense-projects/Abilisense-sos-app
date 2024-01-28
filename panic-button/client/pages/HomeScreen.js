@@ -9,7 +9,8 @@ import FindLocation from '../components/sos_button/FindLocation';
 import CancelButton from '../components/sos_button/CancelButton';
 import AlertSendingConfirmationModel from '../components/sos_button/AlertSendingConfirmationModel';
 import SquareIconButton from '../components/home/SquareIconButton';
-import { LocationButton } from '../components/home/locationButton';
+// import { ListenLocationButton } from '../components/home/locationButton';
+import { ListenLocationButton } from '../components/home/locationButton';
 import CancelAlertButton from '../components/sos_button/CancelAlertButton';
 
 const HomeScreen = ({ navigation }) => {
@@ -20,10 +21,14 @@ const HomeScreen = ({ navigation }) => {
     const [locationPressed, setlocationPressed] = useState();
     // const { locationPressed } = route.params;
 
+    // Inside the component or useEffect
+    useEffect(() => {
+       ListenLocationButton(true);
+    }, []);
+    
     const handleCancel = () => {
         // setModalVisible(false);
         setStep(1);
-
     };
 
     const onSendAlert = () => {

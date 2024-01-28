@@ -22,7 +22,6 @@ async function getPatientByEmailAndPassword(email, password) {
     try {
         // check if there is user with such email
         const patient = await Patient.findOne({ email });
-        console.log('patient:', patient)
         if (!patient) {
             return { success: false, massege: 'not good email' };
         }
