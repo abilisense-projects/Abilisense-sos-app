@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -62,12 +62,21 @@ i18n.use(initReactI18next).init({
 const Drawer = createDrawerNavigator();
 
 const App = () => {
+  const [side, setSide] = useState("left")
+  useEffect(() => {
+    console.log("side", side);
+    if (i18n.language === "he") {
+      setSide('right');
+    } else {
+      setSide("left");
+    }
+  }, [i18n.language]); // Only re-run the effect if i18n.language changes
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
           <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}
-            screenOptions={i18n.language == "he" ? { drawerPosition: 'right' } : { drawerPosition: 'left' }}>
+            /*screenOptions={{ drawerPosition: side }}*/>
             <Drawer.Screen name="Login" component={Login} options={{
               headerShown: false
             }} />
