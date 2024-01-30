@@ -55,9 +55,8 @@ const bcrypt = require('bcrypt');
 
 async function addPatient(patient) {
     const { password, ...otherData } = patient; // Extracting password from patient object
-    console.log('!!!!!!!!!!!!!!!!!')
-    console.log('password', password)
-    console.log('otherData', otherData)
+    console.log('password', password);
+    console.log('otherData', otherData);
     const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
 
     // Create a new object with the hashed password and other patient data

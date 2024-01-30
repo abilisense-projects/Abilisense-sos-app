@@ -26,7 +26,7 @@ const SignUpScreen = ({ onStepChange }) => {
     email: 'Email',
     password: 'Password',
   };
-  
+
   const dispatch = useDispatch();
 
   const handleInputChange = (key, text) => {
@@ -86,25 +86,24 @@ const SignUpScreen = ({ onStepChange }) => {
       console.log("Invalid email");
       // Set the error for the 'email' key
       setErrors({ ...errors, email: 'Provide a valid email' });
-      // You can also display a message to the user if needed
+      // can also display a message to the user if needed
     }
   };
 
   const checkIfEmailExists = async (email) => {
     try {
-        return await axios.post(`${SERVER_BASE_URL}/api/patients//get-by-email/`, { email })
-            .then(response => {
-                console.log('The form data:', response.data);
-                return response.data
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+      return await axios.post(`${SERVER_BASE_URL}/api/patients//get-by-email/`, { email })
+        .then(response => {
+          console.log('The form data:', response.data);
+          return response.data
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     }
     catch (error) {
-        console.error('Error fetching data:', error);
+      console.error('Error fetching data:', error);
     }
-
   };
 
   return (
@@ -190,7 +189,7 @@ const styles = StyleSheet.create({
     flex: 1,
     maxWidth: 150, // Set your desired maximum width
   },
-  
+
   icon: {
     marginLeft: 10, // Adjust the margin as needed
   },

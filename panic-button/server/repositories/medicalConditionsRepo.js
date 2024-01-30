@@ -30,11 +30,12 @@ async function addMedicalConditions( patient, medicalConditions) {
         }
 
         // Hashing the medical conditions
-        const hashedConditions = await Promise.all(medicalConditions.map(condition => bcrypt.hash(condition, 10)));
+        // const hashedConditions = await Promise.all(medicalConditions.map(condition => bcrypt.hash(condition, 10)));
 
         const data = await MedicalConditions.create({
             patient: patient,
-            medicalConditions: hashedConditions,
+            // medicalConditions: hashedConditions,
+            medicalConditions: medicalConditions,
         });
 
         console.log("Medical conditions added:", data);

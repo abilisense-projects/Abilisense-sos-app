@@ -13,10 +13,14 @@ import Login from './pages/Login';
 import { store, persistor } from "./redux/store";
 import { Provider } from 'react-redux';
 import ResetPassword from './pages/ResetPassword';
+import SpeechRecognitionPage from './pages/SpeechRecognitionPage';
 const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
+    // <>
+    //   <SpeechRecognitionPage></SpeechRecognitionPage>
+    // </>
     <Provider store={store}>
       <NavigationContainer>
         <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}>
