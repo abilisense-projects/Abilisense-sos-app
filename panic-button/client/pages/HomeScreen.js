@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import SosButton from '../components/sos_button/SosButton';
 import Status from '../components/sos_button/Status';
