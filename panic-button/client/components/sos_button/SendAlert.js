@@ -3,10 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import axios from 'axios';
 import { SERVER_BASE_URL } from '@env';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 
 const SendAlert = ({ onStepChange, alert, setAlertId }) => {
-    const { t, i18n } = useTranslation();
     const [alertSent, setAlertSent] = useState();
     const user = useSelector((state) => state.userReducer.user);
     useEffect(() => {
@@ -43,7 +41,7 @@ const SendAlert = ({ onStepChange, alert, setAlertId }) => {
     return (
         <View style={styles.container}>
             {alertSent != null && <Text>
-                {alertSent ? t('Alert sent successfully!') : t('Sending the alert failed.')}
+                {alertSent ? 'Alert sent successfully!' : 'Sending the alert failed.'}
             </Text>}
         </View>
     );

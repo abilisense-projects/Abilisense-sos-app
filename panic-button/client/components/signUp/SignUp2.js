@@ -6,7 +6,6 @@ import { signUpValidationSchema } from '../../config/ValidationSchemas';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddressData } from '../../redux/actions/registerActions';
-import { useTranslation } from 'react-i18next';
 import BackButton from './LoginButton';
 
 const SignUp2 = ({ onStepChange }) => {
@@ -26,20 +25,20 @@ const SignUp2 = ({ onStepChange }) => {
   });
 
   const placeholderText = {
-    phoneNumber: t('Phone number'),
-    dateOfBirth: t('YYYY-MM-DD'),
-    country: t('Country'),
-    city: t('City'),
-    street: t('Street'),
-    buildingNumber: t('Building number'),
-    entrance: t('Entrance'),
-    floor: t('Floor'),
-    apartmentNumber: t('Apartment number'),
-    additionalNotes: t('Additional notes'),
+    phoneNumber: 'Phone number',
+    dateOfBirth: 'YYYY-MM-DD',
+    country: 'Country',
+    city: 'City',
+    street: 'Street',
+    buildingNumber: 'Building number',
+    entrance: 'Entrance',
+    floor: 'Floor',
+    apartmentNumber: 'Apartment number',
+    additionalNotes: 'Additional notes',
   };
 
   const [errors, setErrors] = useState({});
-  const { t, i18n } = useTranslation();
+
   const dispatch = useDispatch();
 
   const handleInputChange = (key, text) => {
@@ -63,7 +62,7 @@ const SignUp2 = ({ onStepChange }) => {
   const renderLabel = (key) => {
     return (
       <Text style={styles.placeholderLabel}>
-        {key === 'dateOfBirth' ? t('Date of birth') : formData[key] ? placeholderText[key] : ''}
+        {key === 'dateOfBirth' ? 'Date of birth' : formData[key] ? placeholderText[key] : ''}
       </Text>
     );
   };
@@ -97,7 +96,8 @@ const SignUp2 = ({ onStepChange }) => {
     >
       <ScrollView contentContainerStyle={styles.container}>
       <BackButton />
-        <Text style={styles.title}>{("Sign Up - Step 2")}</Text>
+      
+        <Text style={styles.title}>Sign Up - Step 2</Text>
 
         {Object.keys(formData).map((key) => (
           <View key={key} style={styles.inputContainer}>
@@ -126,7 +126,7 @@ const SignUp2 = ({ onStepChange }) => {
 
             {key === 'dateOfBirth' && (
               <Text style={styles.additionalText}>
-               {t("Year-Month-Day")}
+               {"Year-Month-Day"}
               </Text>
             )}
           </View>
@@ -134,11 +134,11 @@ const SignUp2 = ({ onStepChange }) => {
 
         <View style={styles.buttonContainer}>
           <Pressable style={styles.buttonPrev} onPress={() => onStepChange(1)}>
-            <Text style={styles.buttonText}>{t("Prev")}</Text>
+            <Text style={styles.buttonText}>Prev</Text>
           </Pressable>
 
           <Pressable style={styles.buttonNext} onPress={() => handleSignUp(3)}>
-            <Text style={styles.buttonText}>{t("Next")}</Text>
+            <Text style={styles.buttonText}>Next</Text>
           </Pressable>
         </View>
       </ScrollView>

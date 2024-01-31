@@ -5,8 +5,6 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import MapboxGeocoding from '@mapbox/mapbox-sdk/services/geocoding';
 import { ACCESS_TOKEN } from '@env';
 import { useSelector } from 'react-redux';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
 
 const mapboxClient = MapboxGeocoding({ accessToken: ACCESS_TOKEN });
 
@@ -93,7 +91,7 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
     return (
         <View style={styles.container}>
             <Text>
-                {location ? t('Another address was found. Choose your address: ') : t('Your address: ')}
+                {location ? 'Another address was found. Choose your address: ' : 'Your address: '}
             </Text>
             {location && (
                 <View>
@@ -113,19 +111,19 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
                     {defaultAddress.country}
                 </Text> :
                     <Text>
-                        {t("There is no default address")}
+                        There is no default address
                     </Text>}
 
             </TouchableOpacity>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    placeholder={t("Enter address...")}
+                    placeholder="Enter address..."
                     value={addressInput}
                     onChangeText={handleInputChange}
                 />
                 <TouchableOpacity style={styles.submitButton} onPress={() => handelInsertAdrees()}>
-                    <Text style={styles.submitButtonText}>{t("OK")}</Text>
+                    <Text style={styles.submitButtonText}>OK</Text>
                 </TouchableOpacity>
             </View>
         </View>

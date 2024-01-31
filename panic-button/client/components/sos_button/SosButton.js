@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { StyleSheet, View, TouchableOpacity, Animated, Easing, Text } from 'react-native';
 
 const SosButton = ({ onStepChange }) => {
-    const { t, i18n } = useTranslation();
     const animatedValues = useRef([
         new Animated.Value(0),
         new Animated.Value(0),
@@ -61,7 +59,7 @@ const SosButton = ({ onStepChange }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.button} onPress={onPress}>
-                <Text style={styles.buttonText}>{t("S.O.S")}</Text>
+                <Text style={styles.buttonText}>S.O.S</Text>
                 {animatedCircles}
             </TouchableOpacity>
         </View>

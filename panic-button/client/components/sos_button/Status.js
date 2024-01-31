@@ -1,24 +1,21 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
-import { useTranslation } from 'react-i18next';
 
 
 const Status = ({ onStepChange, addParamsToAlert }) => {
-    const { t, i18n } = useTranslation();
     const handlePress = (level) => {
         const lev = { level: level }
         addParamsToAlert(lev);
         onStepChange();
     };
-    const levels = [t("Easy"), t("Medium"), t("Hard")];
-    const enLevels = ["Easy", "Medium", "Hard"];
+    const levels = ["Easy", "Medium", "Hard"];
     const levelsColors = ["yellow", "orange", "red"]
     return (
         <View style={styles.container}>
-            <Text>{t("Choose your level:")}</Text>
+            <Text>Choose your level:</Text>
             {levels.map((item, index) => (
-                <TouchableOpacity style={[styles.button, { backgroundColor: levelsColors[index] }]} key={index} onPress={() => handlePress(enLevels[index])}>
+                <TouchableOpacity style={[styles.button, { backgroundColor: levelsColors[index] }]} key={index} onPress={() => handlePress(item)}>
                     <Text>{item}</Text>
                 </TouchableOpacity>
             ))}

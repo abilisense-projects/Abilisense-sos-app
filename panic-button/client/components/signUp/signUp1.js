@@ -5,7 +5,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../../redux/actions/registerActions';
-import { useTranslation } from 'react-i18next';
 import BackButton from './LoginButton';
 import { SERVER_BASE_URL } from '@env';
 
@@ -13,7 +12,6 @@ const SignUpScreen = ({ onStepChange }) => {
 
   const user = useSelector((state) => state.register.userData);
   const [errors, setErrors] = useState({});
-  const { t, i18n } = useTranslation();
 
   const [formData, setFormData] = useState({
     firstname: user.firstname,
@@ -23,10 +21,10 @@ const SignUpScreen = ({ onStepChange }) => {
   });
 
   const fieldDisplayNames = {
-    firstname: t('First name'),
-    lastname: t('Last name'),
-    email: t('Email'),
-    password: t('Password'),
+    firstname: 'First name',
+    lastname: 'Last name',
+    email: 'Email',
+    password: 'Password',
   };
 
   const dispatch = useDispatch();
@@ -40,7 +38,7 @@ const SignUpScreen = ({ onStepChange }) => {
     if (formData[key] && !errors[key]) {
       // Check validation conditions
       try {
-        signUpValidationSchema(t).validateSyncAt(key, formData);
+        signUpValidationSchema.validateSyncAt(key, formData);
         return true;
       } catch (validationError) {
         return false;
@@ -61,7 +59,7 @@ const SignUpScreen = ({ onStepChange }) => {
     const formErrors = {};
     Object.keys(formData).forEach((key) => {
       try {
-        signUpValidationSchema(t).validateSyncAt(key, formData);
+        signUpValidationSchema.validateSyncAt(key, formData);
       } catch (validationError) {
         formErrors[key] = validationError.message;
       }
@@ -87,8 +85,8 @@ const SignUpScreen = ({ onStepChange }) => {
     } else {
       console.log("Invalid email");
       // Set the error for the 'email' key
-      setErrors({ ...errors, email: t('Provide a valid email') });
-      // You can also display a message to the user if needed
+      setErrors({ ...errors, email: 'Provide a valid email' });
+      // can also display a message to the user if needed
     }
   };
 
@@ -105,14 +103,13 @@ const SignUpScreen = ({ onStepChange }) => {
     }
     catch (error) {
       console.error('Error fetching data:', error);
-      console.error('Error fetching data:', error);
     }
   };
 
   return (
     <View style={styles.container}>
       <BackButton />
-      <Text style={styles.title}>{t("Sign Up")}</Text>
+      <Text style={styles.title}>Sign Up</Text>
 
       {Object.keys(formData).map((key) => (
         <View key={key} style={styles.inputContainer}>
@@ -139,12 +136,8 @@ const SignUpScreen = ({ onStepChange }) => {
       ))}
 
       <View style={styles.buttonContainer}>
-        {/* <Pressable style={styles.buttonPrev} onPress={() => onStepChange(1)}>
-          <Text style={styles.buttonText}>{t("Prev")}</Text>
-        </Pressable> */}
-
         <Pressable style={styles.buttonNext} onPress={() => handleSignUp(2)}>
-          <Text style={styles.buttonText}>{t("Next")}</Text>
+          <Text style={styles.buttonText}>Next</Text>
         </Pressable>
       </View>
     </View>

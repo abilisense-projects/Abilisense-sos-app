@@ -6,10 +6,8 @@ import { useSelector } from 'react-redux';
 import ShowAlerts from '../components/history/ShowAlerts';
 import { SERVER_BASE_URL } from '@env';
 import axios from 'axios';
-import { useTranslation } from 'react-i18next';
 
 const HistoryPage = ({ navigation }) => {
-  const { t, i18n } = useTranslation();
   const [showHistory, setShowHistory] = useState(true);
   const user = useSelector((state) => state.userReducer.user);
   const [data, setData] = useState([]);
@@ -49,13 +47,13 @@ const HistoryPage = ({ navigation }) => {
           style={[styles.button, { backgroundColor: showHistory ? 'lightblue' : 'white' }]}
           onPress={() => onShowHistory()}
         >
-          <Text style={styles.buttonText}>{t("Show History")}</Text>
+          <Text style={styles.buttonText}>Show History</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: !showHistory ? 'lightblue' : 'white' }]}
           onPress={() => onShowActiveAlerts()}
         >
-          <Text style={styles.buttonText}>{t("Show Active Alerts")}</Text>
+          <Text style={styles.buttonText}>Show Active Alerts</Text>
         </TouchableOpacity>
       </View>
       <ShowAlerts data={data} showHistory={showHistory} navigation={navigation}/>

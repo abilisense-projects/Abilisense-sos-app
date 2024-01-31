@@ -1,9 +1,7 @@
 import React from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useTranslation } from 'react-i18next';
 
 const AlertSendingConfirmationModel = ({ visible, onSendAlert, onClose }) => {
-    const { t, i18n } = useTranslation();
     return (
         <Modal
             animationType="slide"
@@ -13,13 +11,13 @@ const AlertSendingConfirmationModel = ({ visible, onSendAlert, onClose }) => {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>{t("Are you sure you want to send an alert?")}</Text>
+                    <Text style={styles.modalText}>Are you sure you want to send an alert?</Text>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.button} onPress={onSendAlert}>
-                            <Text style={styles.buttonText}>{t("Send alert")}</Text>
+                            <Text style={styles.buttonText}>Send alert</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={onClose}>
-                            <Text style={styles.buttonText}>{t("Cancel")}</Text>
+                            <Text style={styles.buttonText}>Cancel</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
