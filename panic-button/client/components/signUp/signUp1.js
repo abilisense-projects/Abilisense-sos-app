@@ -38,7 +38,7 @@ const SignUpScreen = ({ onStepChange }) => {
     if (formData[key] && !errors[key]) {
       // Check validation conditions
       try {
-        signUpValidationSchema.validateSyncAt(key, formData);
+        signUpValidationSchema(t).validateSyncAt(key, formData);
         return true;
       } catch (validationError) {
         return false;
@@ -59,7 +59,7 @@ const SignUpScreen = ({ onStepChange }) => {
     const formErrors = {};
     Object.keys(formData).forEach((key) => {
       try {
-        signUpValidationSchema.validateSyncAt(key, formData);
+        signUpValidationSchema(t).validateSyncAt(key, formData);
       } catch (validationError) {
         formErrors[key] = validationError.message;
       }
@@ -109,7 +109,7 @@ const SignUpScreen = ({ onStepChange }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{("Sign Up")}</Text>
+      <Text style={styles.title}>{t("Sign Up")}</Text>
 
       {Object.keys(formData).map((key) => (
         <View key={key} style={styles.inputContainer}>

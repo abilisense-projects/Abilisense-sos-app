@@ -88,7 +88,7 @@ const App = () => {
             <Drawer.Screen name="Settings" component={SettingsPage} options={{ title: "" }} />
             <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "" }} />
             <Drawer.Screen name="Accessibility" component={AccessibilityPage} options={{ title: "" }} />
-            <Drawer.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: "" }} />
+            <Drawer.Screen name="ForgetPassword" component={ForgetPassword} options={{ headerShown: false }} />
           </Drawer.Navigator>
         </NavigationContainer>
       </PersistGate>

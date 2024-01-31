@@ -43,7 +43,7 @@ const Login = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       //validate the email and password valid 
-      await loginValidationSchema.validate({ email, password }, { abortEarly: false });
+      await loginValidationSchema(t).validate({ email, password }, { abortEarly: false });
 
       // Runs the function that accesses the database and waits for an answer
       const response = await checkEmailAndpassword(email, password)
@@ -85,6 +85,9 @@ const Login = ({ navigation }) => {
   }
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.translateButton} onPress={() => { i18n.language == "he" ? i18n.changeLanguage('en') : i18n.changeLanguage('he') }}>
+        <Text style={styles.translateButtonText}>{i18n.language == "he" ? "English" : "עברית"}</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>{t("Login")}</Text>
       <TouchableOpacity
         style={styles.registerContainer}
@@ -112,7 +115,7 @@ const Login = ({ navigation }) => {
         }}
         value={password}
       />
-      
+
       <View style={styles.forgotPasswordContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
           <Text style={styles.forgotPassword}>{t("Forgot Password?")}</Text>
@@ -193,6 +196,15 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  translateButton: {
+    // backgroundColor: 'blue', 
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  translateButtonText: {
+    color: 'blue',
   },
 });
 export default Login;
