@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from 'react-i18next';
 
 const CancelButton = ({ navigation }) => {
+    const { t, i18n } = useTranslation();
     const handleCancel = () => {
         navigation.reset({
             index: 0,
@@ -11,8 +13,8 @@ const CancelButton = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.submitButton} onPress={() => handleCancel()}>
-                <Text style={styles.submitButtonText}>Cancel</Text>
+            <TouchableOpacity style={styles.cancelButton} onPress={() => handleCancel()}>
+                <Text style={styles.cancelButtonText}>{t("Cancel")}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
     },
-    submitButton: {
+    cancelButton: {
         width: 80,
         height: 35,
         backgroundColor: 'blue',
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginTop: 5
     },
-    submitButtonText: {
+    cancelButtonText: {
         color: 'white',
         fontSize: 16,
     },

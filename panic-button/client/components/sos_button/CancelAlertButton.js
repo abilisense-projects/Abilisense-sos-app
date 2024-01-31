@@ -1,9 +1,11 @@
 import React from "react";
 import { SERVER_BASE_URL } from '@env';
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 const CancelAlertButton = ({ navigation, alertId }) => {
+    const { t, i18n } = useTranslation();
     const url = `${SERVER_BASE_URL}/api/alerts/update-alert/${alertId}`;
 
     const handleCancelAlert = async () => {
@@ -24,7 +26,7 @@ const CancelAlertButton = ({ navigation, alertId }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.submitButton} onPress={() => handleCancelAlert()}>
-                <Text style={styles.submitButtonText}>Cancel alert</Text>
+                <Text style={styles.submitButtonText}>{t("Cancel alert")}</Text>
             </TouchableOpacity>
         </View>
     )

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addMedicalConditions, removeMedicalCondition } from '../../redux/actions/registerActions';
 import { useNavigation } from '@react-navigation/native';
 import { SERVER_BASE_URL } from '@env';
+import { useTranslation } from 'react-i18next';
 import BackButton from './LoginButton';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -12,6 +13,7 @@ const windowWidth = Dimensions.get('window').width;
 
 const MedicalConditionsComponent = ({ onStepChange }) => {
   const [newCondition, setNewCondition] = useState('');
+  const { t, i18n } = useTranslation();
   const user = useSelector((state) => state.register.userData);
   const address = useSelector((state) => state.register.addressData);
   const medicalConditions = useSelector((state) => state.register.medicalConditions);
@@ -116,32 +118,31 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
             <Text style={styles.selectConditionsButtonText}>Open to select Medical Conditions</Text>
           </TouchableOpacity>
 
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Other medical condition"
-              value={newCondition}
-              onChangeText={(text) => setNewCondition(text)}
-            />
-            <TouchableOpacity onPress={() => handleSelectConditions(newCondition)}>
-              <Text style={styles.addButton}>Add</Text>
-            </TouchableOpacity>
-          </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder={t("Other medical condition")}
+          value={newCondition}
+          onChangeText={(text) => setNewCondition(text)}
+        />
+        <TouchableOpacity onPress={() => handleSelectConditions(newCondition)}>
+          <Text style={styles.addButton}>{t("Add")}</Text>
+        </TouchableOpacity>
+      </View>
+
 
           {renderConditions()}
 
-          <TouchableOpacity style={styles.registerButton} onPress={() => GoToLoginPage()}>
-            <Text style={styles.buttonText}>Register</Text>
-          </TouchableOpacity>
+      <TouchableOpacity style={styles.registerButton} onPress={() => GoToLoginPage()}>
+        <Text style={styles.buttonText}>{t("Register")}</Text>
+      </TouchableOpacity>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.buttonPrev} onPress={() => onStepChange(2)}>
-              <Text style={styles.buttonText}>Prev</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.buttonPrev} onPress={() => onStepChange(2)}>
+          <Text style={styles.buttonText}>{t("Prev")}</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
