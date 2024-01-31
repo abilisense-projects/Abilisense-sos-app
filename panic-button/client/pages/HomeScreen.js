@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import SosButton from '../components/sos_button/SosButton';
 import Status from '../components/sos_button/Status';
@@ -11,12 +11,15 @@ import AlertSendingConfirmationModel from '../components/sos_button/AlertSending
 import SquareIconButton from '../components/home/SquareIconButton';
 import { LocationButton } from '../components/home/locationButton';
 import CancelAlertButton from '../components/sos_button/CancelAlertButton';
+import AudioRecognition from '../components/AudioRecognition';
 
 const HomeScreen = ({ navigation }) => {
     const [step, setStep] = useState(1);
     const [alert, setAlert] = useState();
     const [alertId, setAlertId] = useState('');
     const [modalVisible, setModalVisible] = useState(true);
+    const [audio, setAudio] = useState(false);
+    const [isRecording,setIsRecording] = useState(false);
     const [locationPressed, setlocationPressed] = useState();
     // const { locationPressed } = route.params;
 
@@ -44,6 +47,15 @@ const HomeScreen = ({ navigation }) => {
         setAlert({ ...alert, ...jsonParams })
     };
 
+    const AudioButtonPress = () => {
+        if (audio == false) {
+            setAudio(true);
+        }
+        else {
+            setAudio(false);
+        }
+    }
+
     useFocusEffect(
         React.useCallback(() => {
             setStep(1);
@@ -60,6 +72,7 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <>
+            
             {
                 step === 1 &&
                 <View style={styles.container}>

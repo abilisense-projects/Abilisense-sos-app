@@ -1,19 +1,21 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 
 const ProblemType = ({ onStepChange, addParamsToAlert }) => {
+    const { t, i18n } = useTranslation();
     const handlePress = (problem) => {
         const prob = { problem: problem }
         addParamsToAlert(prob)
         onStepChange();
     };
-    const problems = ["Injury", "health event"];
+    const problems = [t("Injury"), t("health event")];
 
     return (
         <View style={styles.container}>
             
-            <Text>Choose your problem: </Text>
+            <Text>{t("Choose your problem: ")}</Text>
             {problems.map((item, index) => (
                 <TouchableOpacity style={styles.button} key={index} onPress={() => handlePress(item)}>
                     <Text style={styles.buttonText}>{item}</Text>

@@ -3,12 +3,14 @@ import axios from 'axios';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Table, Row, TableWrapper, Cell } from 'react-native-table-component';
 import { SERVER_BASE_URL } from '@env';
+import { useTranslation } from 'react-i18next';
 
 
 
 const ShowAlerts = ({ navigation, data, showHistory }) => {
     const [popupVisible, setPopupVisible] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
+    const { t, i18n } = useTranslation();
 
     const openPopup = (rowData) => {
         setSelectedRowData(rowData);
@@ -52,7 +54,7 @@ const ShowAlerts = ({ navigation, data, showHistory }) => {
     return (
         <View style={styles.container}>
             {data.length !== 0 &&
-                <Text style={[styles.title, styles.boldText]}>You can see more information by tapping on one of the table rows {"\n\n\n"}</Text>}
+                <Text style={[styles.title, styles.boldText]}>{t("You can see more information by tapping on one of the table rows")} {"\n\n\n"}</Text>}
             {data.length !== 0 ? (
                 <View>
                     <Table borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}>
@@ -92,36 +94,36 @@ const ShowAlerts = ({ navigation, data, showHistory }) => {
                             <View style={styles.modalContent}>
                                 {selectedRowData ? (
                                     <View>
-                                        <Text style={[styles.title, styles.boldText]}>Alert information: {"\n\n"}</Text>
+                                        <Text style={[styles.title, styles.boldText]}>{t("Alert information:")} {"\n\n"}</Text>
                                         <Text>
-                                            <Text style={styles.boldText}>Date:</Text>
+                                            <Text style={styles.boldText}>{t("Date:")}</Text>
                                             <Text>{` ${new Date(selectedRowData.date).toISOString().split('T')[1].split('.')[0]}  ${new Date(selectedRowData.date).toISOString().split('T')[0]}`}</Text>
                                         </Text>
                                         {/* <Text> */}
-                                        <Text style={styles.boldText}>Location:</Text>
+                                        <Text style={styles.boldText}>{t("Location:")}</Text>
                                         {renderKeyValuePairs(selectedRowData.location)}
                                         {/* <Text> {selectedRowData.location}</Text> */}
                                         {/* </Text> */}
                                         <Text>
-                                            <Text style={styles.boldText}>Distress description:</Text>
+                                            <Text style={styles.boldText}>{t("Distress description:")}</Text>
                                             <Text> {selectedRowData.distressDescription}</Text>
                                         </Text>
                                         <Text>
-                                            <Text style={styles.boldText}>Level:</Text>
+                                            <Text style={styles.boldText}>{t("Level:")}</Text>
                                             <Text> {selectedRowData.level}</Text>
                                         </Text>
                                         <Text>
-                                            <Text style={styles.boldText}>Status:</Text>
+                                            <Text style={styles.boldText}>{t("Status:")}</Text>
                                             <Text> {selectedRowData.status}</Text>
                                         </Text>
                                     </View>
                                 ) : null}
                                 <View style={styles.buttonContainer}>
                                     {!showHistory && <TouchableOpacity onPress={() => cancelAlert(selectedRowData._id)}>
-                                        <Text style={styles.cancelButton}>Cancel Alert</Text>
+                                        <Text style={styles.cancelButton}>{t("Cancel alert")}</Text>
                                     </TouchableOpacity>}
                                     <TouchableOpacity onPress={closePopup}>
-                                        <Text style={styles.closeButton}>Close</Text>
+                                        <Text style={styles.closeButton}>{t("Close")}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -129,7 +131,7 @@ const ShowAlerts = ({ navigation, data, showHistory }) => {
                     </Modal>
                 </View>
             ) : (
-                <Text>No alerts</Text>
+                <Text>{t("No alerts")}</Text>
             )}
         </View>
     );

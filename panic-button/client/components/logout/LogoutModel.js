@@ -1,7 +1,9 @@
 import { View, Modal, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const LogoutAlert = ({ visible, onClose, onLogout }) => {
+    const { t, i18n } = useTranslation();
     return (
         <Modal
             animationType="slide"
@@ -11,13 +13,13 @@ const LogoutAlert = ({ visible, onClose, onLogout }) => {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Are you sure you want to exit?</Text>
+                    <Text style={styles.modalText}>{t("Are you sure you want to exit?")}</Text>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.button} onPress={onLogout}>
-                            <Text style={styles.buttonText}>Logout</Text>
+                            <Text style={styles.buttonText}>{t("Logout")}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={onClose}>
-                            <Text style={styles.buttonText}>Cancel</Text>
+                            <Text style={styles.buttonText}>{t("Cancel")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
