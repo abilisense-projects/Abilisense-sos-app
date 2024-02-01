@@ -6,7 +6,7 @@ const AudioRecognition = ({ isRecording }) => {
     const [audioFilesArr, setAudioFilesArr] = useState([]);
 
     const startRecording = async () => {
-        console.log("start!!!")
+        console.log("start!!")
         try {
             const recordingObject = new Audio.Recording();
             await recordingObject.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
