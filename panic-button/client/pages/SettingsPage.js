@@ -23,7 +23,7 @@ const SettingsPage = () => {
         setIsSwitchOn(previousState => !previousState);
         console.log("isSwitchOn", isSwitchOn);
         // navigation.navigate('HomeScreen', {locationPressed: isSwitchOn});
-        LocationButton(isSwitchOn);
+        // LocationButton(isSwitchOn);
     }
 
     return (

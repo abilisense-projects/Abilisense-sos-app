@@ -66,7 +66,7 @@ const HomeScreen = ({ navigation }) => {
         console.log('Button pressed!');
         setlocationPressed(!locationPressed);
         console.log('loc', locationPressed)
-        LocationButton(locationPressed)
+        // LocationButton(locationPressed)
         // setStep(7)
     };
 
@@ -135,7 +135,7 @@ const HomeScreen = ({ navigation }) => {
             {
                 step === 7 &&
                 <>
-                    <LocationButton/>
+                    {/* <LocationButton/> */}
                 </>
             }
         </>
