@@ -14,7 +14,7 @@
 import * as React from 'react';
 import { Switch } from 'react-native-paper';
 import { View, Text, StyleSheet } from "react-native"
-import { LocationButton } from '../components/home/locationButton';
+// import { LocationButton } from '../components/home/locationButton';
 
 const SettingsPage = () => {
     const [isSwitchOn, setIsSwitchOn] = React.useState(true);

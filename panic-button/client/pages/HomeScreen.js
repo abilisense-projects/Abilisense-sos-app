@@ -9,7 +9,7 @@ import FindLocation from '../components/sos_button/FindLocation';
 import CancelButton from '../components/sos_button/CancelButton';
 import AlertSendingConfirmationModel from '../components/sos_button/AlertSendingConfirmationModel';
 import SquareIconButton from '../components/home/SquareIconButton';
-import { LocationButton } from '../components/home/locationButton';
+// import { LocationButton } from '../components/home/locationButton';
 import CancelAlertButton from '../components/sos_button/CancelAlertButton';
 import AudioRecognition from '../components/AudioRecognition';
 
