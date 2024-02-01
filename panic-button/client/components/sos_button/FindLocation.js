@@ -21,10 +21,9 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
         findDefaultAddress();
         findUserLocation();
     }, []);
+
     const findDefaultAddress = () => {
-        console.log(user.address);
         setDefaultAddress(user.address);
-        console.log(defaultAddress);
     };
 
     const findUserLocation = () => {
@@ -55,7 +54,6 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
 
             if (response && response.body && response.body.features && response.body.features.length > 0) {
                 const addressData = response.body.features[0];
-                // setAddress(addressData.place_name);
 
                 const separatedAddress = addressData.place_name.split(', ');
                 if (separatedAddress.length === 3) {
@@ -76,35 +74,30 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
 
     const handlePress = (location) => {
         const loc = { location: location }
-        console.log("loc",loc);
         addParamsToAlert(loc);
         onStepChange();
     };
 
     const handelInsertAdrees = () => {
-        console.log(addressInput);
         const addressJson = {
             address: addressInput
         }
-        console.log(addressJson);
         handlePress(addressJson);
     }
 
     return (
         <View style={styles.container}>
-            <Text>
+            <Text style={styles.title}>
                 {location ? t('Another address was found. Choose your address: ') : t('Your address: ')}
             </Text>
             {location && (
-                <View>
-                    <TouchableOpacity style={styles.button} onPress={() => handlePress(address)}>
-                        <Text style={styles.buttonText}>
-                            {address.street}{"\n"}
-                            {address.city}{"\n"}
-                            {address.country}
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={styles.button} onPress={() => handlePress(address)}>
+                    <Text style={styles.buttonText}>
+                        {address.street}{"\n"}
+                        {address.city}{"\n"}
+                        {address.country}
+                    </Text>
+                </TouchableOpacity>
             )}
             <TouchableOpacity style={styles.button} onPress={() => handlePress(defaultAddress)}>
                 {defaultAddress ? <Text style={styles.buttonText}>
@@ -115,7 +108,6 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
                     <Text>
                         {t("There is no default address")}
                     </Text>}
-
             </TouchableOpacity>
             <View style={styles.inputContainer}>
                 <TextInput
@@ -139,6 +131,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        width:230,
+    },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -147,13 +145,13 @@ const styles = StyleSheet.create({
         height: 50,
         borderColor: 'orange',
         borderWidth: 1,
-        width: 100,
+        width: 160,
         marginVertical: 10,
         borderRadius: 5,
         paddingHorizontal: 10,
     },
     submitButton: {
-        width: 40,
+        width: 60,
         height: 50,
         backgroundColor: 'orange',
         justifyContent: 'center',
@@ -166,22 +164,26 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     button: {
-        width: 150,
-        height: 150,
+        width: 230,
+        height: 80,
         backgroundColor: 'orange',
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 10,
-        borderRadius: 10,
+        borderRadius: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     buttonText: {
         color: 'white',
         fontSize: 18,
         fontWeight: 'bold'
-    },
-    addressText: {
-        fontSize: 16,
-        marginBottom: 5,
     },
 });
 

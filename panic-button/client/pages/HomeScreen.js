@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
@@ -13,68 +14,63 @@ import { LocationButton } from '../components/home/locationButton';
 import CancelAlertButton from '../components/sos_button/CancelAlertButton';
 import AudioRecognition from '../components/AudioRecognition';
 
+// Main HomeScreen component
 const HomeScreen = ({ navigation }) => {
+    // State variables
     const [step, setStep] = useState(1);
     const [alert, setAlert] = useState();
     const [alertId, setAlertId] = useState('');
     const [modalVisible, setModalVisible] = useState(true);
     const [audio, setAudio] = useState(false);
-    const [isRecording,setIsRecording] = useState(false);
+    const [isRecording, setIsRecording] = useState(false);
     const [locationPressed, setlocationPressed] = useState();
-    // const { locationPressed } = route.params;
 
+    // Function to handle cancellation
     const handleCancel = () => {
-        // setModalVisible(false);
         setStep(1);
-
     };
 
+    // Function to handle sending an alert
     const onSendAlert = () => {
-        handleStepChange()
-    }
+        handleStepChange();
+    };
 
+    // Function to handle step changes
     const handleStepChange = () => {
-        if (step == 6) {
+        if (step === 6) {
             setStep(1);
-        }
-        else {
+        } else {
             setStep(step + 1);
         }
-
     };
 
+    // Function to add parameters to the alert
     const addParamsToAlert = (jsonParams) => {
-        setAlert({ ...alert, ...jsonParams })
+        setAlert({ ...alert, ...jsonParams });
     };
 
+    // Function to handle audio button press
     const AudioButtonPress = () => {
-        if (audio == false) {
-            setAudio(true);
-        }
-        else {
-            setAudio(false);
-        }
-    }
+        setAudio(!audio);
+    };
 
+    // Use focus effect to reset step on screen focus
     useFocusEffect(
         React.useCallback(() => {
             setStep(1);
         }, [])
     );
 
+    // Function to handle location button press
     const handlelocationPress = () => {
-        console.log('Button pressed!');
         setlocationPressed(!locationPressed);
-        console.log('loc', locationPressed)
-        LocationButton(locationPressed)
-        // setStep(7)
+        LocationButton(locationPressed);
     };
 
+    // Return JSX based on the current step
     return (
         <>
-            
-            {
-                step === 1 &&
+            {step === 1 && (
                 <View style={styles.container}>
                     <View style={styles.buttonsContainer}>
                         <SosButton onStepChange={handleStepChange} style={{ backgroundColor: 'transparent' }} />
@@ -82,66 +78,59 @@ const HomeScreen = ({ navigation }) => {
                             <View style={styles.iconRow}>
                                 <SquareIconButton iconName="location-on" isPressed={locationPressed} />
                                 <View style={styles.iconSpacing} />
-                                <SquareIconButton iconName="keyboard" />
+                                <SquareIconButton iconName="chart-waterfall" />
                                 <View style={styles.iconSpacing} />
-                                <SquareIconButton iconName="keyboard" />
+                                <SquareIconButton iconName="sound" />
                                 <View style={styles.iconSpacing} />
                                 <SquareIconButton iconName="keyboard" />
                             </View>
                         </View>
                     </View>
                 </View>
-            }
-            {
-                step === 2 &&
+            )}
+            {step === 2 && (
                 <>
-                    <CancelButton navigation={navigation} />
                     <Status onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />
+                    <CancelButton navigation={navigation} style={styles.button} />
                 </>
-            }
-            {
-                step === 3 &&
+            )}
+            {step === 3 && (
                 <>
-                    <CancelButton navigation={navigation} />
                     <ProblemType onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />
-                </>
-            }
-            {
-                step === 4 &&
-                <>
                     <CancelButton navigation={navigation} />
-                    <FindLocation onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />
                 </>
-            }
-            {
-                step === 5 &&
+            )}
+            {step === 4 && (
                 <>
-
-                    {/* <CancelButton navigation={navigation} /> */}
+                    <FindLocation onStepChange={handleStepChange} addParamsToAlert={addParamsToAlert} />
+                    <CancelButton navigation={navigation} />
+                </>
+            )}
+            {step === 5 && (
+                <>
                     <AlertSendingConfirmationModel
                         visible={modalVisible}
                         onClose={handleCancel}
-                        onSendAlert={onSendAlert} />
+                        onSendAlert={onSendAlert}
+                    />
                 </>
-            }
-            {
-                step === 6 &&
+            )}
+            {step === 6 && (
                 <>
-                    {/* <CancelButton navigation={navigation}/> */}
-                    <CancelAlertButton navigation={navigation} alertId={alertId} />
                     <SendAlert alert={alert} onStepChange={handleStepChange} setAlertId={setAlertId} />
+                    <CancelAlertButton navigation={navigation} alertId={alertId} />
                 </>
-            }
-            {
-                step === 7 &&
+            )}
+            {step === 7 && (
                 <>
-                    <LocationButton/>
+                    <LocationButton />
                 </>
-            }
+            )}
         </>
     );
 };
 
+// Styles for the components
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -156,7 +145,7 @@ const styles = StyleSheet.create({
     },
     iconsContainer: {
         alignItems: 'center',
-        marginTop: 50
+        marginTop: 80,
     },
     iconRow: {
         flexDirection: 'row',
@@ -166,5 +155,8 @@ const styles = StyleSheet.create({
     iconSpacing: {
         width: 20, // Adjust spacing between icons
     },
+
 });
+
+// Export the HomeScreen component
 export default HomeScreen;

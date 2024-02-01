@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Assuming you're using Expo for icons
 import axios from 'axios';
 import { SERVER_BASE_URL } from '@env';
 import { useSelector } from 'react-redux';
@@ -7,8 +8,9 @@ import { useTranslation } from 'react-i18next';
 
 const SendAlert = ({ onStepChange, alert, setAlertId }) => {
     const { t, i18n } = useTranslation();
-    const [alertSent, setAlertSent] = useState();
+    const [alertSent, setAlertSent] = useState(null);
     const user = useSelector((state) => state.userReducer.user);
+
     useEffect(() => {
         const addAlert = async () => {
             const url = `${SERVER_BASE_URL}/api/alerts/add-alert/`;
@@ -20,20 +22,20 @@ const SendAlert = ({ onStepChange, alert, setAlertId }) => {
                 location: alert.location,
                 level: alert.level,
             };
-            console.log('alert data', alertData)
+
             try {
                 const response = await axios.post(url, alertData);
-                console.log('Response from server: ', response.data);
                 setAlertSent(true);
                 setAlertId(response.data._id);
+
+                // Uncomment the following lines if you want to navigate to the next step automatically after a certain time
                 // setTimeout(() => {
                 //     onStepChange();
                 // }, 5000);
 
             } catch (error) {
-                console.error('Error sending data to server:', error);
+                console.error('Error sending data to the server:', error);
                 setAlertSent(false);
-
             }
         };
 
@@ -42,9 +44,25 @@ const SendAlert = ({ onStepChange, alert, setAlertId }) => {
 
     return (
         <View style={styles.container}>
-            {alertSent != null && <Text>
-                {alertSent ? t('Alert sent successfully!') : t('Sending the alert failed.')}
-            </Text>}
+            {alertSent !== null && (
+                <View style={styles.statusContainer}>
+                    {alertSent ? (
+                        <>
+                            <Ionicons name="checkmark-circle" size={50} color="green" />
+                            <Text style={styles.successText}>
+                                {t('Alert sent successfully!')}
+                            </Text>
+                        </>
+                    ) : (
+                        <>
+                            <Ionicons name="alert-circle" size={50} color="red" />
+                            <Text style={styles.errorText}>
+                                {t('Sending the alert failed.')}
+                            </Text>
+                        </>
+                    )}
+                </View>
+            )}
         </View>
     );
 };
@@ -56,6 +74,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-})
+    statusContainer: {
+        alignItems: 'center',
+    },
+    successText: {
+        color: 'green',
+        marginTop: 10,
+    },
+    errorText: {
+        color: 'red',
+        marginTop: 10,
+    },
+});
 
 export default SendAlert;
