@@ -14,7 +14,6 @@ import { store, persistor } from "./redux/store";
 import { Provider } from 'react-redux';
 import ResetPassword from './pages/ResetPassword';
 import SpeechRecognitionPage from './pages/SpeechRecognitionPage';
-import ForgetPassword from './components/forget_password/forget_password';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Platform } from "react-native";
 
@@ -96,7 +95,6 @@ const App = () => {
             <Drawer.Screen name="Settings" component={SettingsPage} options={{ title: "" }} />
             <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "" }} />
             <Drawer.Screen name="Accessibility" component={AccessibilityPage} options={{ title: "" }} />
-            <Drawer.Screen name="ForgetPassword" component={ForgetPassword} options={{ headerShown: false }} />
           </Drawer.Navigator>
         </NavigationContainer>
       </PersistGate>
