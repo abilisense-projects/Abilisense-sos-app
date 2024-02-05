@@ -34,8 +34,6 @@ const SignUpPage = () => {
       {step === 2 && <SignUp2 onStepChange={handleStepChange} />}
       {step === 3 && <MedicalConditionsComponent onStepChange={handleStepChange} />}
       {step === 4 && <MedicalConditionsList onStepChange={handleStepChange} />}
-      {step === 3 && <MedicalConditionsComponent onStepChange={handleStepChange} />}
-      {step === 4 && <MedicalConditionsList onStepChange={handleStepChange} />}
     </>
   );
 };
