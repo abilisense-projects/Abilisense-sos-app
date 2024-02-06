@@ -24,7 +24,7 @@ const CancelButton = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         justifyContent: 'center',
         paddingTop: 10,  // Adjust the top padding as needed
         // marginLeft: 10,  // Adjust the left margin as needed
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     cancelButton: {
         width: '100%',
         height: 50,
-        backgroundColor: 'red', // Adjust the color to match your design
+        backgroundColor: "#E33458", // Adjust the color to match your design
         justifyContent: 'center',
         alignItems: 'center',
         // borderRadius: 10,

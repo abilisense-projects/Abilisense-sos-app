@@ -14,13 +14,13 @@ const AlertSendingConfirmationModel = ({ visible, onSendAlert, onClose }) => {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Icon name="exclamation-circle" size={40} color="orange" />
+                    <Icon name="exclamation-circle" size={40} color="#E33458" />
                     <Text style={styles.modalText}>{t("Are you sure you want to send an alert?")}</Text>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.button, { backgroundColor: 'green' }]} onPress={onSendAlert}>
+                        <TouchableOpacity style={[styles.button, { backgroundColor: "#E33458" }]} onPress={onSendAlert}>
                             <Text style={styles.buttonText}>{t("Send alert")}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, { backgroundColor: 'red' }]} onPress={onClose}>
+                        <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(227, 52, 88, 0.5)' }]} onPress={onClose}>
                             <Text style={styles.buttonText}>{t("Cancel")}</Text>
                         </TouchableOpacity>
                     </View>

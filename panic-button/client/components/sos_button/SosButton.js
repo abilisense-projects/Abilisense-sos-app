@@ -69,7 +69,7 @@ const SosButton = ({ onStepChange }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         width: 170,  // Adjusted width
         height: 170, // Adjusted height
         borderRadius: 100, // Adjusted borderRadius
-        backgroundColor: 'red',
+        backgroundColor: '#E33458',
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         height: 150, // Adjusted height
         borderRadius: 90, // Adjusted borderRadius
         borderWidth: 2.5,
-        borderColor: 'red',
+        borderColor: '#E33458',
     },
 });
 

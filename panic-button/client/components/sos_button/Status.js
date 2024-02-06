@@ -12,7 +12,8 @@ const Status = ({ onStepChange, addParamsToAlert }) => {
     };
     const levels = [t("Easy"), t("Medium"), t("Hard")];
     const enLevels = ["Easy", "Medium", "Hard"];
-    const levelsColors = ["#FFD700", "orange", "#FF5733"];
+    // const levelsColors = ["#FFD700", "orange", "#FF5733"];
+    const levelsColors = ["rgba(227, 52, 88, 0.5)","rgba(227, 52, 88, 0.7)","#E33458"]
 
     return (
         <View style={styles.container}>
@@ -33,7 +34,7 @@ const Status = ({ onStepChange, addParamsToAlert }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },

@@ -14,13 +14,13 @@ const LogoutAlert = ({ visible, onClose, onLogout }) => {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Icon name="exclamation-circle" size={40} color="orange" />
+                    <Icon name="exclamation-circle" size={40} color="#E33458" />
                     <Text style={styles.modalText}>{t("Are you sure you want to exit?")}</Text>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.button, { backgroundColor: 'green' }]} onPress={onLogout}>
+                        <TouchableOpacity style={[styles.button, { backgroundColor: "#E33458" }]} onPress={onLogout}>
                             <Text style={styles.buttonText}>{t("Logout")}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, { backgroundColor: 'red' }]} onPress={onClose}>
+                        <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(227, 52, 88, 0.5)' }]} onPress={onClose}>
                             <Text style={styles.buttonText}>{t("Cancel")}</Text>
                         </TouchableOpacity>
                     </View>
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
         padding: 10,
         elevation: 2,
         width: '40%',
+        backgroundColor:"#E33458"
     },
     buttonText: {
         color: 'white',

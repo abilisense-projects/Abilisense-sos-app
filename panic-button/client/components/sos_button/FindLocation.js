@@ -127,7 +127,7 @@ const FindLocation = ({ onStepChange, addParamsToAlert }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 50,
-        borderColor: 'orange',
+        borderColor: "#E33458",
         borderWidth: 1,
         width: 160,
         marginVertical: 10,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     submitButton: {
         width: 60,
         height: 50,
-        backgroundColor: 'orange',
+        backgroundColor: "#E33458",
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     button: {
         width: 230,
         height: 80,
-        backgroundColor: 'orange',
+        backgroundColor: "#E33458",
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 10,

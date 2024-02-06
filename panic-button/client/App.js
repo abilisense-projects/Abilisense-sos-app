@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import SignUpPage from './pages/SignUpPage';
@@ -63,6 +63,18 @@ i18n.use(initReactI18next).init({
 
 const Drawer = createDrawerNavigator();
 
+const CustomHeaderTitle = () => {
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', right:0 }}>
+      <Image
+        source={require("../client/assets/images/AbiliSense_Lgo-sos.png")}
+        style={{ width: 160, height: 100 }}
+        resizeMode="contain"
+      />
+    </View>
+  );
+};
+
 const App = () => {
   const [side, setSide] = useState("left")
   useEffect(() => {
@@ -81,6 +93,15 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
           <Drawer.Navigator drawerContent={(props) => <SideBarMenu {...props} />}
+            screenOptions={{
+              headerShown: true,
+              headerTitle: () => <CustomHeaderTitle />,
+              // headerRight: () => <CustomHeader />,
+              // headerStyle: {
+              //   backgroundColor: '#E33458',
+              // },
+              // headerTintColor: '#fff',
+            }}
             /*screenOptions={{ drawerPosition: side }}*/>
             <Drawer.Screen name="Login" component={Login} options={{
               headerShown: false
@@ -89,26 +110,26 @@ const App = () => {
               headerShown: false
             }} />
             <Drawer.Screen name="ResetPassword" component={ResetPassword} options={{
-            headerShown: false
-          }} />
-            <Drawer.Screen name="Home" component={HomeScreen} options={{ title: "" }} />
-            <Drawer.Screen name="History" component={HistoryPage} options={{ title: "" }} />
-            <Drawer.Screen name="Settings" component={SettingsPage} options={{ title: "" }} />
-            <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "" }} />
-            <Drawer.Screen name="Accessibility" component={AccessibilityPage} options={{ title: "" }} />
+              headerShown: false
+            }} />
+            <Drawer.Screen name="Home" component={HomeScreen} />
+            <Drawer.Screen name="History" component={HistoryPage} />
+            <Drawer.Screen name="Settings" component={SettingsPage} />
+            <Drawer.Screen name="LogOut" component={LogOut} />
+            <Drawer.Screen name="Accessibility" component={AccessibilityPage}/>
             <Drawer.Screen name="ForgetPassword" component={ForgetPassword} options={{ headerShown: false }} />
           </Drawer.Navigator>
         </NavigationContainer>
       </PersistGate>
     </Provider >
-  
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },

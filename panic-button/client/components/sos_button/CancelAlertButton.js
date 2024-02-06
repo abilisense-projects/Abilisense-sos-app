@@ -4,19 +4,17 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { SERVER_BASE_URL } from '@env';
 
-const UnifiedCancelButton = ({ navigation, alertId, isAlert }) => {
+const CancelAlertButton = ({ navigation, alertId}) => {
     const { t, i18n } = useTranslation();
-    const url = isAlert ? `${SERVER_BASE_URL}/api/alerts/update-alert/${alertId}` : null;
+    const url =`${SERVER_BASE_URL}/api/alerts/update-alert/${alertId}`;
 
     const handleCancel = async () => {
-        if (isAlert) {
-            const statusUpdate = { "status": "canceled" };
-            try {
-                const response = await axios.put(url, statusUpdate);
-                console.log('Response from server: ', response.data);
-            } catch (error) {
-                console.error('Error updating alert:', error);
-            }
+        const statusUpdate = { "status": "canceled" };
+        try {
+            const response = await axios.put(url, statusUpdate);
+            console.log('Response from server: ', response.data);
+        } catch (error) {
+            console.error('Error updating alert:', error);
         }
 
         navigation.reset({
@@ -28,7 +26,7 @@ const UnifiedCancelButton = ({ navigation, alertId, isAlert }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.cancelButton} onPress={() => handleCancel()}>
-                <Text style={styles.cancelButtonText}>{isAlert ? t("Cancel alert") : t("Cancel")}</Text>
+                <Text style={styles.cancelButtonText}>{t("Cancel alert")}</Text>
             </TouchableOpacity>
         </View>
     );
@@ -37,14 +35,14 @@ const UnifiedCancelButton = ({ navigation, alertId, isAlert }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         justifyContent: 'center',
         paddingTop: 10,
     },
     cancelButton: {
         width: '100%',
         height: 50,
-        backgroundColor: 'red', // Adjust the color to match your design
+        backgroundColor: "#E33458", // Adjust the color to match your design
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000',
@@ -64,4 +62,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default UnifiedCancelButton;
+export default CancelAlertButton;

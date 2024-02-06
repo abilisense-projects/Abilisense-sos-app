@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next';
 
 const ProblemType = ({ onStepChange, addParamsToAlert }) => {
     const { t, i18n } = useTranslation();
-    const handlePress = (problem) => {
-        const prob = { problem: problem }
+    const handlePress = (index) => {
+        const prob = { problem: enProblems[index] }
         addParamsToAlert(prob)
         onStepChange();
     };
     const problems = [t("Injury"), t("Health Event")];
+    const enProblems = ["Injury", "Health Event"];
 
     return (
         <View style={styles.container}>
@@ -18,7 +19,7 @@ const ProblemType = ({ onStepChange, addParamsToAlert }) => {
                 <TouchableOpacity
                     style={[styles.button]}
                     key={index}
-                    onPress={() => handlePress(item)}
+                    onPress={() => handlePress(index)}
                 >
                     <Text style={styles.buttonText}>{item}</Text>
                 </TouchableOpacity>
@@ -30,7 +31,7 @@ const ProblemType = ({ onStepChange, addParamsToAlert }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     button: {
         width: 200,
         height: 80,
-        backgroundColor: 'orange',
+        backgroundColor: "#E33458",
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 10,
