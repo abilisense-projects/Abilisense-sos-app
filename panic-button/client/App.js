@@ -17,6 +17,7 @@ import SpeechRecognitionPage from './pages/SpeechRecognitionPage';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Platform } from "react-native";
 
+
 const isAndroid = Platform.OS === "android";
 const isHermes = !!global.HermesInternal;
 
@@ -41,6 +42,7 @@ import { getLocales } from "expo-localization";
 // Import all the languages you want here
 import en from "./locales/en/translation.json";
 import he from "./locales/he/translation.json";
+
 
 i18n.use(initReactI18next).init({
   // Add any imported languages here
@@ -76,6 +78,9 @@ const App = () => {
     // <>
     //   <SpeechRecognitionPage></SpeechRecognitionPage>
     // </>
+
+//  <KeyWordSenserComponent></KeyWordSenserComponent>
+
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>

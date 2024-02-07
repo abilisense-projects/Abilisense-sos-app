@@ -5,6 +5,7 @@ const patients = require('./routes/patients');
 const alerts = require('./routes/alerts');
 const passwordReset = require('./routes/passwordReset');
 const medicalConditions = require('./routes/medicalConditions');
+const speechToText = require('./routes/speechToText');
 require('dotenv').config();
 
 const app = express();
@@ -16,7 +17,7 @@ app.use('/api/patients', patients);
 app.use('/api/alerts', alerts);
 app.use('/api/reset-password', passwordReset);
 app.use('/api/medicalConditions', medicalConditions);
-
+app.use('/api/speechToText',speechToText);
 
 const startApp = async () => {
     try {
