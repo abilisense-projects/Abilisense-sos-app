@@ -28,11 +28,6 @@ const SendAlert = ({ onStepChange, alert, setAlertId }) => {
                 setAlertSent(true);
                 setAlertId(response.data._id);
 
-                // Uncomment the following lines if you want to navigate to the next step automatically after a certain time
-                // setTimeout(() => {
-                //     onStepChange();
-                // }, 5000);
-
             } catch (error) {
                 console.error('Error sending data to the server:', error);
                 setAlertSent(false);

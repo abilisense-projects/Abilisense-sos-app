@@ -97,9 +97,9 @@ const App = () => {
               headerShown: true,
               headerTitle: () => <CustomHeaderTitle />,
               // headerRight: () => <CustomHeader />,
-              // headerStyle: {
-              //   backgroundColor: '#E33458',
-              // },
+              headerStyle: {
+                backgroundColor: 'rgb(243,243,243)',
+              },
               // headerTintColor: '#fff',
             }}
             /*screenOptions={{ drawerPosition: side }}*/>
