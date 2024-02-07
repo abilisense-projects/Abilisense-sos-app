@@ -11,6 +11,7 @@ import BackButton from './LoginButton';
 
 const SignUp2 = ({ onStepChange }) => {
   const addressData = useSelector((state) => state.register.addressData);
+  const { t, i18n } = useTranslation();
 
   const [formData, setFormData] = useState({
     phoneNumber: addressData.phoneNumber,
@@ -39,7 +40,6 @@ const SignUp2 = ({ onStepChange }) => {
   };
 
   const [errors, setErrors] = useState({});
-  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
   const handleInputChange = (key, text) => {
@@ -51,7 +51,7 @@ const SignUp2 = ({ onStepChange }) => {
     if (formData[key] && !errors[key]) {
       // Check validation conditions
       try {
-        signUpValidationSchema.validateSyncAt(key, formData);
+        signUpValidationSchema(t).validateSyncAt(key, formData);
         return true;
       } catch (validationError) {
         return false;
@@ -72,7 +72,7 @@ const SignUp2 = ({ onStepChange }) => {
     const formErrors = {};
     Object.keys(formData).forEach((key) => {
       try {
-        signUpValidationSchema.validateSyncAt(key, formData);
+        signUpValidationSchema(t).validateSyncAt(key, formData);
       } catch (validationError) {
         formErrors[key] = validationError.message;
       }
