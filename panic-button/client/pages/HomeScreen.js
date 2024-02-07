@@ -12,7 +12,6 @@ import AlertSendingConfirmationModel from '../components/sos_button/AlertSending
 import SquareIconButton from '../components/home/SquareIconButton';
 import { LocationButton } from '../components/home/locationButton';
 import CancelAlertButton from '../components/sos_button/CancelAlertButton';
-import AudioRecognition from '../components/AudioRecognition';
 
 // Main HomeScreen component
 const HomeScreen = ({ navigation }) => {

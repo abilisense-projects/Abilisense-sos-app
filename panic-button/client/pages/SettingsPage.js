@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Switch } from 'react-native-paper';
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, ImageBackground } from "react-native";
 import { recordFor10Seconds } from '../services/RecordService';
 import { addAlert, checkIfWordInRecord } from '../services/ApiRequest';
 import { useSelector } from 'react-redux';
@@ -14,7 +14,7 @@ const SettingsPage = () => {
     const user = useSelector((state) => state.userReducer.user);
     const [modalVisible, setModalVisible] = useState(false);
     const [isAlert, setIsAlert] = useState(true);
-    const timer = 21;
+    const timer = 20;
 
 
     // Toggle location switch
@@ -69,28 +69,28 @@ const SettingsPage = () => {
 
     return (
         <View style={styles.pageContainer}>
-      <ImageBackground source={require('../assets/images/rm222-mind-24.jpg')} resizeMode="cover" style={styles.image}>
-            <Text style={styles.titleText}>Sensors Settings</Text>
-            <View style={styles.settingContainer}>
-                <Text style={styles.settingText}>Location</Text>
-                <Switch value={isLocationSwitchOn} onValueChange={onLocationToggleSwitch} color="#E33458" />
-            </View>
-            <View style={styles.settingContainer}>
-                <Text style={styles.settingText}>Fall Detection</Text>
-                <Switch value={isFallDetectionSwitchOn} onValueChange={onFallDetectionToggleSwitch} color="#E33458" />
-            </View>
-            <View style={styles.settingContainer}>
-                <Text style={styles.settingText}>Key Word</Text>
-                <Switch value={isKeyWordSwitchOn} onValueChange={onKeyWordToggleSwitch} color="#E33458" />
-            </View>
-            {/* <SendModal visible={modalVisible} onClose={setIsAlert(false)}/> */}
-            {<SendModal visible={modalVisible} onClose={(timer) => {
-                if (timer != 0) {
-                    setIsAlert(false);
-                }
-                setModalVisible(false);
-            }} setIsAlert={setIsAlert} openAlert={openAlert} timerNum={timer} />}
-</ImageBackground>
+            <ImageBackground source={require('../assets/images/rm222-mind-24.jpg')} resizeMode="cover" style={styles.image}>
+                <Text style={styles.titleText}>Sensors Settings</Text>
+                <View style={styles.settingContainer}>
+                    <Text style={styles.settingText}>Location</Text>
+                    <Switch value={isLocationSwitchOn} onValueChange={onLocationToggleSwitch} color="#E33458" />
+                </View>
+                <View style={styles.settingContainer}>
+                    <Text style={styles.settingText}>Fall Detection</Text>
+                    <Switch value={isFallDetectionSwitchOn} onValueChange={onFallDetectionToggleSwitch} color="#E33458" />
+                </View>
+                <View style={styles.settingContainer}>
+                    <Text style={styles.settingText}>Key Word</Text>
+                    <Switch value={isKeyWordSwitchOn} onValueChange={onKeyWordToggleSwitch} color="#E33458" />
+                </View>
+                {/* <SendModal visible={modalVisible} onClose={setIsAlert(false)}/> */}
+                {modalVisible&& <SendModal visible={modalVisible} onClose={(timer) => {
+                    if (timer != 0) {
+                        setIsAlert(false);
+                    }
+                    setModalVisible(false);
+                }} setIsAlert={setIsAlert} openAlert={openAlert} timerNum={timer} />}
+            </ImageBackground>
 
         </View>
     )
