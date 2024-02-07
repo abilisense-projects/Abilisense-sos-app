@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as Yup from 'yup';
 import { passwordValidationSchema } from '../../config/passwordValidation';
 import { SERVER_BASE_URL } from '@env';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import PasswordInput from './PasswordInput';
 
 
@@ -44,7 +44,7 @@ const CompleteResetPassword = ({ email, onStepChange }) => {
         }
     }
     const handleResetPassword = async () => {
-        if (password != verifyPassword) {setErrorMessage("No Overlap"); return;}
+        if (password != verifyPassword) { setErrorMessage("No Overlap"); return; }
         else if (isValidPassword(password)) {
             const verificationResult = await resetPassword(password);
             if (!verificationResult) return;
@@ -63,7 +63,10 @@ const CompleteResetPassword = ({ email, onStepChange }) => {
                 onPasswordChange={setVerifyPassword}
             />
             <Text style={{ color: 'red' }}>{errorMessage}</Text>
-            <Button title='verify password' onPress={handleResetPassword}></Button>
+            {/* <Button title='verify password' onPress={handleResetPassword}></Button> */}
+            <TouchableOpacity style={styles.btn} onPress={handleResetPassword} >
+                <Text style={styles.buttonText} >verify password</Text>
+            </TouchableOpacity>
 
         </View >
     )
@@ -80,10 +83,23 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
-    input: {
+    // input: {
+    //     width: '70%',
+    //     height: 40,
+    //     borderWidth: 2,
+    //     paddingLeft: 5,
+    // }
+    btn: {
+        backgroundColor: "#E33458",
+        justifyContent: 'center',
+        borderRadius: 5,
         width: '70%',
-        height: 40,
-        borderWidth: 2,
-        paddingLeft: 5,
-    }
+        height: 50,
+        marginBottom: 10,
+    },
+    buttonText: {
+        color: 'white',
+        textAlign: 'center'
+    },
+
 });

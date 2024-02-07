@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity, StyleSheet } from 'react-native';
 import CodeInput from './CodeInput';
 import { sendVerificationCode } from './PublicFunctions';
 
@@ -73,10 +73,13 @@ const EmailVerification = ({ email, onStepChange }) => {
                 {'\n'}
                 A verification code has been sent to you right now</Text>
             <CodeInput onCodeChange={handleCodeChange}></CodeInput>
-            <Button title='Verify' onPress={handleVerificationCode}></Button>
+            {/* <Button title='Verify' onPress={handleVerificationCode}></Button> */}
+            <TouchableOpacity style={styles.btn} onPress={handleVerificationCode} >
+                <Text style={styles.buttonText} >Verify</Text>
+            </TouchableOpacity>
             <TouchableWithoutFeedback onPress={handleResend}>
                 <View>
-                    <Text style={{ color: 'blue', cursor: 'pointer' }}>Resend</Text>
+                    <Text style={{ color: '#E33458', cursor: 'pointer' }}>Resend</Text>
                 </View>
             </TouchableWithoutFeedback>
             <Text style={isError ? styles.errorMessage : styles.message}>{message}</Text>
@@ -92,6 +95,18 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center'
+    },
+    btn: {
+        backgroundColor: "#E33458",
+        justifyContent: 'center',
+        borderRadius: 5,
+        width: '70%',
+        height: 50,
+        marginBottom: 10,
+    },
+    buttonText: {
+        color: 'white',
+        textAlign: 'center'
     },
     errorMessage: {
         color: "red"

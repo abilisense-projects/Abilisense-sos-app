@@ -1,13 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import { SERVER_BASE_URL } from '@env';
-import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
+import { View, Text, Button, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { sendVerificationCode } from './PublicFunctions';
-
 const ResetPasswordInitialize = ({ onEmailChange, onStepChange }) => {
     const [message, setMessage] = React.useState('');
     const [emailInput, setEmailInput] = React.useState('');
-
     const checkIfEmailExists = async (email) => {
         try {
             return await axios.post(`${SERVER_BASE_URL}/api/patients/get-by-email/`, { email })
@@ -21,9 +19,7 @@ const ResetPasswordInitialize = ({ onEmailChange, onStepChange }) => {
         catch (error) {
             console.error('Error fetching data:', error);
         }
-
     }
-
     const handleSendingCode = async () => {
         try {
             await sendVerificationCode(emailInput);
@@ -44,7 +40,6 @@ const ResetPasswordInitialize = ({ onEmailChange, onStepChange }) => {
             return false;
         }
     }
-
     const handleVerificationCode = async () => {
         const result = await checkIfEmailExists(emailInput);
         if (!result) {
@@ -56,7 +51,6 @@ const ResetPasswordInitialize = ({ onEmailChange, onStepChange }) => {
             onStepChange(2);//nevigate to the next step
         }
     }
-
     return (
         <View style={styles.container}>
             <Text>Enter your email address:</Text>
@@ -66,13 +60,13 @@ const ResetPasswordInitialize = ({ onEmailChange, onStepChange }) => {
                 value={emailInput}
                 style={styles.input}
             ></TextInput>
-            <Text style={{ color: 'red' }}>{message}</Text>
-            <Button title='Send me a code' onPress={handleVerificationCode}></Button>
-
+            <Text style={{ color: '#E33458' }}>{message}</Text>
+            <TouchableOpacity style={styles.btn} onPress={handleVerificationCode} >
+                <Text style={styles.buttonText} >Submit code</Text>
+            </TouchableOpacity>
         </View>
     )
 }
-
 export default ResetPasswordInitialize;
 const styles = StyleSheet.create({
     container: {
@@ -85,8 +79,25 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '70%',
-        height: 40,
-        borderWidth: 2,
-        paddingLeft: 5,
-    }
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 10,
+        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+    },
+    btn: {
+        backgroundColor: "#E33458",
+        justifyContent: 'center',
+        borderRadius: 5,
+        width: '70%',
+        height: 50,
+        marginBottom: 10,
+    },
+    buttonText: {
+        color: 'white',
+        textAlign: 'center'
+    },
 });

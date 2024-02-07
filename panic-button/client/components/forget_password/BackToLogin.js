@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
 const BackToLoginButton = ({ navigation }) => {
     const handleNavigation = () => {
         navigation.reset({
@@ -8,34 +7,21 @@ const BackToLoginButton = ({ navigation }) => {
             routes: [{ name: "Login" }]
         });
     };
-
     return (
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.submitButton} onPress={() => handleNavigation()}>
-                <Text style={styles.submitButtonText}>Back</Text>
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.submitButton} onPress={() => handleNavigation()}>
+            <Text style={styles.submitButtonText}>Back</Text>
+        </TouchableOpacity>
     )
 };
-
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#fff',
-    },
     submitButton: {
-        width: 80,
-        height: 35,
-        backgroundColor: 'blue',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5,
-        marginLeft: 10,
-        marginTop: 5
+        position: 'absolute',
+        top: 10,
+        left: 10,
     },
     submitButtonText: {
-        color: 'white',
         fontSize: 16,
+        color: "#E33458",
     },
 });
-
 export default BackToLoginButton;
