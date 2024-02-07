@@ -1,10 +1,10 @@
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LogoutModel from "../components/logout/LogoutModel";
 import { useFocusEffect } from "@react-navigation/native";
 
-const Logout = () => {
+const Logout = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(true);
 
     const handleLogout = () => {
@@ -29,17 +29,33 @@ const Logout = () => {
     };
 
     return (
-        <View>
-            <LogoutModel
-                visible={modalVisible}
-                onClose={handleCancel}
-                onLogout={logoutUser}
-            />
+        <View style={styles.container}>
+            <ImageBackground source={require('../assets/images/rm222-mind-24.jpg')} resizeMode="cover" style={styles.image}>
+
+                <LogoutModel
+                    visible={modalVisible}
+                    onClose={handleCancel}
+                    onLogout={logoutUser}
+                />
+            </ImageBackground>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // Remove backgroundColor to allow the image background to be visible
+    },
+    image: {
+        flex: 1,
+        width: '100%', // Ensure the image covers the entire width
+        height: '100%', // Ensure the image covers the entire height
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     centeredView: {
         flex: 1,
         justifyContent: 'center',

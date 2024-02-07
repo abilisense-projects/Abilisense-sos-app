@@ -2,22 +2,25 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-
 const ProblemType = ({ onStepChange, addParamsToAlert }) => {
     const { t, i18n } = useTranslation();
-    const handlePress = (problem) => {
-        const prob = { problem: problem }
+    const handlePress = (index) => {
+        const prob = { problem: enProblems[index] }
         addParamsToAlert(prob)
         onStepChange();
     };
-    const problems = [t("Injury"), t("health event")];
+    const problems = [t("Injury"), t("Health Event")];
+    const enProblems = ["Injury", "Health Event"];
 
     return (
         <View style={styles.container}>
-            
-            <Text>{t("Choose your problem: ")}</Text>
+            <Text style={styles.title}>{t("Choose your problem:")}</Text>
             {problems.map((item, index) => (
-                <TouchableOpacity style={styles.button} key={index} onPress={() => handlePress(item)}>
+                <TouchableOpacity
+                    style={[styles.button]}
+                    key={index}
+                    onPress={() => handlePress(index)}
+                >
                     <Text style={styles.buttonText}>{item}</Text>
                 </TouchableOpacity>
             ))}
@@ -28,23 +31,36 @@ const ProblemType = ({ onStepChange, addParamsToAlert }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
     button: {
-        width: 150,
-        height: 150,
-        backgroundColor: 'orange',
+        width: 200,
+        height: 80,
+        backgroundColor: "#E33458",
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 10,
-        borderRadius: 10,
+        borderRadius: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     buttonText: {
         color: 'white',
-        fontSize: 20,
-        fontWeight: 'bold'
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 });
 

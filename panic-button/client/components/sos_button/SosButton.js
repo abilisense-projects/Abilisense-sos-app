@@ -42,9 +42,7 @@ const SosButton = ({ onStepChange }) => {
 
         const animatedStyle = {
             transform: [
-                { translateX: value.interpolate({ inputRange: [0, 1], outputRange: [0, 0] }) },
-                { translateY: value.interpolate({ inputRange: [0, 1], outputRange: [0, 0] }) },
-                { scale: value.interpolate({ inputRange: [0, 0.3, 0.5], outputRange: [1, 1.1, 1.3] }) },
+                { scale: value.interpolate({ inputRange: [0, 0.3, 0.5], outputRange: [1, 1.2, 1.4] }) },
             ],
             opacity: value.interpolate({ inputRange: [0, 0.7, 1], outputRange: [1, 0.3, 0] }),
         };
@@ -71,15 +69,15 @@ const SosButton = ({ onStepChange }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
     button: {
-        width: 150,
-        height: 150,
-        borderRadius: 75,
-        backgroundColor: 'red',
+        width: 170,  // Adjusted width
+        height: 170, // Adjusted height
+        borderRadius: 100, // Adjusted borderRadius
+        backgroundColor: '#E33458',
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1,
@@ -91,11 +89,11 @@ const styles = StyleSheet.create({
     },
     animationCircle: {
         position: 'absolute',
-        width: 140,
-        height: 140,
-        borderRadius: 75,
+        width: 150, // Adjusted width
+        height: 150, // Adjusted height
+        borderRadius: 90, // Adjusted borderRadius
         borderWidth: 2.5,
-        borderColor: 'red',
+        borderColor: '#E33458',
     },
 });
 

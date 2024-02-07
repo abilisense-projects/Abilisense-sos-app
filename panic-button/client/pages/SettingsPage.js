@@ -69,6 +69,7 @@ const SettingsPage = () => {
 
     return (
         <View style={styles.pageContainer}>
+      <ImageBackground source={require('../assets/images/rm222-mind-24.jpg')} resizeMode="cover" style={styles.image}>
             <Text style={styles.titleText}>Sensors Settings</Text>
             <View style={styles.settingContainer}>
                 <Text style={styles.settingText}>Location</Text>
@@ -89,7 +90,7 @@ const SettingsPage = () => {
                 }
                 setModalVisible(false);
             }} setIsAlert={setIsAlert} openAlert={openAlert} timerNum={timer} />}
-
+</ImageBackground>
 
         </View>
     )
@@ -99,6 +100,10 @@ const styles = StyleSheet.create({
     pageContainer: {
         flex: 1,
         justifyContent: 'flex-start',
+    },
+    image: {
+        flex: 1,
+        // alignItems: 'center',
     },
     titleText: {
         fontSize: 24,

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-// import ShowHistory from '../components/history/ShowHistory';
-// import ShowActiveAlerts from '../components/alerts/ShowActiveAlerts';
+import { View, TouchableOpacity, Text, StyleSheet, ImageBackground, Dimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 import ShowAlerts from '../components/history/ShowAlerts';
 import { SERVER_BASE_URL } from '@env';
@@ -15,6 +13,7 @@ const HistoryPage = ({ navigation }) => {
   const [data, setData] = useState([]);
 
   const onShowHistory = async () => {
+    setShowHistory(true);
     try {
       const patientId = user._id;
       const response = await axios.post(`${SERVER_BASE_URL}/api/alerts/get-by-patient-id/`, {
@@ -32,6 +31,7 @@ const HistoryPage = ({ navigation }) => {
   }, [])
 
   const onShowActiveAlerts = async () => {
+    setShowHistory(false);
     try {
       const patientId = user._id;
       const response = await axios.get(`${SERVER_BASE_URL}/api/alerts/get-active-alerts-by-patient-id/${patientId}`);
@@ -44,41 +44,55 @@ const HistoryPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.alertStatusButtons}>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: showHistory ? 'lightblue' : 'white' }]}
-          onPress={() => onShowHistory()}
-        >
-          <Text style={styles.buttonText}>{t("Show History")}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: !showHistory ? 'lightblue' : 'white' }]}
-          onPress={() => onShowActiveAlerts()}
-        >
-          <Text style={styles.buttonText}>{t("Show Active Alerts")}</Text>
-        </TouchableOpacity>
-      </View>
-      <ShowAlerts data={data} showHistory={showHistory} navigation={navigation}/>
-      {/* {showHistory ? (
+      <ImageBackground source={require('../assets/images/rm222-mind-24.jpg')} resizeMode="cover" style={styles.image}>
+
+        <View style={styles.alertStatusButtons}>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: showHistory ? "#E33458" : 'transparent' }]}
+            onPress={() => onShowHistory()}
+          >
+            <Text style={styles.buttonText}>{t("Show History")}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: !showHistory ? "#E33458" : 'transparent' }]}
+            onPress={() => onShowActiveAlerts()}
+          >
+            <Text style={styles.buttonText}>{t("Show Active Alerts")}</Text>
+          </TouchableOpacity>
+        </View>
+        <ShowAlerts data={data} showHistory={showHistory} navigation={navigation} />
+        {/* {showHistory ? (
         <ShowHistory />
       ) : (
         <ShowActiveAlerts user={user} />
       )} */}
+      </ImageBackground>
     </View>
   );
 };
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center',
+  },
+  image: {
+    flex: 1,
+    // width: windowWidth,
+    // height: windowHeight,
     alignItems: 'center',
   },
   alertStatusButtons: {
     flexDirection: 'row',
-    alignItems: 'center',
-},
+    // alignItems: 'center',
+    position: 'absolute',
+    // textAlign:'center',
+    // justifyContent:'center',
+    top: 20, // Adjust this value as needed
+    // left: 20, // Adjust this value as needed
+  },
   button: {
     padding: 10,
     borderRadius: 5,
