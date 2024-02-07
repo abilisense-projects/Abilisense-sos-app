@@ -44,7 +44,7 @@ async function getAlertsByPatientId(patientId) {
 }
 
 async function getActiveAlertsByPatientId(patientId) {
-    const status = ["not treated", "in treated"];
+    const status = ["not treated", "in treated", "in treatment"];
     try {
         const alerts = await Alert.find({ patient: patientId, status: { $in: status } });
         return alerts;

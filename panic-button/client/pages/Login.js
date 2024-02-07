@@ -8,13 +8,14 @@ import { loginSuccess } from '../redux/actions/loginActions';
 import { useSelector } from 'react-redux';
 import { BY_EMAIL_AND_PASSWORD, SERVER_BASE_URL } from '@env';
 import * as Yup from 'yup';
-
+import { useTranslation } from 'react-i18next';
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
 
   // on start the app or on reload check in local-storege If there is a logged in user
   useEffect(() => {
@@ -41,7 +42,7 @@ const Login = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       //validate the email and password valid 
-      await loginValidationSchema.validate({ email, password }, { abortEarly: false });
+      await loginValidationSchema(t).validate({ email, password }, { abortEarly: false });
 
       // Runs the function that accesses the database and waits for an answer
       const response = await checkEmailAndpassword(email, password)
@@ -55,7 +56,7 @@ const Login = ({ navigation }) => {
         navigation.navigate('Home');
       } else {
         // if the response is not good there is a error on login
-        setErrorMessage('user name or password invalid');
+        setErrorMessage(t('user name or password invalid'));
       }
 
       // if there is error show them
@@ -67,7 +68,7 @@ const Login = ({ navigation }) => {
         });
         setErrors(yupErrors);
       }
-      setErrorMessage('user name or password invalid');
+      setErrorMessage(t('user name or password invalid'));
     }
   };
 
@@ -83,7 +84,10 @@ const Login = ({ navigation }) => {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <TouchableOpacity style={styles.translateButton} onPress={() => { i18n.language == "he" ? i18n.changeLanguage('en') : i18n.changeLanguage('he') }}>
+        <Text style={styles.translateButtonText}>{i18n.language == "he" ? "English" : "עברית"}</Text>
+      </TouchableOpacity>
+      <Text style={styles.title}>{t("Login")}</Text>
       <TouchableOpacity
         style={styles.registerContainer}
         onPress={() =>{
@@ -92,11 +96,11 @@ const Login = ({ navigation }) => {
             routes: [{ name: 'SignUpPage' }]
           });}}
       >
-        <Text style={styles.register}>Register</Text>
+        <Text style={styles.register}>{t("Register")}</Text>
       </TouchableOpacity>
       <TextInput
         style={[styles.input, errors.email && styles.invalidInput]}
-        placeholder="Email"
+        placeholder={t("Email")}
         onChangeText={(text) => {
           setEmail(text);
           setErrors((prevErrors) => ({ ...prevErrors, email: '' })); // Merge state updates
@@ -106,7 +110,7 @@ const Login = ({ navigation }) => {
 
       <TextInput
         style={[styles.input, errors.password && styles.invalidInput]}
-        placeholder="Password"
+        placeholder={t("Password")}
         secureTextEntry
         onChangeText={(text) => {
           setPassword(text);
@@ -114,16 +118,16 @@ const Login = ({ navigation }) => {
         }}
         value={password}
       />
-      
+
       <View style={styles.forgotPasswordContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
-          <Text style={styles.forgotPassword}>Forgot Password?</Text>
+          <Text style={styles.forgotPassword}>{t("Forgot Password?")}</Text>
         </TouchableOpacity>
       </View>
       {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
 
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>{t("Login")}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -195,6 +199,15 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  translateButton: {
+    // backgroundColor: 'blue', 
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  translateButtonText: {
+    color: 'blue',
   },
 });
 export default Login;

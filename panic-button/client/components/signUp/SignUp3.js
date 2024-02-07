@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMedicalConditions, removeMedicalCondition } from '../../redux/actions/registerActions';
 import { useNavigation } from '@react-navigation/native';
 import { SERVER_BASE_URL } from '@env';
+import { useTranslation } from 'react-i18next';
 import BackButton from './LoginButton';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -12,6 +13,7 @@ const windowWidth = Dimensions.get('window').width;
 
 const MedicalConditionsComponent = ({ onStepChange }) => {
   const [newCondition, setNewCondition] = useState('');
+  const { t, i18n } = useTranslation();
   const user = useSelector((state) => state.register.userData);
   const address = useSelector((state) => state.register.addressData);
   const medicalConditions = useSelector((state) => state.register.medicalConditions);
@@ -89,19 +91,19 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
   const renderConditions = () => {
     return (
       <View style={styles.conditionsListContainer}>
-      <Text style={styles.conditionsListTitle}>Selected Medical Conditions:</Text>
-      {medicalConditions.map((condition, index) => (
-        <View key={index} style={styles.conditionItem}>
-          <Text style={styles.conditionText}>{condition}</Text>
-          <TouchableOpacity
-            style={styles.removeButtonContainer}
-            onPress={() => removeCondition(condition)}
-          >
-            <Text style={styles.removeButton}>X</Text>
-          </TouchableOpacity>
-        </View>
-      ))}
-    </View>    
+        <Text style={styles.conditionsListTitle}>Selected Medical Conditions:</Text>
+        {medicalConditions.map((condition, index) => (
+          <View key={index} style={styles.conditionItem}>
+            <Text style={styles.conditionText}>{condition}</Text>
+            <TouchableOpacity
+              style={styles.removeButtonContainer}
+              onPress={() => removeCondition(condition)}
+            >
+              <Text style={styles.removeButton}>X</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View>
     );
   };
 
@@ -115,30 +117,31 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
             <MaterialIcons name="list" size={24} color="blue" style={styles.icon} />
             <Text style={styles.selectConditionsButtonText}>Open to select Medical Conditions</Text>
           </TouchableOpacity>
+        </View>
 
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Other medical condition"
-              value={newCondition}
-              onChangeText={(text) => setNewCondition(text)}
-            />
-            <TouchableOpacity onPress={() => handleSelectConditions(newCondition)}>
-              <Text style={styles.addButton}>Add</Text>
-            </TouchableOpacity>
-          </View>
-
-          {renderConditions()}
-
-          <TouchableOpacity style={styles.registerButton} onPress={() => GoToLoginPage()}>
-            <Text style={styles.buttonText}>Register</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder={t("Other medical condition")}
+            value={newCondition}
+            onChangeText={(text) => setNewCondition(text)}
+          />
+          <TouchableOpacity onPress={() => handleSelectConditions(newCondition)}>
+            <Text style={styles.addButton}>{t("Add")}</Text>
           </TouchableOpacity>
+        </View>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.buttonPrev} onPress={() => onStepChange(2)}>
-              <Text style={styles.buttonText}>Prev</Text>
-            </TouchableOpacity>
-          </View>
+
+        {renderConditions()}
+
+        <TouchableOpacity style={styles.registerButton} onPress={() => GoToLoginPage()}>
+          <Text style={styles.buttonText}>{t("Register")}</Text>
+        </TouchableOpacity>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.buttonPrev} onPress={() => onStepChange(2)}>
+            <Text style={styles.buttonText}>{t("Prev")}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -235,7 +238,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     justifyContent: 'center',
-  },  
+  },
   removeButton: {
     marginLeft: 5,
     color: 'green',

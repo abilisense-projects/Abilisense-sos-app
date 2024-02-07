@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import SosButton from '../components/sos_button/SosButton';
 import Status from '../components/sos_button/Status';
@@ -9,14 +9,17 @@ import FindLocation from '../components/sos_button/FindLocation';
 import CancelButton from '../components/sos_button/CancelButton';
 import AlertSendingConfirmationModel from '../components/sos_button/AlertSendingConfirmationModel';
 import SquareIconButton from '../components/home/SquareIconButton';
-import { LocationButton } from '../components/home/locationButton';
+// import { LocationButton } from '../components/home/locationButton';
 import CancelAlertButton from '../components/sos_button/CancelAlertButton';
+
 
 const HomeScreen = ({ navigation }) => {
     const [step, setStep] = useState(1);
     const [alert, setAlert] = useState();
     const [alertId, setAlertId] = useState('');
     const [modalVisible, setModalVisible] = useState(true);
+    const [audio, setAudio] = useState(false);
+    const [isRecording,setIsRecording] = useState(false);
     const [locationPressed, setlocationPressed] = useState();
     // const { locationPressed } = route.params;
 
@@ -44,6 +47,15 @@ const HomeScreen = ({ navigation }) => {
         setAlert({ ...alert, ...jsonParams })
     };
 
+    const AudioButtonPress = () => {
+        if (audio == false) {
+            setAudio(true);
+        }
+        else {
+            setAudio(false);
+        }
+    }
+
     useFocusEffect(
         React.useCallback(() => {
             setStep(1);
@@ -54,12 +66,13 @@ const HomeScreen = ({ navigation }) => {
         console.log('Button pressed!');
         setlocationPressed(!locationPressed);
         console.log('loc', locationPressed)
-        LocationButton(locationPressed)
+        // LocationButton(locationPressed)
         // setStep(7)
     };
 
     return (
         <>
+            
             {
                 step === 1 &&
                 <View style={styles.container}>
@@ -122,7 +135,7 @@ const HomeScreen = ({ navigation }) => {
             {
                 step === 7 &&
                 <>
-                    <LocationButton/>
+                    {/* <LocationButton/> */}
                 </>
             }
         </>
