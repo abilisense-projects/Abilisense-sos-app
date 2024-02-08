@@ -80,7 +80,7 @@ const SettingsPage = () => {
                     <Switch value={isFallDetectionSwitchOn} onValueChange={onFallDetectionToggleSwitch} color="#E33458" />
                 </View>
                 <View style={styles.settingContainer}>
-                    <Text style={styles.settingText}>Key Word</Text>
+                    <Text style={styles.settingText}>Keyword</Text>
                     <Switch value={isKeyWordSwitchOn} onValueChange={onKeyWordToggleSwitch} color="#E33458" />
                 </View>
                 {/* <SendModal visible={modalVisible} onClose={setIsAlert(false)}/> */}
