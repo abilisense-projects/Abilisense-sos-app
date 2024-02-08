@@ -1,27 +1,25 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
-const BackButton = () => {
-  const navigation = useNavigation();
-
+const BackButton = ({ onPress, style, textStyle }) => {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.backButton}>
-      <Text style={styles.backButtonText}>Back to Login</Text>
+    <TouchableOpacity onPress={onPress} style={[styles.backButton, style]}>
+      <Text style={[styles.backButtonText, textStyle]}>Back to Login</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  //not in use
   backButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
+    padding: 10,
+    borderRadius: 20,
+    overflow: 'hidden',
   },
-
   backButtonText: {
     fontSize: 16,
-    color: 'blue',
+    color: '#FFFFFF',
+    textAlign: 'center',
   },
 });
 

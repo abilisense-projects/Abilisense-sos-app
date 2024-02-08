@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Pressable, StyleSheet, ImageBackground } from 'react-native';
 import { signUpValidationSchema } from '../../config/ValidationSchemas';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../../redux/actions/registerActions';
-import { useTranslation } from 'react-i18next';
-import BackButton from './LoginButton';
+import { useTranslation } from 'react-i18next'
 import { SERVER_BASE_URL } from '@env';
 
 const SignUpScreen = ({ onStepChange }) => {
@@ -110,8 +109,10 @@ const SignUpScreen = ({ onStepChange }) => {
   };
 
   return (
+    // <ImageBackground source={require('../../assets/images/rm222-mind-24.jpg')} resizeMode="cover" style={styles.backgroundImage}>
+
     <View style={styles.container}>
-      <BackButton />
+      
       <Text style={styles.title}>{t("Sign Up")}</Text>
 
       {Object.keys(formData).map((key) => (
@@ -148,6 +149,7 @@ const SignUpScreen = ({ onStepChange }) => {
         </Pressable>
       </View>
     </View>
+    // </ImageBackground>
   );
 };
 
@@ -156,6 +158,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
   },
   title: {
     fontSize: 24,
@@ -168,11 +175,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    width: '80%',
     borderWidth: 1,
     paddingLeft: 10,
-    flexDirection: 'row',
-    alignItems: 'center', // Center the icon vertically
+    borderColor: '#ccc',
+    borderRadius: 8,
+    marginBottom: 5,
+    fontSize: 18,
   },
   buttonText: {
     color: 'white',
@@ -190,7 +198,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonNext: {
-    backgroundColor: 'blue',
+    backgroundColor: "#E33458",
     padding: 10,
     borderRadius: 5,
     flex: 1,
@@ -203,7 +211,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     position: 'absolute',
     top: 12,
-    right: 12,
+    right: -30,
   },
   placeholderLabel: {
     position: 'absolute',
