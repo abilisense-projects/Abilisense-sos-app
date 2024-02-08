@@ -14,7 +14,6 @@ import { store, persistor } from "./redux/store";
 import { Provider } from 'react-redux';
 import ResetPassword from './pages/ResetPassword';
 import SpeechRecognitionPage from './pages/SpeechRecognitionPage';
-// import ForgetPassword from './components/forget_password/forget_password';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Platform } from "react-native";
 
@@ -86,9 +85,7 @@ const App = () => {
     }
   }, [i18n.language]); // Only re-run the effect if i18n.language changes
   return (
-    // <>
-    //   <SpeechRecognitionPage></SpeechRecognitionPage>
-    // </>
+
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
@@ -96,11 +93,9 @@ const App = () => {
             screenOptions={{
               headerShown: true,
               headerTitle: () => <CustomHeaderTitle />,
-              // headerRight: () => <CustomHeader />,
               headerStyle: {
                 backgroundColor: 'rgb(243,243,243)',
               },
-              // headerTintColor: '#fff',
             }}
             /*screenOptions={{ drawerPosition: side }}*/>
             <Drawer.Screen name="Login" component={Login} options={{
@@ -129,7 +124,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },

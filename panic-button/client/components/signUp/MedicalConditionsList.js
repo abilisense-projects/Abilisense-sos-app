@@ -33,7 +33,6 @@ const MedicalConditionsList = ({ onStepChange }) => {
     }
   };
 
-
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => handleSelectCondition(item)}
@@ -50,17 +49,19 @@ const MedicalConditionsList = ({ onStepChange }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.closeButton} onPress={() => onStepChange(3)}>
-        <Text style={styles.closeButtonText}>Close</Text>
-      </TouchableOpacity>
+      <View style={styles.topContainer}>
+        <TouchableOpacity style={styles.closeButton} onPress={() => onStepChange(3)}>
+          <Text style={styles.closeButtonText}>Close</Text>
+        </TouchableOpacity>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Enter medical condition"
-          value={inputValue}
-          onChangeText={handleInputChange}
-          style={styles.input}
-        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Enter medical condition"
+            value={inputValue}
+            onChangeText={handleInputChange}
+            style={styles.input}
+          />
+        </View>
       </View>
 
       <View style={styles.centeredContainer}>
@@ -73,8 +74,6 @@ const MedicalConditionsList = ({ onStepChange }) => {
           />
         )}
       </View>
-
-
     </View>
   );
 };
@@ -83,9 +82,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    paddingTop: 40,
+  },
+  topContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 30,
   },
   inputContainer: {
-    marginTop: 30,
+    flex: 1,
+    marginLeft: 10,
+    paddingTop: 30,
   },
   input: {
     height: 40,
@@ -106,17 +114,17 @@ const styles = StyleSheet.create({
   },
 
   selectedConditionButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#E33458',
   },
 
   closeButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
+    backgroundColor: '#E33458',
+    borderRadius: 10,
+    padding: 10,
   },
   closeButtonText: {
     fontSize: 16,
-    color: 'blue',
+    color: '#FFFFFF',
   },
   centeredContainer: {
     flex: 1,

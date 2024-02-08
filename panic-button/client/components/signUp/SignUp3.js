@@ -110,12 +110,11 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.container}>
-        <BackButton />
 
-        <View style={styles.middleContainer}>
+        <View style={styles.topContainer}>
+          <Text style={styles.selectConditionsButtonText}>Open to select Medical Conditions</Text>
           <TouchableOpacity onPress={() => onStepChange(4)} style={styles.selectConditionsButton}>
-            <MaterialIcons name="list" size={24} color="blue" style={styles.icon} />
-            <Text style={styles.selectConditionsButtonText}>Open to select Medical Conditions</Text>
+            <MaterialIcons name="list" size={24} color='#E33458' style={styles.icon} />
           </TouchableOpacity>
         </View>
 
@@ -130,7 +129,6 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
             <Text style={styles.addButton}>{t("Add")}</Text>
           </TouchableOpacity>
         </View>
-
 
         {renderConditions()}
 
@@ -151,49 +149,44 @@ const MedicalConditionsComponent = ({ onStepChange }) => {
 const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
-    justifyContent: 'space-between',
   },
   container: {
     flex: 1,
-  },
-  middleContainer: {
-    flex: 1,
-    justifyContent: 'space-around',
     alignItems: 'center',
-    padding: 20,
-    maxWidth: 600,
-    marginHorizontal: 'auto',
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    paddingVertical: 20,
   },
-  selectConditionsButton: {
-    borderRadius: 5,
-    padding: 15,
-    marginTop: 30,
-    borderWidth: 2,
-    borderColor: 'blue',
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
+  topContainer: {
+    padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%',
-    maxWidth: windowWidth - 40,
+    marginBottom: 20,
+    paddingTop: 80,
+  },
+  selectConditionsButton: {
+    marginLeft: 'auto',
+    borderRadius: 5,
+    padding: 15,
+    borderWidth: 2,
+    borderColor: '#E33458',
   },
   selectConditionsButtonText: {
     color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   icon: {
-    marginRight: 10,
+    marginLeft: 10,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
-    maxWidth: 600,
+    marginBottom: 10,
     width: '100%',
+    maxWidth: 600,
     justifyContent: 'space-between',
+    padding: 20,
   },
   input: {
     flex: 1,
@@ -203,7 +196,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   addButton: {
-    color: 'blue',
+    color: '#E33458',
     padding: 10,
   },
   conditionsListContainer: {
@@ -212,7 +205,7 @@ const styles = StyleSheet.create({
     maxWidth: 600,
   },
   conditionsListTitle: {
-    color: 'green',
+    color: 'gray',
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
@@ -222,7 +215,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: 'green',
+    borderColor: '#f3a5b5',
     padding: 10,
     margin: 5,
     backgroundColor: 'transparent',
@@ -241,16 +234,16 @@ const styles = StyleSheet.create({
   },
   removeButton: {
     marginLeft: 5,
-    color: 'green',
+    color: 'gray',
     fontWeight: 'bold',
   },
   registerButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#E33458',
     borderRadius: 10,
     padding: 15,
     alignItems: 'center',
-    marginTop: 20,
-    width: '100%',
+    marginTop: 40,
+    width: '60%',
     maxWidth: windowWidth - 40,
   },
   buttonText: {
@@ -259,16 +252,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 20,
+    width: '50%',
+    maxWidth: 600,
   },
   buttonPrev: {
     backgroundColor: '#ccc',
     padding: 10,
     borderRadius: 5,
     flex: 1,
-    margin: 10,
+    marginHorizontal: 10,
   },
 });
 

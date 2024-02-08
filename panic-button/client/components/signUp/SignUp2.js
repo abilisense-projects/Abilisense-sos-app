@@ -7,7 +7,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddressData } from '../../redux/actions/registerActions';
 import { useTranslation } from 'react-i18next';
-import BackButton from './LoginButton';
 
 const SignUp2 = ({ onStepChange }) => {
   const addressData = useSelector((state) => state.register.addressData);
@@ -95,53 +94,53 @@ const SignUp2 = ({ onStepChange }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
-      <ScrollView contentContainerStyle={styles.container}>
-      <BackButton />
-        <Text style={styles.title}>{("Sign Up - Step 2")}</Text>
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.title}>{("Sign Up - Step 2")}</Text>
 
-        {Object.keys(formData).map((key) => (
-          <View key={key} style={styles.inputContainer}>
-            {renderLabel(key)}
-            <TextInput
-              style={{
-                ...styles.input,
-                height: 40, // Set a fixed height for the input
-                borderColor: isFieldValid(key)
-                  ? 'green'
-                  : errors[key]
-                    ? 'red'
-                    : 'gray',
-              }}
-              placeholder={placeholderText[key]}
-              onChangeText={(text) => handleInputChange(key, text)}
-              value={formData[key]}
-              keyboardType={key === 'dateOfBirth' ? 'numeric' : 'default'}
-            />
-            {isFieldValid(key) && (
-              <View style={styles.iconContainer}>
-                <MaterialIcons name="check" size={24} color="green" style={styles.icon} />
-              </View>
-            )}
-            {errors[key] && <Text style={styles.error}>{errors[key]}</Text>}
+          {Object.keys(formData).map((key) => (
+            <View key={key} style={styles.inputContainer}>
+              {renderLabel(key)}
+              <TextInput
+                style={{
+                  ...styles.input,
+                  borderColor: isFieldValid(key)
+                    ? 'green'
+                    : errors[key]
+                      ? 'red'
+                      : 'gray',
+                }}
+                placeholder={placeholderText[key]}
+                onChangeText={(text) => handleInputChange(key, text)}
+                value={formData[key]}
+                keyboardType={key === 'dateOfBirth' ? 'numeric' : 'default'}
+              />
+              {isFieldValid(key) && (
+                <View style={styles.iconContainer}>
+                  <MaterialIcons name="check" size={24} color="green" style={styles.icon} />
+                </View>
+              )}
+              {errors[key] && <Text style={styles.error}>{errors[key]}</Text>}
 
-            {key === 'dateOfBirth' && (
-              <Text style={styles.additionalText}>
-               {t("Year-Month-Day")}
-              </Text>
-            )}
+              {key === 'dateOfBirth' && (
+                <Text style={styles.additionalText}>
+                  {t("Year-Month-Day")}
+                </Text>
+              )}
+            </View>
+          ))}
+
+          <View style={styles.buttonContainer}>
+            <Pressable style={styles.buttonPrev} onPress={() => onStepChange(1)}>
+              <Text style={styles.buttonText}>{t("Prev")}</Text>
+            </Pressable>
+
+            <Pressable style={styles.buttonNext} onPress={() => handleSignUp(3)}>
+              <Text style={styles.buttonText}>{t("Next")}</Text>
+            </Pressable>
           </View>
-        ))}
-
-        <View style={styles.buttonContainer}>
-          <Pressable style={styles.buttonPrev} onPress={() => onStepChange(1)}>
-            <Text style={styles.buttonText}>{t("Prev")}</Text>
-          </Pressable>
-
-          <Pressable style={styles.buttonNext} onPress={() => handleSignUp(3)}>
-            <Text style={styles.buttonText}>{t("Next")}</Text>
-          </Pressable>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -153,22 +152,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
   },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 100, // Add padding bottom to accommodate buttons
+    height: '80%', // Limit the height of ScrollView to 80% of the screen height
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    marginTop: 30,
+    marginTop: 40,
   },
   inputContainer: {
     position: 'relative',
     marginBottom: 20,
+    width: '80%', // Added for consistent width with SignUpScreen
   },
   input: {
-    width: '80%',
+    width: '100%', // Adjusted width for consistency
     borderWidth: 1,
     paddingLeft: 10,
-    flexDirection: 'row',
-    alignItems: 'center', // Center the icon vertically
+    borderColor: 'gray', // Changed default border color to gray
+    borderRadius: 8,
+    marginBottom: 5,
+    fontSize: 18,
+    height: 40, // Set a fixed height for the input
   },
   buttonText: {
     color: 'white',
@@ -194,7 +204,7 @@ const styles = StyleSheet.create({
     maxWidth: 150, // Set your desired maximum width
   },
   buttonNext: {
-    backgroundColor: 'blue',
+    backgroundColor: '#E33458',
     padding: 10,
     borderRadius: 5,
     flex: 1,
@@ -206,7 +216,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     position: 'absolute',
     top: 12,
-    right: 12,
+    right: -22,
   },
   placeholderLabel: {
     position: 'absolute',
