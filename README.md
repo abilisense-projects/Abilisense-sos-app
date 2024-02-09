@@ -1,4 +1,4 @@
-## Link to abilisense-sos-app
+## Link to Abilisense-sos-app
 https://abilisense-sos-app.onrender.com/
 
 ## Abilisense-sos-app presentation
