@@ -10,7 +10,7 @@ import FindLocation from '../components/sos_button/FindLocation';
 import CancelButton from '../components/sos_button/CancelButton';
 import AlertSendingConfirmationModel from '../components/sos_button/AlertSendingConfirmationModel';
 import SquareIconButton from '../components/home/SquareIconButton';
-import { LocationButton } from '../components/home/locationButton';
+// import { LocationButton } from '../components/home/locationButton';
 import CancelAlertButton from '../components/sos_button/CancelAlertButton';
 
 // Main HomeScreen component
@@ -64,7 +64,7 @@ const HomeScreen = ({ navigation }) => {
     // Function to handle location button press
     const handlelocationPress = () => {
         setlocationPressed(!locationPressed);
-        LocationButton(locationPressed);
+        // LocationButton(locationPressed);
     };
 
     // Return JSX based on the current step
@@ -78,7 +78,8 @@ const HomeScreen = ({ navigation }) => {
                             <SosButton onStepChange={handleStepChange} style={{ backgroundColor: 'transparent' }} />
                             <View style={styles.iconsContainer}>
                                 <View style={styles.iconRow}>
-                                    <SquareIconButton iconName="location-on" isPressed={locationPressed} />
+                                    <SquareIconButton iconName="location-on"/>
+                                    {/* <SquareIconButton iconName="location-on" isPressed={locationPressed} /> */}
                                     <View style={styles.iconSpacing} />
                                     <SquareIconButton iconName="chart-waterfall" />
                                     <View style={styles.iconSpacing} />
@@ -123,11 +124,11 @@ const HomeScreen = ({ navigation }) => {
                             <CancelAlertButton navigation={navigation} alertId={alertId} />
                         </>
                     )}
-                    {step === 7 && (
+                    {/* {step === 7 && (
                         <>
                             <LocationButton />
                         </>
-                    )}
+                    )} */}
                 </ImageBackground>
             </View>
         </>
